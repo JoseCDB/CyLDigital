@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="es.jcyl.cee.cylford.app.cyldigital" >
+
+
+    <!--Permisos INTERNET, ACCESS_NETWORK_STATE, WRITE_EXTERNAL_STORAGE para evitar errores de Conectividad-->
+    <!--java.lang.SecurityException: ConnectivityService: Neither user 10056 nor current process has android.permission.ACCESS_NETWORK_STATE.-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!--Allows app to open network sockets-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!--Allows app to access information about networks-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!--Allows app to write to external storage-->
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!--Allows app to access approximate location-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!--Allows app to access precise location-->
+
+    <!--android:minSdkVersion — The minimum version of the Android platform on which the application will run, specified by the platform's API Level identifier. -->
+    <!--android:targetSdkVersion — Specifies the API Level on which the application is designed to run.
+    In some cases, this allows the application to use manifest elements or behaviors defined in the target API Level,
+    rather than being restricted to using only those defined for the minimum API Level.-->
+    <!--
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="19" />
+    -->
+
+    <!--Clase App se instancia al arrancarse el proceso de la aplicación. Antes que ningún compoenente de la aplicación-->
+    <application
+        android:allowBackup="true"
+        android:name="es.jcyl.cee.cylford.app.cyldigital.backend.App"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <!-- Deberemos de especificar que la primera actividad a ejecutar cuando arranque la aplicación sea la actividad SplashActivity -->
+        <!-- Quito la etiqueta del título android:label="@string/title_activity_splash" a la pantalla -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" /> <!--Solo una puede ser LAUNCHER. La principal.-->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ui.MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ui.PresencialActivity"
+            android:label="@string/title_activity_presencial" >
+        </activity>
+        <activity
+            android:name=".ui.OnlineActivity"
+            android:label="@string/title_activity_online" >
+        </activity>
+    </application>
+
+</manifest>

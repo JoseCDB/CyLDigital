@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">CyLDigital</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_splash">CyLDigital</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="menu_presencial">Formación Presencial</string>
+    <string name="menu_online">Formación Online</string>
+    <string name="title_presenciales">Formación Presencial Espacios CyLDigital</string>
+    <string name="title_onlines">Formación Online Espacios CyLDigital</string>
+    <string name="build">Build %d</string>
+    <string name="title_activity_presencial">PresencialActivity</string>
+    <string name="title_activity_online">OnlineActivity</string>
+    <string name="search">Buscar</string>
+</resources>

@@ -1,0 +1,27 @@
+// DE MÓDULO
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23 //versión con la que se compila
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        applicationId "es.jcyl.cee.cylford.app.cyldigital"
+        minSdkVersion 15 //minimo sdk con el que aseguramos que va a funcionar
+        targetSdkVersion 23
+        versionCode 1 //para nosotros
+        versionName "1.0" //para la tienda de desarrollo. Control de versiones de software. Lo va a pedir la tienda al subirlo
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//Dependencias que vamos a utilizar. Añadir otras apis...
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.0.1' //soporte para versiones anteriores. Retrocompatibilidad.
+}
