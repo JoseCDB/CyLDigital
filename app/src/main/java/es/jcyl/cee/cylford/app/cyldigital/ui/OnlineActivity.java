@@ -156,9 +156,9 @@ public class OnlineActivity extends AppCompatActivity
         currentCallTime = new Date().getTime();
         //Si no hay valor en ninguno de los campos
         if (search.length() == 0 && prov.length() == 0 && tipo.length() == 0) {
-            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, currentCallId, this);// Parámetro this válido porque se implementa CyLDFormacionHandlerListener
+            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, currentCallId, OnlineActivity.this);// Parámetro this válido porque se implementa CyLDFormacionHandlerListener
         } else {
-            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, 1, null, null, search, tipoVal, provinciaVal, currentCallId, this);
+            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, 0, null, null, search, tipoVal, provinciaVal, currentCallId, OnlineActivity.this);
         }
     }// requestData
 

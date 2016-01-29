@@ -14,33 +14,35 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
     private static final String ATTRVAL_IDENTIFIER = "Identificador";
     private static final String ATTRVAL_PROVINCEID = "Localidad_CodigoProvincia";
-    private static final String ATTRVAL_NAME = "Nombre_es";
-    private static final String ATTRVAL_DESCRIPTION = "Descripcion_es";
-    private static final String ATTRVAL_STARTDATE = "FechaInicio";
-    private static final String ATTRVAL_ENDDATE = "FechaFin";
-    private static final String ATTRVAL_NUMHOR = "NumeroHoras";
-    private static final String ATTRVAL_NUMPLA = "NumeroPlazas";
-    private static final String ATTRVAL_REQUESTS = "NumeroSolicitudes";
-    private static final String ATTRVAL_NUMPLAWLIST = "NumeroPlazasListaEsp";
-    private static final String ATTRVAL_REQUIREMENTS = "Requisitos_es";
-    private static final String ATTRVAL_WARN = "Aviso_es";
-    private static final String ATTRVAL_THEME = "Tematica_es";
-    private static final String ATTRVAL_CLUSTER = "Agrupada";
-    private static final String ATTRVAL_CLUSTERNAME = "NombreAgrupacion_es";
-    private static final String ATTRVAL_URL = "Url";
-    private static final String ATTRVAL_ACTYPE = "TipoActividad_es";
-    private static final String ATTRVAL_STARTHOUR = "HoraInicio";
-    private static final String ATTRVAL_ENDHOUR = "HoraFin";
-    private static final String ATTRVAL_ENROLLSTARTDATE = "FechaInicioMatricula";
-    private static final String ATTRVAL_ENROLLENDDATE = "FechaFinMatricula";
-    private static final String ATTRVAL_EXECUTIONPLACE = "Centro";
-    private static final String ATTRVAL_LEVEL = "Nivel_es";
+    private static final String ATTRVAL_MESSAGE = "mensaje";
+    private static final String ATTRVAL_RIGHT = "correcto";
+    private static final String ATTRVAL_NAME = "nombre";
+    private static final String ATTRVAL_DESCRIPTION = "descripcion";
+    private static final String ATTRVAL_STARTDATE = "fechaInicio";
+    private static final String ATTRVAL_ENDDATE = "fechaFin";
+    private static final String ATTRVAL_NUMHOR = "numeroHoras";
+    private static final String ATTRVAL_NUMPLA = "numeroPlazas";
+    private static final String ATTRVAL_REQUESTS = "numeroSolicitudes";
+    private static final String ATTRVAL_NUMPLAWLIST = "plazasEnListaEspera";
+    private static final String ATTRVAL_REQUIREMENTS = "requisitos";
+    private static final String ATTRVAL_WARN = "aviso";
+    private static final String ATTRVAL_THEME = "tematica";
+    private static final String ATTRVAL_CLUSTER = "agrupacion";
+    private static final String ATTRVAL_CLUSTERNAME = "nombreAgrupacion";
+    private static final String ATTRVAL_URL = "url";
+    private static final String ATTRVAL_ACTYPE = "tipo";//Presenciales
+    private static final String ATTRVAL_STARTHOUR = "horaInicio";
+    private static final String ATTRVAL_ENDHOUR = "horaFin";
+    private static final String ATTRVAL_ENROLLSTARTDATE = "fechaInicioMatriculacion";
+    private static final String ATTRVAL_ENROLLENDDATE = "fechaFinMatriculacion";
+    private static final String ATTRVAL_EXECUTIONPLACE = "centro";
+    private static final String ATTRVAL_LEVEL = "nivel";
 
 
 
     private static int pos = 1;
-    private static final int CONTEXT_IDENTIFICADOR = pos++;
-    private static final int CONTEXT_PROVINCIA = pos++;
+    //private static final int CONTEXT_IDENTIFICADOR = pos++;
+    //private static final int CONTEXT_PROVINCIA = pos++;
     private static final int CONTEXT_NOMBRE = pos++;
     private static final int CONTEXT_DESCRIPCION = pos++;
     private static final int CONTEXT_FECHAINICIO= pos++;
@@ -64,10 +66,14 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
     private static final int CONTEXT_NIVEL = pos++;
 
 
+    public CyLDActivityParser() {
+
+    }
+
     private static Map<String, Integer> attributeToContextMap = new java.util.HashMap<String, Integer>();
     static {
-        attributeToContextMap.put(ATTRVAL_IDENTIFIER, CONTEXT_IDENTIFICADOR);
-        attributeToContextMap.put(ATTRVAL_PROVINCEID, CONTEXT_PROVINCIA);
+        //attributeToContextMap.put(ATTRVAL_IDENTIFIER, CONTEXT_IDENTIFICADOR);
+        //attributeToContextMap.put(ATTRVAL_PROVINCEID, CONTEXT_PROVINCIA);
         attributeToContextMap.put(ATTRVAL_NAME, CONTEXT_NOMBRE);
         attributeToContextMap.put(ATTRVAL_DESCRIPTION, CONTEXT_DESCRIPCION);
         attributeToContextMap.put(ATTRVAL_STARTDATE, CONTEXT_FECHAINICIO);
@@ -93,9 +99,9 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
     @Override
     public String getAppendableOnlyUnderElement(int context) {
-        if ( context == CONTEXT_IDENTIFICADOR
-                || context == CONTEXT_PROVINCIA
-                || context == CONTEXT_NOMBRE
+        if ( //context == CONTEXT_IDENTIFICADOR
+                //|| context == CONTEXT_PROVINCIA
+                context == CONTEXT_NOMBRE
                 || context == CONTEXT_FECHAINICIO
                 || context == CONTEXT_FECHAFIN
                 || context == CONTEXT_NUMHORAS
@@ -132,11 +138,12 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
     @Override
     public void setAttributeValue(int context, String value, CyLDFormacion dto) {
         //try {
-            if (context == CONTEXT_IDENTIFICADOR) {
-                dto.id = Integer.parseInt(value);
-            } else if (context == CONTEXT_PROVINCIA) {
-                dto.provincia = value;
-            } else if (context == CONTEXT_NOMBRE) {
+            //if (context == CONTEXT_IDENTIFICADOR) {
+              //  dto.id = Integer.parseInt(value);
+            //} else if (context == CONTEXT_PROVINCIA) {
+              //  dto.provincia = value;
+            //} else
+            if (context == CONTEXT_NOMBRE) {
                 dto.nombre = value;
             } else if (context == CONTEXT_FECHAINICIO) {
                 dto.fechaInicio = value;

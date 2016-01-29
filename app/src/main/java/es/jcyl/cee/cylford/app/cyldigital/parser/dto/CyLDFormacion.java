@@ -104,6 +104,138 @@ public class CyLDFormacion extends CyLDDTO implements Serializable {
 
     /*Devuelve un String indicando de que nivel de la actividad (básico, medio,avanzado)*/
     public String nivel;
+
+
+    /**
+     * Getters y Setters
+     */
+
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nom) {
+        nombre = nom;
+    }
+    public String getDescriocion() {
+        return descripcion;
+    }
+    public void setDescripcion(String des) {
+        descripcion = des;
+    }
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+    public void setFechaInicio(String fecIni) {
+        fechaInicio = fecIni;
+    }
+    public String getFechaFin() {
+        return fechaFin;
+    }
+    public void setFechaFin(String fecFin) {
+        fechaInicio = fecFin;
+    }
+    public float getNumeroHoras() {
+        return numeroHoras;
+    }
+    public void setNumeroHoras(float numHor) {
+        numeroHoras = numHor;
+    }
+    public int getNumeroPlazas() {
+        return numeroPlazas;
+    }
+    public void setNumeroPlazas(int numPla) {
+        numeroPlazas = numPla;
+    }
+    public int getNumeroSolicitudes() {
+        return numeroSolicitudes;
+    }
+    public void setNumeroSolicitudes(int numSol) {
+        numeroSolicitudes = numSol;
+    }
+    public int getPlazasListaEspera() {
+        return plazasEnListaEspera;
+    }
+    public void setPlazasListaEspera(int numPlaLista) {
+        plazasEnListaEspera = numPlaLista;
+    }
+    public String getRequisitos() {
+        return requisitos;
+    }
+    public void setRequisitos(String req) {
+        requisitos = req;
+    }
+    public String getAviso() {
+        return aviso;
+    }
+    public void setAviso(String avs) {
+        aviso = avs;
+    }
+    public String getTematica() {
+        return tematica;
+    }
+    public void setTematica(String tema) {
+        tematica = tema;
+    }
+    public int getAgrupacion() {
+        return agrupacion;
+    }
+    public void setAgrupacion(int tema) {
+        agrupacion = tema;
+    }
+    public String getNombreAgrupacion() {
+        return nombreAgrupacion;
+    }
+    public void setNombreAgrupacion(String agr) {
+        nombreAgrupacion = agr;
+    }
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public String getTipo() {
+        return tipo;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+    public void setHoraInicio(String horaIni) {
+        this.horaInicio = horaIni;
+    }
+    public String getHoraFin() {
+        return horaFin;
+    }
+    public void setHoraFin(String horaF) {
+        this.horaFin = horaF;
+    }
+    public String getFechaInicioMatriculacion() {
+        return fechaInicioMatriculacion;
+    }
+    public void setFechaInicioMatriculacion(String fecIniMat) {
+        this.fechaInicioMatriculacion = fecIniMat;
+    }
+    public String getFechaFinMatriculacion() {
+        return fechaFinMatriculacion;
+    }
+    public void setFechaFinMatriculacion(String fecFinMat) {
+        this.fechaFinMatriculacion = fecFinMat;
+    }
+    public String getCentro() {
+        return centro;
+    }
+    public void setCentro(String cen) {
+        this.centro = cen;
+    }
+    public String getNivel() {
+        return nivel;
+    }
+    public void setNivel(String niv) {
+        this.centro = niv;
+    }
 }
 
 

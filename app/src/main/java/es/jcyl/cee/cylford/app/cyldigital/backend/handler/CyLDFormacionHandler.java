@@ -9,6 +9,7 @@ import es.jcyl.cee.cylford.app.cyldigital.backend.ws.CyLDWServiceException;
 import es.jcyl.cee.cylford.app.cyldigital.backend.ws.FormCylDigOnlineWS;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 import es.jcyl.cee.cylford.app.cyldigital.backend.App;
+import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
 
 /**
  * Created by josecarlos.delbarrio on 20/10/2015.
@@ -46,7 +47,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
      */
     public static void listActivities(final String tipoFormacion, final int numeroAct, final String fechaInicio, final String fechaFin,
                                       final String text, final String tipoActividad, final String provincia,
-                                      final String callId, final CyLDFormacionHandlerListener<CyLDFormacion> listener) {
+                                      final String callId, final OnlineActivity listener) {
         startCallId(callId);
 
         //**Se crea un objeto "retrieverBlock" de una clase anónima interna que implementa la interfaz "CollectionDataRetrieverBlock" declarada en CyLDHandler.
@@ -68,7 +69,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             @Override
             public Collection<CyLDFormacion> remoteRetrieve() throws CyLDWServiceException {
                 // Desde el Web Service se obtienen datos de actividades.
-                return getActividadesDesdeWebservice(tipoFormacion, numeroAct, fechaInicio, fechaFin, text, tipoActividad, provincia);
+                return getActividadesDesdeWebservice(tipoFormacion, numeroAct, fechaInicio, fechaFin, text, tipoActividad, provincia, listener);
             }
 
             @Override
@@ -83,7 +84,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
 
 
 
-    public static void listActivities(final String tipoFormacion, final String callId, final CyLDFormacionHandlerListener<CyLDFormacion> listener) {
+    public static void listActivities(final String tipoFormacion, final String callId, final OnlineActivity listener) {
         startCallId(callId);
 
         //**Añado un objeto "retrieverBlock" de una clase anónima interna que implementa la interfaz "CollectionDataRetrieverBlock" declarada en CyLDHandler
@@ -105,7 +106,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             @Override
             public Collection<CyLDFormacion> remoteRetrieve() throws CyLDWServiceException {
                 // Desde el Web Service se obtienen datos de actividades.
-                return getActividadesDesdeWebservice(null, 0, null, null, null, null, null);
+                return getActividadesDesdeWebservice(null, 0, null, null, null, null, null, listener);
             }
 
             @Override
@@ -122,8 +123,13 @@ public class CyLDFormacionHandler extends CyLDHandler {
     * @throws CyLDWServiceException
     * **/
     private static Collection<CyLDFormacion> getActividadesDesdeWebservice(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
-                                                                           String text, String tipoActividad, String provincia)throws CyLDWServiceException {
-        return FormCylDigOnlineWS.getActividades(tipoFormacion, numeroAct, fechaInicio, fechaFin, text, tipoActividad, provincia);
+                                                                           String text, String tipoActividad, String provincia, OnlineActivity listener){
+        try {
+            return FormCylDigOnlineWS.getActividades(tipoFormacion, numeroAct, fechaInicio, fechaFin, text, tipoActividad, provincia, listener);
+        } catch (CyLDWServiceException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static void guardaActividades(Collection<CyLDFormacion> actividades) {

@@ -98,8 +98,6 @@ public class CyLDHandler {
         }
     }
 
-
-
     protected static boolean seRequiereRefresco(Collection<? extends CyLDDTO> dtos, long expirationTime, String nombreTablaPrincipal) {
 
         long oldestRefresh = Long.MAX_VALUE;
