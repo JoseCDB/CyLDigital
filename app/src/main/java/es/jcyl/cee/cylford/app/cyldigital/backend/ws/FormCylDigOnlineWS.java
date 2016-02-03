@@ -1,24 +1,14 @@
 package es.jcyl.cee.cylford.app.cyldigital.backend.ws;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-import android.os.Environment;
-
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.util.Collection;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
 import es.jcyl.cee.cylford.app.cyldigital.backend.Configuration;
-import es.jcyl.cee.cylford.app.cyldigital.backend.handler.CyLDFormacionHandlerListener;
-import es.jcyl.cee.cylford.app.cyldigital.backend.handler.CyLDHandler;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDActivityParser;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDParserException;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
@@ -44,7 +34,6 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
 
     public static Collection<CyLDFormacion> getActividades(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
                                             String text, String tipoActividad, String provincia, OnlineActivity listener) throws CyLDWServiceException {
-        Collection<CyLDFormacion> actividadesOn = null;
         InputStream is = null;
         HttpsURLConnection cnt = null;
         StringBuffer sUrl = new StringBuffer(Configuration.KEY_FORM_ONLINE_WSURL);
@@ -83,7 +72,7 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
             //llamada al método de FormCylDigWS con la url que se enviará con GET al WS
             cnt = enviarRequestA(sUrl.toString(), connectTimeOut, readTimeOut, listener);
             is = new BufferedInputStream(cnt.getInputStream());
-            //Guardao de fichero en sdcard
+            //Guardado de fichero en sdcard
                 /*
                 try{
                     File sdCard = Environment.getExternalStorageDirectory();
@@ -104,7 +93,7 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
                 }
                 */
 
-            actividadesOn = parser.parse(is);
+            Collection<CyLDFormacion> actividadesOn = parser.parse(is);
             return actividadesOn;
         } catch (IOException ioe) {
             throw new CyLDWServiceException("No ha sido capáz de leer el stream");//hay que retornar algo...
@@ -113,10 +102,9 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
             eclp.printStackTrace();
             throw new CyLDWServiceException("No ha sido capáz de leer el stream");//hay que retornar algo...
         } finally {
-
             if (is != null) {try { is.close(); } catch (IOException ioe) {}}
             if (cnt != null) { cnt.disconnect(); }
         }
-}
+    }
 }
 

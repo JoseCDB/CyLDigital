@@ -70,7 +70,7 @@ public class CyLDFormacion extends CyLDDTO implements Serializable {
 
     /*booleano que indica si el curso online pertenece a una agrupación o no.
     En CyL Digital hay algunos cursos que forman parte de una agrupación*/
-    public int agrupacion;//En origen boolean
+    public int agrupacion;//En origen boolean pero wn SQLite int 1 0
 
     /*En el caso de que pertenezca a una agrupación, devuelve el nombre de la agrupación online*/
     public String nombreAgrupacion;
@@ -109,7 +109,7 @@ public class CyLDFormacion extends CyLDDTO implements Serializable {
     /**
      * Getters y Setters
      */
-
+    /*
     public String getNombre() {
         return nombre;
     }
@@ -236,6 +236,7 @@ public class CyLDFormacion extends CyLDDTO implements Serializable {
     public void setNivel(String niv) {
         this.centro = niv;
     }
+    */
 }
 
 

@@ -32,7 +32,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     protected int xmlContext = CONTEXT_NOCONTEXT;
     private StringBuilder strBuilder = new StringBuilder();
     private M currDTO = null;
-    private String appendableUnder = null;
+    private String appendableUnder = null; // string o text
     private boolean isUnderAppendableElement = false;
     private List<M> dtos = new java.util.LinkedList<M>();
 
@@ -40,7 +40,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     // MÉTODOS ABSTRACTOS
     public abstract M crearNuevoDTO();
     public abstract int getContextForAttribute(String attr);
-    public abstract String getAppendableOnlyUnderElement(int context);
+    public abstract String getAppendableOnlyUnderElement(int context); //devuelve a "appendableUnder" tipo string o texto dependiendo del tipo de campo
     public abstract void setAttributeValue(int context, String value, M dto);
 
 
@@ -55,7 +55,31 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
         if (NODE_ELEMENT.equals(localName)) {
             // Nueva actividad formativa
             currDTO = crearNuevoDTO();
-        } else if(localName.equals("nombre")) {
+            isUnderAppendableElement = false;
+        } else if(localName.equals("nombre")
+                || (localName.equals("descripcion"))
+                || (localName.equals("fechaInicio"))
+                || (localName.equals("fechaFin"))
+                || (localName.equals("numeroHoras"))
+                || (localName.equals("numeroPlazas"))
+                || (localName.equals("numeroSolicitudes"))
+                || (localName.equals("plazasEnListaEspera"))
+                || (localName.equals("agrupacion"))
+                || (localName.equals("requisitos"))
+                || (localName.equals("aviso"))
+                || (localName.equals("tematica"))
+                || (localName.equals("nombreAgrupacion"))
+                || (localName.equals("url"))
+                || (localName.equals("tipo"))
+                || (localName.equals("horaInicio"))
+                || (localName.equals("horaFin"))
+                || (localName.equals("fechaInicioMatriculacion"))
+                || (localName.equals("fechaFinMatriculacion"))
+                || (localName.equals("centro"))
+                || (localName.equals("nivel")) ){
+            /*
+            *
+            *         } else if(localName.equals("nombre")) {
             //((CyLDFormacion) currDTO).setNombre();
         } else if(localName.equals("descripcion")) {
         } else if(localName.equals("fechaInicio")) {
@@ -76,24 +100,19 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
         } else if(localName.equals("fechaInicioMatriculacion")) {
         } else if(localName.equals("fechaFinMatriculacion")) {
         } else if(localName.equals("centro")) {
-        } else if(localName.equals("nivel")) {
+        } else if(localName.equals("nivel")) {*/
             // New attribute, find out which one
             String name = atts.getValue(ATTR_NAME);
-
-            this.xmlContext = CONTEXT_NOCONTEXT;
-
-            this.xmlContext = getContextForAttribute(name);
             strBuilder = new StringBuilder();
-            this.appendableUnder = getAppendableOnlyUnderElement(this.xmlContext);
-
-        } else if (localName.equals(this.appendableUnder)) {
-            isUnderAppendableElement = true;
+            //this.xmlContext = CONTEXT_NOCONTEXT;
+            this.xmlContext = getContextForAttribute(localName);//le asignamos el valor numérico por nombre del atributo
+            this.appendableUnder = getAppendableOnlyUnderElement(this.xmlContext); //string o text
         }
     }
 
     @Override
     /**
-     * Se produce al teminar un elemento. El significado de los atributos es el mismo que en startElement
+     * Se produce al teminar un elemento, Añadiendosele el valor del strBuilder al campo del dto. El significado de los atributos es el mismo que en startElement
      */
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
@@ -102,7 +121,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
             this.dtos.add(this.currDTO);
             this.currDTO = null;
             this.xmlContext = CONTEXT_NOCONTEXT;
-        } else if ((localName.equals("nombre") ||
+        } else if (localName.equals("nombre") ||
                 localName.equals("descripcion") ||
                 localName.equals("fechaInicio") ||
                 localName.equals("fechaFin") ||
@@ -122,15 +141,12 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
                 localName.equals("fechaInicioMatriculacion") ||
                 localName.equals("fechaFinMatriculacion") ||
                 localName.equals("centro") ||
-                localName.equals("nivel") )
-                && appendableUnder == null) {
+                localName.equals("nivel")) {
             setAttributeValue(this.xmlContext, strBuilder.toString().replaceAll("\\n", ""), this.currDTO);
-            this.xmlContext =  this.xmlContext + 1;
-
+            this.xmlContext = CONTEXT_NOCONTEXT;
         } else if (localName.equals(appendableUnder)) { // End of string (in case of array addd value
             setAttributeValue(this.xmlContext, strBuilder.toString(), this.currDTO);
             strBuilder = new StringBuilder();
-            isUnderAppendableElement = false;
         }
     }
 
@@ -172,8 +188,9 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         String string = new String(ch, start, length);
-        if (this.xmlContext != CONTEXT_NOCONTEXT && (isUnderAppendableElement || getAppendableOnlyUnderElement(this.xmlContext) == null)) {
-            // Only append to string builder if we are under string node or there is no need of a string node
+        if (this.xmlContext != CONTEXT_NOCONTEXT ) {
+            // if (this.xmlContext != CONTEXT_NOCONTEXT && (isUnderAppendableElement || getAppendableOnlyUnderElement(this.xmlContext) == null)) {
+            //Solo se agrega al string builder el valor para el campo si es un nodo string
             strBuilder.append(string);
         }
     }

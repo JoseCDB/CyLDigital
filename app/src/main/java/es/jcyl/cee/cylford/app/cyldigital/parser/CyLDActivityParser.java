@@ -12,8 +12,6 @@ import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
  */
 public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
-    private static final String ATTRVAL_IDENTIFIER = "Identificador";
-    private static final String ATTRVAL_PROVINCEID = "Localidad_CodigoProvincia";
     private static final String ATTRVAL_MESSAGE = "mensaje";
     private static final String ATTRVAL_RIGHT = "correcto";
     private static final String ATTRVAL_NAME = "nombre";
@@ -41,8 +39,6 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
 
     private static int pos = 1;
-    //private static final int CONTEXT_IDENTIFICADOR = pos++;
-    //private static final int CONTEXT_PROVINCIA = pos++;
     private static final int CONTEXT_NOMBRE = pos++;
     private static final int CONTEXT_DESCRIPCION = pos++;
     private static final int CONTEXT_FECHAINICIO= pos++;
@@ -72,8 +68,6 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
     private static Map<String, Integer> attributeToContextMap = new java.util.HashMap<String, Integer>();
     static {
-        //attributeToContextMap.put(ATTRVAL_IDENTIFIER, CONTEXT_IDENTIFICADOR);
-        //attributeToContextMap.put(ATTRVAL_PROVINCEID, CONTEXT_PROVINCIA);
         attributeToContextMap.put(ATTRVAL_NAME, CONTEXT_NOMBRE);
         attributeToContextMap.put(ATTRVAL_DESCRIPTION, CONTEXT_DESCRIPCION);
         attributeToContextMap.put(ATTRVAL_STARTDATE, CONTEXT_FECHAINICIO);
@@ -99,9 +93,7 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
     @Override
     public String getAppendableOnlyUnderElement(int context) {
-        if ( //context == CONTEXT_IDENTIFICADOR
-                //|| context == CONTEXT_PROVINCIA
-                context == CONTEXT_NOMBRE
+        if (       context == CONTEXT_NOMBRE
                 || context == CONTEXT_FECHAINICIO
                 || context == CONTEXT_FECHAFIN
                 || context == CONTEXT_NUMHORAS
@@ -138,13 +130,10 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
     @Override
     public void setAttributeValue(int context, String value, CyLDFormacion dto) {
         //try {
-            //if (context == CONTEXT_IDENTIFICADOR) {
-              //  dto.id = Integer.parseInt(value);
-            //} else if (context == CONTEXT_PROVINCIA) {
-              //  dto.provincia = value;
-            //} else
             if (context == CONTEXT_NOMBRE) {
                 dto.nombre = value;
+            } else if (context == CONTEXT_DESCRIPCION) {
+                dto.descripcion = value;
             } else if (context == CONTEXT_FECHAINICIO) {
                 dto.fechaInicio = value;
             } else if (context == CONTEXT_FECHAFIN) {
@@ -164,7 +153,11 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
             } else if (context == CONTEXT_TEMATICA) {
                 dto.tematica = value;
             } else if (context == CONTEXT_AGRUPADA) {
-                dto.agrupacion = Integer.parseInt(value);
+                int valAgr = 0;
+                if(value.equals("true")){
+                    valAgr = 1;
+                }
+                dto.agrupacion = valAgr;
             } else if (context == CONTEXT_NOMAGR) {
                 dto.nombreAgrupacion = value;
             } else if (context == CONTEXT_URL) {

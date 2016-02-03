@@ -1,10 +1,8 @@
 package es.jcyl.cee.cylford.app.cyldigital.backend.ws;
 
-import android.app.Application;
 import android.content.Context;
 import android.net.NetworkInfo;
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -24,8 +22,6 @@ import javax.net.ssl.TrustManagerFactory;
 
 import es.jcyl.cee.cylford.app.cyldigital.R;
 import es.jcyl.cee.cylford.app.cyldigital.backend.App;
-import es.jcyl.cee.cylford.app.cyldigital.backend.handler.CyLDFormacionHandlerListener;
-import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
 
 /**
@@ -34,7 +30,7 @@ import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
 public abstract class FormCylDigWS {
 
     /**
-     * Nos dice si la red está accesible
+     * Comprueba si la red está accesible
      */
     protected static boolean estaRedAccesible() {
         //ConnectivityManager: Class that answers queries about the state of network connectivity
@@ -100,13 +96,13 @@ public abstract class FormCylDigWS {
             cnt.setReadTimeout(readTimeOut);
             cnt.setSSLSocketFactory(sslContext.getSocketFactory());
 
-        }catch (KeyStoreException keyStoreException) {
+        } catch (KeyStoreException keyStoreException) {
 
-        }catch (NoSuchAlgorithmException nsae){
+        } catch (NoSuchAlgorithmException nsae){
 
-        }catch (KeyManagementException keyManagmentException){
+        } catch (KeyManagementException keyManagmentException){
 
-        }catch (CertificateException ce){
+        } catch (CertificateException ce){
 
         }
         return cnt;
