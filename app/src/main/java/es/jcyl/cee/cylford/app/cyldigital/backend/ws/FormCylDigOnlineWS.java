@@ -3,11 +3,16 @@ package es.jcyl.cee.cylford.app.cyldigital.backend.ws;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.Collection;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
 import es.jcyl.cee.cylford.app.cyldigital.backend.Configuration;
+import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDActivityParser;
+import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDParserException;
+import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
+import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
 
 /**
  * Created by josecarlos.delbarrio on 13/10/2015.
@@ -27,19 +32,18 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
         readTimeOut = Integer.parseInt(sValue) * 1000;
     }
 
-    public static Collection getActividades(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
-                                            String text, String tipoActividad, String provincia) throws CyLDWServiceException {
-        Collection actividadesOn = null;
+    public static Collection<CyLDFormacion> getActividades(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
+                                            String text, String tipoActividad, String provincia, OnlineActivity listener) throws CyLDWServiceException {
         InputStream is = null;
-        HttpURLConnection cnt = null;
+        HttpsURLConnection cnt = null;
         StringBuffer sUrl = new StringBuffer(Configuration.KEY_FORM_ONLINE_WSURL);
         int cont = 0;
 
         if (!estaRedAccesible()) {
             throw new CyLDWServiceException("La red no está disponible");
         }
-        fechaInicio= "10-10-2001";
-        fechaFin = "10-10-2015";
+        fechaInicio= null; //null en ambas me devuelve todas las actividades
+        fechaFin = null;
 
         // Se completa la url en caso de ser tipo consulta tipo Online
         if(tipoFormacion.equals(Constants.TIPO_ONLINE)) {
@@ -63,16 +67,43 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
         }
 
         try {
-            //parser = new ECyLEducationParser();
+            CyLDActivityParser parser = new CyLDActivityParser();
             System.out.println("FORMACIÓN ONLINE: Parseando respuesta desde " + sUrl);
             //llamada al método de FormCylDigWS con la url que se enviará con GET al WS
-            cnt = enviarRequestA(sUrl.toString(), connectTimeOut, readTimeOut);
+            cnt = enviarRequestA(sUrl.toString(), connectTimeOut, readTimeOut, listener);
             is = new BufferedInputStream(cnt.getInputStream());
-            //Collection actividadesOn = parser.parse(is);
+            //Guardado de fichero en sdcard
+                /*
+                try{
+                    File sdCard = Environment.getExternalStorageDirectory();
+                    File dir = new File (sdCard.getAbsolutePath() + "/dir1/dir2");
+                    dir.mkdirs();
+                    File file = new File(dir, "filename.xml");
+                    FileOutputStream f = new FileOutputStream(file);
+
+                    byte[] buf =new byte[1024];
+                    int len;
+                    while((len=is.read(buf))>0){
+                        f.write(buf,0,len);
+                    }
+                    f.close();
+                    is.close();
+                }catch(IOException e){
+                    System.out.println("Se produjo el error : "+e.toString());
+                }
+                */
+
+            Collection<CyLDFormacion> actividadesOn = parser.parse(is);
             return actividadesOn;
         } catch (IOException ioe) {
-            //hay que retornar algo...
-            throw new CyLDWServiceException("No ha sido capáz de leer el stream");
+            throw new CyLDWServiceException("No ha sido capáz de leer el stream");//hay que retornar algo...
+        }catch (CyLDParserException eclp) {
+            System.out.println("Unable to read education courses");
+            eclp.printStackTrace();
+            throw new CyLDWServiceException("No ha sido capáz de leer el stream");//hay que retornar algo...
+        } finally {
+            if (is != null) {try { is.close(); } catch (IOException ioe) {}}
+            if (cnt != null) { cnt.disconnect(); }
         }
     }
 }

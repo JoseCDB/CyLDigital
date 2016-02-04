@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import es.jcyl.cee.cylford.app.cyldigital.backend.App;
 import es.jcyl.cee.cylford.app.cyldigital.backend.ws.CyLDWServiceException;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDDTO;
 
@@ -98,15 +100,16 @@ public class CyLDHandler {
         }
     }
 
-
-
+    /**
+     * Comprueba el último refresco/actualización de cualquier tabla que se le pase.
+     */
     protected static boolean seRequiereRefresco(Collection<? extends CyLDDTO> dtos, long expirationTime, String nombreTablaPrincipal) {
 
         long oldestRefresh = Long.MAX_VALUE;
 
         if (dtos == null || dtos.size() == 0) {
             //Si no se pueden obtener modelos dtos,... buscar en la tabla general de refrescos.
-            //oldestRefresh = App.getDataSource().getLastRefreshFor(nombreTablaPrincipal); //TODO: Refrescos
+            oldestRefresh = App.getDataSource().getLastRefreshFor(nombreTablaPrincipal); //TODO: Refrescos
         } else {
             // Locate  the oldest center in the collection
             for (CyLDDTO dto: dtos) {

@@ -16,6 +16,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
+
 /**
  * Created by josecarlos.delbarrio on 23/11/2015.
  * El interface ContentHandler define los siguientes métodos, que se ejecutarán cada vez que ocurra un evento al procesar un documento XML
@@ -23,15 +25,14 @@ import javax.xml.parsers.SAXParserFactory;
 public abstract class CyLDGenericParser<M> implements ContentHandler{
 
     // ATRIBUTOS
-    private static final String NODE_ELEMENT = "element";
-    private static final String NODE_ATTRIBUTE = "attribute";
+    private static final String NODE_ELEMENT = "actividades";
     //private static final String NODE_STRING = "string";
     private static final String ATTR_NAME = "name";
     private static final int CONTEXT_NOCONTEXT = 0;
     protected int xmlContext = CONTEXT_NOCONTEXT;
     private StringBuilder strBuilder = new StringBuilder();
     private M currDTO = null;
-    private String appendableUnder = null;
+    private String appendableUnder = null; // string o text
     private boolean isUnderAppendableElement = false;
     private List<M> dtos = new java.util.LinkedList<M>();
 
@@ -39,7 +40,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     // MÉTODOS ABSTRACTOS
     public abstract M crearNuevoDTO();
     public abstract int getContextForAttribute(String attr);
-    public abstract String getAppendableOnlyUnderElement(int context);
+    public abstract String getAppendableOnlyUnderElement(int context); //devuelve a "appendableUnder" tipo string o texto dependiendo del tipo de campo
     public abstract void setAttributeValue(int context, String value, M dto);
 
 
@@ -52,28 +53,66 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     public void startElement(String uri, String localName, String qName,
                              Attributes atts) throws SAXException {
         if (NODE_ELEMENT.equals(localName)) {
-            // Entering a new element
-            this.currDTO = crearNuevoDTO();
-
-
-        } else if (NODE_ATTRIBUTE.equals(localName)) {
+            // Nueva actividad formativa
+            currDTO = crearNuevoDTO();
+            isUnderAppendableElement = false;
+        } else if(localName.equals("nombre")
+                || (localName.equals("descripcion"))
+                || (localName.equals("fechaInicio"))
+                || (localName.equals("fechaFin"))
+                || (localName.equals("numeroHoras"))
+                || (localName.equals("numeroPlazas"))
+                || (localName.equals("numeroSolicitudes"))
+                || (localName.equals("plazasEnListaEspera"))
+                || (localName.equals("agrupacion"))
+                || (localName.equals("requisitos"))
+                || (localName.equals("aviso"))
+                || (localName.equals("tematica"))
+                || (localName.equals("nombreAgrupacion"))
+                || (localName.equals("url"))
+                || (localName.equals("tipo"))
+                || (localName.equals("horaInicio"))
+                || (localName.equals("horaFin"))
+                || (localName.equals("fechaInicioMatriculacion"))
+                || (localName.equals("fechaFinMatriculacion"))
+                || (localName.equals("centro"))
+                || (localName.equals("nivel")) ){
+            /*
+            *
+            *         } else if(localName.equals("nombre")) {
+            //((CyLDFormacion) currDTO).setNombre();
+        } else if(localName.equals("descripcion")) {
+        } else if(localName.equals("fechaInicio")) {
+        } else if(localName.equals("fechaFin")) {
+        } else if(localName.equals("numeroHoras")) {
+        } else if(localName.equals("numeroPlazas")) {
+        } else if(localName.equals("numeroSolicitudes")) {
+        } else if(localName.equals("plazasEnListaEspera")) {
+        } else if(localName.equals("agrupacion")) {
+        } else if(localName.equals("requisitos")) {
+        } else if(localName.equals("aviso")) {
+        } else if(localName.equals("tematica")) {
+        } else if(localName.equals("nombreAgrupacion")) {
+        } else if(localName.equals("url")) {
+        } else if(localName.equals("tipo")) {
+        } else if(localName.equals("horaInicio")) {
+        } else if(localName.equals("horaFin")) {
+        } else if(localName.equals("fechaInicioMatriculacion")) {
+        } else if(localName.equals("fechaFinMatriculacion")) {
+        } else if(localName.equals("centro")) {
+        } else if(localName.equals("nivel")) {*/
             // New attribute, find out which one
             String name = atts.getValue(ATTR_NAME);
-
-            this.xmlContext = CONTEXT_NOCONTEXT;
-
-            this.xmlContext = getContextForAttribute(name);
             strBuilder = new StringBuilder();
-            this.appendableUnder = getAppendableOnlyUnderElement(this.xmlContext);
-
-        } else if (localName.equals(this.appendableUnder)) {
-            isUnderAppendableElement = true;
+            //this.xmlContext = CONTEXT_NOCONTEXT;
+            this.xmlContext = getContextForAttribute(localName);//le asignamos el valor numérico por nombre del atributo
+            this.appendableUnder = getAppendableOnlyUnderElement(this.xmlContext); //string o text
         }
     }
 
     @Override
     /**
-     * Se produce al teminar un elemento. El sgnificado de los atributos es el mismo que en startElement
+     * Se produce al teminar un elemento, Añadiendosele el valor del strBuilder al campo del dto. El significado de los atributos es el mismo que en startElement
      */
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
@@ -82,14 +121,32 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
             this.dtos.add(this.currDTO);
             this.currDTO = null;
             this.xmlContext = CONTEXT_NOCONTEXT;
-        } else if (NODE_ATTRIBUTE.equals(localName) && appendableUnder == null) {
+        } else if (localName.equals("nombre") ||
+                localName.equals("descripcion") ||
+                localName.equals("fechaInicio") ||
+                localName.equals("fechaFin") ||
+                localName.equals("numeroHoras") ||
+                localName.equals("numeroPlazas") ||
+                localName.equals("numeroSolicitudes") ||
+                localName.equals("plazasEnListaEspera") ||
+                localName.equals("agrupacion") ||
+                localName.equals("requisitos") ||
+                localName.equals("aviso") ||
+                localName.equals("tematica") ||
+                localName.equals("nombreAgrupacion") ||
+                localName.equals("url") ||
+                localName.equals("tipo") ||
+                localName.equals("horaInicio") ||
+                localName.equals("horaFin") ||
+                localName.equals("fechaInicioMatriculacion") ||
+                localName.equals("fechaFinMatriculacion") ||
+                localName.equals("centro") ||
+                localName.equals("nivel")) {
             setAttributeValue(this.xmlContext, strBuilder.toString().replaceAll("\\n", ""), this.currDTO);
             this.xmlContext = CONTEXT_NOCONTEXT;
-
         } else if (localName.equals(appendableUnder)) { // End of string (in case of array addd value
             setAttributeValue(this.xmlContext, strBuilder.toString(), this.currDTO);
             strBuilder = new StringBuilder();
-            isUnderAppendableElement = false;
         }
     }
 
@@ -103,6 +160,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
             XMLReader reader=sp.getXMLReader();
             reader.setContentHandler(this);
             InputSource iSrc = new InputSource(is);
+            iSrc.setEncoding("UTF-8");
             reader.parse(iSrc);
 
         } catch (SAXException saxpe) {
@@ -130,27 +188,12 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
         String string = new String(ch, start, length);
-        if (this.xmlContext != CONTEXT_NOCONTEXT && (isUnderAppendableElement || getAppendableOnlyUnderElement(this.xmlContext) == null)) {
-            // Only append to string builder if we are under string node or there is no need of a string node
+        if (this.xmlContext != CONTEXT_NOCONTEXT ) {
+            // if (this.xmlContext != CONTEXT_NOCONTEXT && (isUnderAppendableElement || getAppendableOnlyUnderElement(this.xmlContext) == null)) {
+            //Solo se agrega al string builder el valor para el campo si es un nodo string
             strBuilder.append(string);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     /**
