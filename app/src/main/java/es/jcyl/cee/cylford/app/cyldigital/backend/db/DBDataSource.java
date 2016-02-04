@@ -176,7 +176,6 @@ public class DBDataSource {
      * @param table
      * @return
      */
-    /* //TODO: Refrescos
     public long getLastRefreshFor(String table) {
         Cursor c = db.query(DBTableRefreshInfo.NAME, DBTableRefreshInfo.COLUMNS, DBTableRefreshInfo.COL_NAME + " = '" + table + "'", null, null, null, null);
         if (!c.moveToFirst()) {
@@ -193,7 +192,7 @@ public class DBDataSource {
             c.close();
         }
     }
-        */
+
 
     }
 
