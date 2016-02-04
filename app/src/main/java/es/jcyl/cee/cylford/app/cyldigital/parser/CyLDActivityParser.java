@@ -112,7 +112,7 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
                 }
             }
         } catch (ParseException pe) {
-            System.err.println("Unable to set date " + value + " on context " + context);
+            System.err.println("Unable to set dat" + value + " on context " + context);
         }
     }
 
