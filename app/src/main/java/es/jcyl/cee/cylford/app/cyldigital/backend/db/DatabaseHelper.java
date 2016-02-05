@@ -13,7 +13,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 4; // Tuve que subir el nº de version para que me volviese a crear la bbdd.
     private static final String DB_NAME = "CyLD";
 
-    DBTable tablaActividades  = new DBTableActivities();
+    private static DBTable[] tables = {
+        new DBTableActivities(),
+        new DBTableRefreshInfo()
+    };
 
     /**
      * Constructor
@@ -25,16 +28,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //for (DBTable table: tables) {
-        System.out.println("logjc DatabaseHelper onCreate");
-        tablaActividades.onCreate(db);
-        //}
+        System.out.println("logjc Inicio: DatabaseHelper onCreate");
+        for (DBTable table: tables) {
+            table.onCreate(db);
+        }
+        System.out.println("logjc Creadas CYLD_ACTIVITIES y CYLD_REFRESHINFO");
+        System.out.println("logjc Fin: DatabaseHelper onCreate");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //for (DBTable table: tables) {
-        tablaActividades.onUpgrade(db, oldVersion, newVersion);
-        //}
+        System.out.println("logjc Inicio: DatabaseHelper onUpgrade");
+        for (DBTable table: tables) {
+            table.onUpgrade(db, oldVersion, newVersion);
+        }
+        System.out.println("logjc Fin: DatabaseHelper onUpgrade");
     }
 }

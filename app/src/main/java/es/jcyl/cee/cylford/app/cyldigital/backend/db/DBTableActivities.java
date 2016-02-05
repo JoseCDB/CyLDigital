@@ -34,9 +34,8 @@ public class DBTableActivities extends DBTable {
     public static final String COL_URL = "CAM_URL";
 
     // Campos Comunes
-    public static final String COL_TIPO_FORMACION = "CAM_TIP_FOR";
+    public static final String COL_TIPO_FORMACION = "CAM_TIP_FOR"; //Online o Presencial
 
-    public static final String COL_PROVINCIA = "CAM_PRO";
     public static final String COL_NOMBRE = "CAM_NOM";
     public static final String COL_DESCRIPCION = "CAM_DES";
     public static final String COL_FECHA_INICIO = "CAM_FEC_INI";
@@ -53,19 +52,6 @@ public class DBTableActivities extends DBTable {
 
     // Array con los nombres de las columnas de la tabla CYLD_ACTIVITIES
     public static String[] COLUMNS = {
-            COL_ID,
-            COL_TIPO_FORMACION,
-            COL_TIPO,
-            COL_HORA_INICIO,
-            COL_HORA_FIN,
-            COL_FECHA_INICIO_MATRIC,
-            COL_FECHA_FIN_MATRIC,
-            COL_CENTRO,
-            COL_NIVEL,
-            COL_AGRUPACION,
-            COL_NOM_AGRUPACION,
-            COL_URL,
-            COL_PROVINCIA,
             COL_NOMBRE,
             COL_DESCRIPCION,
             COL_FECHA_INICIO,
@@ -74,9 +60,20 @@ public class DBTableActivities extends DBTable {
             COL_NUM_PLAZAS,
             COL_NUM_SOLIC,
             COL_NUM_PLAZAS_LISTA,
+            COL_AGRUPACION,
             COL_REQUISITOS,
             COL_AVISO,
-            COL_TEMATICA
+            COL_TEMATICA,
+            COL_NOM_AGRUPACION,
+            COL_URL,
+            COL_TIPO,
+            COL_HORA_INICIO,
+            COL_HORA_FIN,
+            COL_FECHA_INICIO_MATRIC,
+            COL_FECHA_FIN_MATRIC,
+            COL_CENTRO,
+            COL_NIVEL,
+            COL_TIPO_FORMACION
             //METACOL_REFRESHEDON
     };
 
@@ -98,7 +95,6 @@ public class DBTableActivities extends DBTable {
             .append(COL_AGRUPACION).append(" INTEGER, ")// Online
             .append(COL_NOM_AGRUPACION).append(" TEXT, ")
             .append(COL_URL).append(" TEXT, ")
-            .append(COL_PROVINCIA).append(" TEXT, ")// Comunes
             .append(COL_NOMBRE).append(" TEXT COLLATE NOCASE, ")
             .append(COL_DESCRIPCION).append(" TEXT COLLATE NOCASE, ") /* collating sequence NOCASE. Columns will be handled case insensitive. 'smith' = 'Smith'  */
             .append(COL_FECHA_INICIO).append(" TEXT, ")
@@ -226,7 +222,6 @@ public class DBTableActivities extends DBTable {
         values.put(COL_AGRUPACION, act.agrupacion);// Online
         values.put(COL_NOM_AGRUPACION, act.nombreAgrupacion);
         values.put(COL_URL, act.url);
-        values.put(COL_PROVINCIA, act.provincia);// Comunes
         values.put(COL_NOMBRE, act.nombre);
         values.put(COL_DESCRIPCION, act.descripcion); /* collating sequence NOCASE. Columns will be handled case insensitive. 'smith' = 'Smith'  */
         values.put(COL_FECHA_INICIO, act.fechaInicio);
