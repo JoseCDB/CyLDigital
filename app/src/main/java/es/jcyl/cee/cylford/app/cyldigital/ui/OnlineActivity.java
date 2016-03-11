@@ -41,7 +41,7 @@ public class OnlineActivity extends AppCompatActivity
     Spinner tipo;
 
     //Valores seleccionados en los combos
-    String provinciaVal = "";
+    String centroVal = "";
     String tipoVal = "";
 
     //Campo buscar
@@ -109,9 +109,9 @@ public class OnlineActivity extends AppCompatActivity
     public void onItemSelected(AdapterView<?> adapter, View arg1, int index, long arg3) {
         if (adapter == localidad) {
             if (index == 0) {
-                provinciaVal = "";
+                centroVal = "";
             } else {
-                provinciaVal = ((Family) localidad.getSelectedItem()).getCode();
+                centroVal = ((Family) localidad.getSelectedItem()).getCode();
             }
         } else if (adapter == tipo) {
             if (index == 0) {
@@ -134,10 +134,18 @@ public class OnlineActivity extends AppCompatActivity
 
     //@Override
     protected void onScrollNext() {
-        requestData(false, search.getText().toString(), provinciaVal,
+        requestData(false, search.getText().toString(), centroVal,
                 tipoVal);
     }
 
+
+    /**
+     *
+     * @param clear
+     * @param search
+     * @param prov
+     * @param tipo
+     */
     private void requestData(boolean clear, String search, String prov, String tipo) {
 
         //adapter.lock(); Objeto de tipo BoardAdapter
@@ -156,9 +164,9 @@ public class OnlineActivity extends AppCompatActivity
         currentCallTime = new Date().getTime();
         //Si no hay valor en ninguno de los campos
         if (search.length() == 0 && prov.length() == 0 && tipo.length() == 0) {
-            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, currentCallId, OnlineActivity.this);// Parámetro this válido porque se implementa CyLDFormacionHandlerListener
+            CyLDFormacionHandler.listActivitiesOnline(currentCallId, OnlineActivity.this);// Parámetro this válido porque se implementa CyLDFormacionHandlerListener
         } else {
-            CyLDFormacionHandler.listActivities(Constants.TIPO_ONLINE, 0, null, null, search, tipoVal, provinciaVal, currentCallId, OnlineActivity.this);
+            CyLDFormacionHandler.listActivitiesPresencial(0, null, null, search, tipoVal, centroVal, currentCallId, OnlineActivity.this);
         }
     }// requestData
 
@@ -167,7 +175,7 @@ public class OnlineActivity extends AppCompatActivity
     @Override
     public void onNothingSelected(AdapterView<?> adapter) {
         if (adapter == localidad) {
-            provinciaVal = "";
+            centroVal = "";
         } else if (adapter == tipo) {
             tipoVal = "";
         }
@@ -199,10 +207,10 @@ public class OnlineActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if (v == back) {//Si el evento es sobre el botón volver
+        if (v == back) {//Si el evento es sobre el botón volver.
             this.onBackPressed();
         }else if (v == botonPrueba) {
-            requestData(false, search.getText().toString(), provinciaVal,
+            requestData(false, search.getText().toString(), centroVal,
                     tipoVal);
         }
     }
@@ -255,5 +263,5 @@ public class OnlineActivity extends AppCompatActivity
             return item;
         }
 
-    }// FamiliAdapter
+    }// FamilyAdapter
 }

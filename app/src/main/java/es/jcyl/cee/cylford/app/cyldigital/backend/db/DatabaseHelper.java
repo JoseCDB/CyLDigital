@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 
-    private static final int DB_VERSION = 4; // Tuve que subir el nº de version para que me volviese a crear la bbdd.
+    private static final int DB_VERSION = 6; // Se tuvo que subir el nº de version para que me volviese a crear la bbdd.
     private static final String DB_NAME = "CyLD";
 
     private static DBTable[] tables = {
@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Constructor
+     * Esta clase extiende de SQLiteOpenHelper. Hay que pasarle > super(context, name, factory, version);
      */
     public DatabaseHelper(Context ctx) {
         super(ctx, DB_NAME, null, DB_VERSION);
@@ -40,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         System.out.println("logjc Inicio: DatabaseHelper onUpgrade");
         for (DBTable table: tables) {
-            table.onUpgrade(db, oldVersion, newVersion);
+            table.onUpgrade(db, oldVersion, newVersion);//al tener nueva versión actualiza la BBDD
         }
         System.out.println("logjc Fin: DatabaseHelper onUpgrade");
     }

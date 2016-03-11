@@ -44,6 +44,7 @@ public class CyLDHandler {
 
     /**
      * Elimina el actual callId de la lista de llamadas pendientes
+     *
      * @param callId
      * @return void
      */
@@ -55,6 +56,7 @@ public class CyLDHandler {
 
     /**
      * Agrega el actual callId a la lista de llamadas pendientes.
+     *
      * @param callId Id de la llamada a añadir.
      * @return void
      */
@@ -66,6 +68,7 @@ public class CyLDHandler {
 
     /**
      * Retrieves information executing background refresh if required
+     *
      * @param callId
      * @param expirationTime
      * @param retrieverBlock
@@ -79,7 +82,7 @@ public class CyLDHandler {
         try {
             //retrieverBlock se crea en CyLFromacionHandler, en el método listActivities. Se obtienen datos locales.
             Collection<T> data = retrieverBlock.localRetrieve();
-            // Se comprueba si, para la tabla (Actividades), se necesita un refresco en bd.
+            // Se comprueba si, después de obtenidos los data de la tabla "CYLD_ACTIVITIES", se necesita un refresco en BBDD llamando al servicio web.
             requiereRefresco = seRequiereRefresco(data, expirationTime, nombreTablaPrincipal);
             synchronized (CyLDHandler.class) {
                 if (checkCall(callId)) {
@@ -102,6 +105,11 @@ public class CyLDHandler {
 
     /**
      * Comprueba el último refresco/actualización de cualquier tabla que se le pase.
+     *
+     * @param dtos
+     * @param expirationTime declarada en
+     * @param nombreTablaPrincipal Nombre de la tabla a consultar su fecha de último refresco.
+     * @return true si hay necesidad de refresco de datos.
      */
     protected static boolean seRequiereRefresco(Collection<? extends CyLDDTO> dtos, long expirationTime, String nombreTablaPrincipal) {
 
@@ -118,8 +126,8 @@ public class CyLDHandler {
                 }
             }
         }
-        long now = System.currentTimeMillis();
-        if (oldestRefresh > expirationTime) {
+        long now = System.currentTimeMillis(); //Returns the current time in milliseconds.
+        if (now - oldestRefresh > expirationTime) {
             return true;
         }
         return false;
@@ -128,6 +136,7 @@ public class CyLDHandler {
 
     /**
      * Comprueba si la llamada se ha realizado ya o no.
+     *
      * @param callId
      * @return
      */

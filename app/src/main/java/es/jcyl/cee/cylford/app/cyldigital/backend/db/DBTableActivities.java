@@ -19,6 +19,8 @@ public class DBTableActivities extends DBTable {
     // COLUMNAS tabla:
     public static final String COL_ID = "_id";
 
+    public static final String COL_TIPO_FORMACION = "CAM_TIP_FOR"; //Online o Presencial
+
     // Campos Actividades Presenciales
     public static final String COL_TIPO = "CAM_TIP";
     public static final String COL_HORA_INICIO = "CAM_HOR_INI";
@@ -33,9 +35,6 @@ public class DBTableActivities extends DBTable {
     public static final String COL_NOM_AGRUPACION = "CAM_NOM_AGR";
     public static final String COL_URL = "CAM_URL";
 
-    // Campos Comunes
-    public static final String COL_TIPO_FORMACION = "CAM_TIP_FOR"; //Online o Presencial
-
     public static final String COL_NOMBRE = "CAM_NOM";
     public static final String COL_DESCRIPCION = "CAM_DES";
     public static final String COL_FECHA_INICIO = "CAM_FEC_INI";
@@ -48,10 +47,25 @@ public class DBTableActivities extends DBTable {
     public static final String COL_AVISO = "CAM_AVI";
     public static final String COL_TEMATICA = "CAM_TEM";
 
-    //public static final String METACOL_REFRESHEDON = "REFRESHEDON";
+    public static final String METACOL_REFRESHEDON = "REFRESHEDON";
 
     // Array con los nombres de las columnas de la tabla CYLD_ACTIVITIES
     public static String[] COLUMNS = {
+            COL_ID,
+            COL_TIPO_FORMACION,
+
+            COL_TIPO,
+            COL_HORA_INICIO,
+            COL_HORA_FIN,
+            COL_FECHA_INICIO_MATRIC,
+            COL_FECHA_FIN_MATRIC,
+            COL_CENTRO,
+            COL_NIVEL,
+
+            COL_AGRUPACION,
+            COL_NOM_AGRUPACION,
+            COL_URL,
+
             COL_NOMBRE,
             COL_DESCRIPCION,
             COL_FECHA_INICIO,
@@ -60,21 +74,12 @@ public class DBTableActivities extends DBTable {
             COL_NUM_PLAZAS,
             COL_NUM_SOLIC,
             COL_NUM_PLAZAS_LISTA,
-            COL_AGRUPACION,
+
             COL_REQUISITOS,
             COL_AVISO,
             COL_TEMATICA,
-            COL_NOM_AGRUPACION,
-            COL_URL,
-            COL_TIPO,
-            COL_HORA_INICIO,
-            COL_HORA_FIN,
-            COL_FECHA_INICIO_MATRIC,
-            COL_FECHA_FIN_MATRIC,
-            COL_CENTRO,
-            COL_NIVEL,
-            COL_TIPO_FORMACION
-            //METACOL_REFRESHEDON
+
+            METACOL_REFRESHEDON //Metacolumna que guardará la fecha de última actualización en milisegundos.
     };
 
     // Buffer de script de creación de la tabla.
@@ -92,9 +97,11 @@ public class DBTableActivities extends DBTable {
             .append(COL_FECHA_FIN_MATRIC).append(" TEXT, ")
             .append(COL_CENTRO).append(" TEXT, ")
             .append(COL_NIVEL).append(" TEXT, ")
+
             .append(COL_AGRUPACION).append(" INTEGER, ")// Online
             .append(COL_NOM_AGRUPACION).append(" TEXT, ")
             .append(COL_URL).append(" TEXT, ")
+
             .append(COL_NOMBRE).append(" TEXT COLLATE NOCASE, ")
             .append(COL_DESCRIPCION).append(" TEXT COLLATE NOCASE, ") /* collating sequence NOCASE. Columns will be handled case insensitive. 'smith' = 'Smith'  */
             .append(COL_FECHA_INICIO).append(" TEXT, ")
@@ -105,12 +112,11 @@ public class DBTableActivities extends DBTable {
             .append(COL_NUM_PLAZAS_LISTA).append(" INTEGER, ")
             .append(COL_REQUISITOS).append(" TEXT, ")
             .append(COL_AVISO).append(" TEXT, ")
-            .append(COL_TEMATICA).append(" TEXT ")
+            .append(COL_TEMATICA).append(" TEXT, ")
+
+            .append(METACOL_REFRESHEDON).append(" INTEGER ")
 
             .append(")");
-
-            //.append(COL_IDENTIFIER).append(" INTEGER PRIMARY KEY, ")
-           // .append(METACOL_REFRESHEDON).append(" INTEGER, ")
 
     private void createTable(SQLiteDatabase db) {
         //Se pasa a String el StringBuffer con el texto de creación de la tabla.
@@ -125,7 +131,7 @@ public class DBTableActivities extends DBTable {
     @Override
     public void onCreate(SQLiteDatabase db) {
         createTable(db);
-        System.out.println("logjc Tabla creada onCreate" + NAME);
+        System.out.println("logjc Tabla creada onCreate " + NAME);
     }
 
     /**
@@ -154,9 +160,10 @@ public class DBTableActivities extends DBTable {
     }
 
     /**
-     * Rellena el objeto CyLDFormacion acon los valores del Cursor.
-     * @param c Cursor con los valores para rellenar el objeto CyLDFormacion.
-     * @return Objeto CyLDFormacion con los valores del de la actividad del cursor.
+     * Rellena el objeto CyLDFormacion con los valores del Cursor tras la consulta local.
+     *
+     * @param c cursor con los valores para rellenar el objeto CyLDFormacion.
+     * @return CyLDFormacion objeto tipo CyLDFormacion con los valores del de la actividad del cursor.
      */
     public static CyLDFormacion pasaCursorAModeloInividual(Cursor c) {
         CyLDFormacion act = new CyLDFormacion();
@@ -181,7 +188,6 @@ public class DBTableActivities extends DBTable {
         act.url = c.getString(pos++);
 
         // Campos comunes
-        act.provincia = c.getString(pos++);
         act.nombre = c.getString(pos++);
         act.descripcion  = c.getString(pos++);
         act.fechaInicio = c.getString(pos++);
@@ -194,21 +200,22 @@ public class DBTableActivities extends DBTable {
         act.aviso = c.getString(pos++);
         act.tematica = c.getString(pos++);
 
-        //edu.refreshedOn = c.getLong(pos++);
+        act.refreshedOn = c.getLong(pos++);
 
         return act;
     }
 
     /**
-     * Pasa los valores contenidos en el objeto de tipo CyLDFormacion.
-     * @param act
+     * Pasa los valores contenidos en el objeto de tipo CyLDFormacion para la inserción en Local.
+     *
+     * @param act objeto de tipo CyLDFormacion.
      * @return ContentValues
      */
     public static ContentValues pasaDatosModeloAValores(CyLDFormacion act) {
 
         ContentValues values = new ContentValues();
 
-        values.put(COL_ID, act.id);
+        //values.put(COL_ID, act.id);
 
         values.put(COL_TIPO_FORMACION, act.tipoFormación);
 
@@ -233,11 +240,9 @@ public class DBTableActivities extends DBTable {
         values.put(COL_REQUISITOS, act.requisitos);
         values.put(COL_AVISO, act.aviso);
         values.put(COL_TEMATICA, act.tematica);
+        values.put(METACOL_REFRESHEDON, System.currentTimeMillis());
 
         /*
-        values.put(COL_IDENTIFIER, edu.identifier);
-        values.put(COL_TITLEES, edu.title);
-
 
         String normalized = null;
         if (edu.title != null) {
@@ -265,18 +270,7 @@ public class DBTableActivities extends DBTable {
         if (edu.locality == null) {
             System.out.println("Null?");
         }
-        values.put(COL_LOCALITY, edu.locality);
-        values.put(COL_PROVINCEID, edu.provinceId);
-        values.put(COL_EXECUTIONPLACE, edu.executionPlace);
-        values.put(COL_DURATION, edu.duration);
-        values.put(COL_CONTENTSLINK, edu.contentsLink);
-        values.put(COL_FAMILY, edu.family);
-        values.put(COL_REGISTRATION, edu.registrationMean);
-        values.put(METACOL_REFRESHEDON, System.currentTimeMillis());
-
         */
         return values;
     }
-
-
 }

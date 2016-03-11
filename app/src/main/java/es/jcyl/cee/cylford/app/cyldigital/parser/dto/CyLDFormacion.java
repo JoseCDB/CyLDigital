@@ -98,7 +98,6 @@ public class CyLDFormacion extends CyLDDTO implements Serializable {
     /*Devuelve un String indicando la fecha de fin para matricularse en la actividad en formato yyyy-MM-dd*/
     public String fechaFinMatriculacion;
 
-
     /*Devuelve un String indicando el nombre del centro en el que se imparte la actividad*/
     public String centro;
 

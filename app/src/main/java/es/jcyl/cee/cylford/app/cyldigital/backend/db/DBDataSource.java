@@ -9,6 +9,7 @@ import java.text.Normalizer;
 import java.util.Collection;
 import java.util.List;
 
+import es.jcyl.cee.cylford.app.cyldigital.Constants;
 import es.jcyl.cee.cylford.app.cyldigital.backend.App;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 
@@ -36,17 +37,17 @@ public class DBDataSource {
         System.out.println("logjc DBDataSource getWritableDatabase");
     }
 
-
-    /* --------- ACTIVIDADES ------------ */
+    /* ------------------------------------------------------------ TABLA ACTIVIDADES ------------------------------------------------------------------------------ */
 
     /**
      * Realiza la consulta (con los datos aportados) a la base de datos SQLite.
+     *
      * @param tipoFormacion Online o Presencial
-     * @param text Texto de búsqueda en descripción
+     * @param text          Texto de búsqueda en descripción
      * @param tipoActividad Tipo curso, taller o charla
-     * @param provincia Localidad donde se realiza (Presencial)
+     * @param provincia     Localidad donde se realiza (Presencial)
      * @return Collection<CyLDFormacion> con los datos de actividades Online o Presenciales recuperadas.
-     * */
+     */
     public Collection<CyLDFormacion> listActivities(String tipoFormacion, String text, String tipoActividad, String provincia) throws SQLException {
         // Filtros para la query
         StringBuffer osConditions = new StringBuffer();
@@ -64,30 +65,32 @@ public class DBDataSource {
         }
         /* ------------ PARÁMETROS DE BÚSQUEDA ------------ */
 
-        // Filtro PROVINCIA
-        if (provincia != null && provincia.length() > 0) {
-            if (osConditions.length() > 0) {
-                osConditions.append(" AND ");
+        if (!tipoFormacion.equals(Constants.TIPO_ONLINE)) {
+            // Filtro CENTRO
+            if (provincia != null && provincia.length() > 0) {
+                if (osConditions.length() > 0) {
+                    osConditions.append(" AND ");
+                }
+                //osConditions.append("( ");
+                osConditions.append(DBTableActivities.COL_CENTRO).append(" = '").append(provincia).append("' ");
+                //osConditions.append(" )");
             }
-            //osConditions.append("( ");
-            osConditions.append(DBTableActivities.COL_PROVINCIA).append(" = '").append(provincia).append("' ");
-            //osConditions.append(" )");
-        }
 
-        // Filtro TIPO_ACTIVIDAD
-        if (tipoActividad != null && tipoActividad.length() > 0) {
-            if (osConditions.length() > 0) {
-                osConditions.append(" AND ");
+            // Filtro TIPO_ACTIVIDAD
+            if (tipoActividad != null && tipoActividad.length() > 0) {
+                if (osConditions.length() > 0) {
+                    osConditions.append(" AND ");
+                }
+                osConditions.append(DBTableActivities.COL_TIPO).append(" = '").append(tipoActividad).append("' ");
             }
-            osConditions.append(DBTableActivities.COL_TIPO).append(" = '").append(tipoActividad).append("' ");
-        }
 
-        // Filtro TIPO FORMACIÓN
-        if (tipoFormacion != null && tipoFormacion.length() > 0) {
-            if (osConditions.length() > 0) {
-                osConditions.append(" AND ");
+            // Filtro TIPO FORMACIÓN
+            if (tipoFormacion != null && tipoFormacion.length() > 0) {
+                if (osConditions.length() > 0) {
+                    osConditions.append(" AND ");
+                }
+                osConditions.append(DBTableActivities.COL_TIPO_FORMACION).append(" = '").append(tipoFormacion).append("' ");
             }
-            osConditions.append(DBTableActivities.COL_TIPO_FORMACION).append(" = '").append(tipoFormacion).append("' ");
         }
 
         Cursor c = db.query(DBTableActivities.NAME, DBTableActivities.COLUMNS, osConditions.toString(),
@@ -108,6 +111,7 @@ public class DBDataSource {
 
     /**
      * Elimina las actividades que hubiese en Base de datos e inserta las nuevas.
+     *
      * @param actividades Colección con actividades
      * @return boolean
      */
@@ -119,27 +123,24 @@ public class DBDataSource {
             // 1º Se eliminan todas las actividades.
             eliminaActividades();
             // 2º Se insertan una a una las nuevas actividades.
-            for (CyLDFormacion act: actividades) {
+            for (CyLDFormacion act : actividades) {
                 if (!insertaActividad(act)) {
                     success = false;
                     break;
                 }
             }
-            /*
             //En la original existe una tabla (ECYL_REFRESHINFO) con nombre de resto de tablas y fecha de actualización.
             if (success) {
-                success = insertOrUpdateRefreshDate(DBTableActivities.NAME, System.currentTimeMillis()); //TODO: Refrescos
+                success = insertOrUpdateRefreshDate(DBTableActivities.NAME, System.currentTimeMillis());
             }
-            */
+            //si success = true
             if (success) {
                 db.setTransactionSuccessful(); // 3º Se marca la transacción como exitosa.
             }
             return success;
         } catch (SQLException e) {
             return false;
-        }
-        finally
-        {
+        } finally {
             db.endTransaction();
         }
     }
@@ -171,18 +172,31 @@ public class DBDataSource {
         return true;
     }
 
+     /* -------------------------------------------------- TABLA REFRESCOS ------------------------------------------------------------------- */
+
     /**
-     * Obtiene el último refresco de la tabla pasáda como parámetro.
-     * @param table
-     * @return
+     * Obtiene el último refresco en la tabla "CYLD_REFRESHINFO"  de la tabla "CYLD_ACTIVITIES" pasáda como parámetro.
+     * @param table Nombre de tabla a refrescar
+     * @return long con el tiempo de último refresco en milisegundos.
      */
     public long getLastRefreshFor(String table) {
         Cursor c = db.query(DBTableRefreshInfo.NAME, DBTableRefreshInfo.COLUMNS, DBTableRefreshInfo.COL_NAME + " = '" + table + "'", null, null, null, null);
-        if (!c.moveToFirst()) {
-            return -1;
+        if (c != null && !c.moveToFirst()) {
+            //Recorremos el cursor hasta que no haya más registros
+            int refresco = -1;
+            String nombre;
+            if (c.getCount() > 0) {
+                do {
+                    if (!c.isNull(0))
+                        nombre = c.getString(0);
+                    if (!c.isNull(1))
+                        refresco = c.getInt(1);
+                } while (c.moveToNext());
+            }
+            return refresco;
         }
         try {
-            if (c.isAfterLast()) {
+            if (c != null && c.isAfterLast()) {
                 return -1;
             }
             long timestamp = c.getLong(1);
@@ -193,7 +207,73 @@ public class DBDataSource {
         }
     }
 
-
+    /**
+     * Método que llama a los tres siguientes.
+     * Comprueba si ha habido un refresco de datos para actualizarlos o
+     * si son nuevos para insertarlos.
+     *
+     * @param table Nombre de la tabla sobre la que se han actualizado datos o insertado.
+     * @param when Tiempo actual en milisegundos para la inserción o actualización del refresco.
+     * @return boolean Con el resultado de actualización o inserción.
+     */
+    public boolean insertOrUpdateRefreshDate(String table, long when) {
+        if (checkExistsRefresh(table)) {
+            return updateRefreshDate(table, when);
+        } else {
+            return insertRefreshDate(table, when);
+        }
     }
+
+
+    /**
+     * Inserta en la tabla CYLD_REFRESHINFO el nombre de
+     * la tabla actualizada y le fecha en long de actualización
+     */
+    public boolean insertRefreshDate(String table, long when) {
+        ContentValues values = new ContentValues();
+        values.put(DBTableRefreshInfo.COL_NAME, table);
+        values.put(DBTableRefreshInfo.COL_REFRESHDATE, when);
+
+        try {
+            db.insertOrThrow(DBTableRefreshInfo.NAME, null, values);
+        } catch (SQLException sqle) {
+
+            System.out.println("Unable to insert refresh info");
+            sqle.printStackTrace();
+            return false;
+        }
+
+        System.out.println("Inserted refresh for table " + table);
+        return true;
+    }
+    
+    public boolean updateRefreshDate(String table, long when) {
+        ContentValues values = new ContentValues();
+        values.put(DBTableRefreshInfo.COL_NAME, table);
+        values.put(DBTableRefreshInfo.COL_REFRESHDATE, when);
+
+        try {
+            db.update(DBTableRefreshInfo.NAME, values, DBTableRefreshInfo.COL_NAME + " = '" + table + "'", null);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+            return false;
+        }
+        System.out.println("Updated refresh info for table " + table);
+        return true;
+    }
+
+    public boolean checkExistsRefresh(String name) {
+        Cursor c = db.query(DBTableRefreshInfo.NAME, new String[] {DBTableRefreshInfo.COL_REFRESHDATE}, DBTableRefreshInfo.COL_NAME + " = '" + name + "'", null, null, null, null );
+        try {
+            c.moveToFirst();
+            if (!c.isAfterLast()) {
+                return true;
+            }
+            return false;
+        } finally {
+            c.close();
+        }
+    }
+}
 
 

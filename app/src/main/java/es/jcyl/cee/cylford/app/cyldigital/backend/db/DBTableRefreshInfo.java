@@ -23,16 +23,15 @@ public class DBTableRefreshInfo extends DBTable {
             .append(COL_REFRESHDATE).append(" INTEGER ")
             .append(")");
 
-
-
     private void createTable(SQLiteDatabase db) {
+        System.out.println("logjc DBTableRefreshInfo createTable");
         db.execSQL(CREATE_DB.toString());
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         createTable(db);
-        System.out.println("Created table " + NAME);
+        System.out.println("logjc Tabla creada onCreate " + NAME);
     }
 
     public void onUpgrade(SQLiteDatabase db, int from, int to) {

@@ -32,37 +32,76 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
         readTimeOut = Integer.parseInt(sValue) * 1000;
     }
 
+    /**
+     * Forma la Url dependiendo de si se consultan actividades de modalidad presencial u online
+     * y realiza la petición de envío al servicio web.
+     *
+     * @param tipoFormacion
+     * @param numeroAct
+     * @param fechaInicio
+     * @param fechaFin
+     * @param text
+     * @param tipoActividad
+     * @param provincia
+     * @param listener
+     * @return
+     * @throws CyLDWServiceException
+     */
     public static Collection<CyLDFormacion> getActividades(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
                                             String text, String tipoActividad, String provincia, OnlineActivity listener) throws CyLDWServiceException {
         InputStream is = null;
         HttpsURLConnection cnt = null;
-        StringBuffer sUrl = new StringBuffer(Configuration.KEY_FORM_ONLINE_WSURL);
+        StringBuffer sUrl = new StringBuffer();
         int cont = 0;
 
         if (!estaRedAccesible()) {
             throw new CyLDWServiceException("La red no está disponible");
         }
-        fechaInicio= null; //null en ambas me devuelve todas las actividades
+        //Diferente url dependiendo del tipo de formación.
+        if(tipoFormacion.equals(Constants.TIPO_ONLINE)){
+            sUrl = new StringBuffer(Configuration.KEY_FORM_ONLINE_WSURL);
+        } else if (tipoFormacion.equals(Constants.TIPO_PRESENCIAL)) {
+            sUrl = new StringBuffer(Configuration.KEY_FORM_PRESEN_WSURL);
+        }
+        //Fechas de inicio y fin de actividades.
+        fechaInicio= null; //null en ambas me devuelve todas las actividades.
         fechaFin = null;
 
-        // Se completa la url en caso de ser tipo consulta tipo Online
-        if(tipoFormacion.equals(Constants.TIPO_ONLINE)) {
-            if (numeroAct > 0) {
-                sUrl.append("numActividades=").append(numeroAct);
+        //Se completa la url con los posibles parámetros en caso de ser tipo consulta tipo Online
+        if (numeroAct > 0) {
+            sUrl.append("numActividades=").append(numeroAct);
+            cont++;
+        }
+        if (fechaInicio != null) {
+            if(cont > 0) {
+                sUrl.append("&");
+            }
+            sUrl.append("strFechaInicio=").append(fechaInicio);
+            cont++;
+        }
+        if (fechaFin != null) {
+            if (cont > 0) {
+                sUrl.append("&");
+            }
+            sUrl.append("strFechaFin=").append(fechaFin);
+            cont++;
+        }
+        //Y si es búsqueda de actividades de tipo Presencial.
+        //La no inclusión de uno de estos 2 parámetros en la consulta de actividades presenciales, devuelve mensaje de error.
+        if (tipoFormacion.equals(Constants.TIPO_PRESENCIAL)) {
+            if (tipoActividad != null) {
+                if(cont > 0) {
+                    sUrl.append("&");
+                }
+                sUrl.append("tipoActividad=").append(tipoActividad);
                 cont++;
             }
-            if (fechaInicio != null) {
-                if(cont > 0){
+            if (provincia != null) {
+                if(cont > 0) {
                     sUrl.append("&");
                 }
-                sUrl.append("strFechaInicio=").append(fechaInicio);
-            }
-
-            if (fechaFin != null) {
-                if(cont > 0){
-                    sUrl.append("&");
-                }
-                sUrl.append("strFechaFin=").append(fechaFin);
+                sUrl.append("centro=").append(provincia);
+                cont++;
             }
         }
 
@@ -92,8 +131,13 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
                     System.out.println("Se produjo el error : "+e.toString());
                 }
                 */
-
+            //Se realiza el parseo del xml recuperado en la consulta al servicio web.
             Collection<CyLDFormacion> actividadesOn = parser.parse(is);
+            //Se agrega el tipo de formación a cada objeto de actividad recuperado.
+            if(actividadesOn != null && actividadesOn.size() > 0) {
+                agregaTipoFormacionActividad(actividadesOn, tipoFormacion);
+            }
+
             return actividadesOn;
         } catch (IOException ioe) {
             throw new CyLDWServiceException("No ha sido capáz de leer el stream");//hay que retornar algo...
@@ -105,6 +149,24 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
             if (is != null) {try { is.close(); } catch (IOException ioe) {}}
             if (cnt != null) { cnt.disconnect(); }
         }
+    }
+
+    /**
+     * Método que añade el tipo de formación recuperada a la
+     * colección de actividades de tipo CyLDFormacion.
+     *
+     * @param coleActividades colección de actividades recuperadas del servicio web.
+     * @param tipo tipo de formación buscada, online o presencial.
+     * @return boolean confirmando si ha habido algún cambio.
+     */
+    private static boolean agregaTipoFormacionActividad ( Collection<CyLDFormacion> coleActividades, String tipo) {
+        boolean cambios = false;
+
+        for(CyLDFormacion acti: coleActividades) {
+            acti.tipoFormación = tipo;
+            cambios= true;
+        }
+        return cambios;
     }
 }
 

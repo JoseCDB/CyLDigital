@@ -14,6 +14,19 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
 
     private static final String ATTRVAL_MESSAGE = "mensaje";
     private static final String ATTRVAL_RIGHT = "correcto";
+
+    private static final String ATTRVAL_ACTYPE = "tipo";
+    private static final String ATTRVAL_STARTHOUR = "horaInicio";
+    private static final String ATTRVAL_ENDHOUR = "horaFin";
+    private static final String ATTRVAL_ENROLLSTARTDATE = "fechaInicioMatriculacion";
+    private static final String ATTRVAL_ENROLLENDDATE = "fechaFinMatriculacion";
+    private static final String ATTRVAL_EXECUTIONPLACE = "centro";
+    private static final String ATTRVAL_LEVEL = "nivel";
+
+    private static final String ATTRVAL_CLUSTER = "agrupacion";
+    private static final String ATTRVAL_CLUSTERNAME = "nombreAgrupacion";
+    private static final String ATTRVAL_URL = "url";
+
     private static final String ATTRVAL_NAME = "nombre";
     private static final String ATTRVAL_DESCRIPTION = "descripcion";
     private static final String ATTRVAL_STARTDATE = "fechaInicio";
@@ -22,19 +35,10 @@ public class CyLDActivityParser extends CyLDGenericParser<CyLDFormacion>{
     private static final String ATTRVAL_NUMPLA = "numeroPlazas";
     private static final String ATTRVAL_REQUESTS = "numeroSolicitudes";
     private static final String ATTRVAL_NUMPLAWLIST = "plazasEnListaEspera";
+
     private static final String ATTRVAL_REQUIREMENTS = "requisitos";
     private static final String ATTRVAL_WARN = "aviso";
     private static final String ATTRVAL_THEME = "tematica";
-    private static final String ATTRVAL_CLUSTER = "agrupacion";
-    private static final String ATTRVAL_CLUSTERNAME = "nombreAgrupacion";
-    private static final String ATTRVAL_URL = "url";
-    private static final String ATTRVAL_ACTYPE = "tipo";//Presenciales
-    private static final String ATTRVAL_STARTHOUR = "horaInicio";
-    private static final String ATTRVAL_ENDHOUR = "horaFin";
-    private static final String ATTRVAL_ENROLLSTARTDATE = "fechaInicioMatriculacion";
-    private static final String ATTRVAL_ENROLLENDDATE = "fechaFinMatriculacion";
-    private static final String ATTRVAL_EXECUTIONPLACE = "centro";
-    private static final String ATTRVAL_LEVEL = "nivel";
 
 
 

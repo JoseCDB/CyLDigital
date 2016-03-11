@@ -56,51 +56,31 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
             // Nueva actividad formativa
             currDTO = crearNuevoDTO();
             isUnderAppendableElement = false;
-        } else if(localName.equals("nombre")
-                || (localName.equals("descripcion"))
-                || (localName.equals("fechaInicio"))
-                || (localName.equals("fechaFin"))
-                || (localName.equals("numeroHoras"))
-                || (localName.equals("numeroPlazas"))
-                || (localName.equals("numeroSolicitudes"))
-                || (localName.equals("plazasEnListaEspera"))
-                || (localName.equals("agrupacion"))
-                || (localName.equals("requisitos"))
-                || (localName.equals("aviso"))
-                || (localName.equals("tematica"))
-                || (localName.equals("nombreAgrupacion"))
-                || (localName.equals("url"))
-                || (localName.equals("tipo"))
-                || (localName.equals("horaInicio"))
-                || (localName.equals("horaFin"))
-                || (localName.equals("fechaInicioMatriculacion"))
-                || (localName.equals("fechaFinMatriculacion"))
-                || (localName.equals("centro"))
-                || (localName.equals("nivel")) ){
-            /*
-            *
-            *         } else if(localName.equals("nombre")) {
-            //((CyLDFormacion) currDTO).setNombre();
-        } else if(localName.equals("descripcion")) {
-        } else if(localName.equals("fechaInicio")) {
-        } else if(localName.equals("fechaFin")) {
-        } else if(localName.equals("numeroHoras")) {
-        } else if(localName.equals("numeroPlazas")) {
-        } else if(localName.equals("numeroSolicitudes")) {
-        } else if(localName.equals("plazasEnListaEspera")) {
-        } else if(localName.equals("agrupacion")) {
-        } else if(localName.equals("requisitos")) {
-        } else if(localName.equals("aviso")) {
-        } else if(localName.equals("tematica")) {
-        } else if(localName.equals("nombreAgrupacion")) {
-        } else if(localName.equals("url")) {
-        } else if(localName.equals("tipo")) {
-        } else if(localName.equals("horaInicio")) {
-        } else if(localName.equals("horaFin")) {
-        } else if(localName.equals("fechaInicioMatriculacion")) {
-        } else if(localName.equals("fechaFinMatriculacion")) {
-        } else if(localName.equals("centro")) {
-        } else if(localName.equals("nivel")) {*/
+        } else if(
+            localName.equals("tipo") ||
+            localName.equals("horaInicio") ||
+            localName.equals("horaFin") ||
+            localName.equals("fechaInicioMatriculacion") ||
+            localName.equals("fechaFinMatriculacion") ||
+            localName.equals("centro") ||
+            localName.equals("nivel") ||
+
+            localName.equals("agrupacion") ||
+            localName.equals("nombreAgrupacion") ||
+            localName.equals("url") ||
+
+            localName.equals("nombre") ||
+            localName.equals("descripcion") ||
+            localName.equals("fechaInicio") ||
+            localName.equals("fechaFin") ||
+            localName.equals("numeroHoras") ||
+            localName.equals("numeroPlazas") ||
+            localName.equals("numeroSolicitudes") ||
+            localName.equals("plazasEnListaEspera") ||
+
+            localName.equals("requisitos") ||
+            localName.equals("aviso") ||
+            localName.equals("tematica") ) {
             // New attribute, find out which one
             String name = atts.getValue(ATTR_NAME);
             strBuilder = new StringBuilder();
@@ -112,7 +92,7 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
 
     @Override
     /**
-     * Se produce al teminar un elemento, Añadiendosele el valor del strBuilder al campo del dto. El significado de los atributos es el mismo que en startElement
+     * Se produce al teminar un elemento, añadiendosele el valor del strBuilder al campo del dto. El significado de los atributos es el mismo que en startElement
      */
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
@@ -121,27 +101,32 @@ public abstract class CyLDGenericParser<M> implements ContentHandler{
             this.dtos.add(this.currDTO);
             this.currDTO = null;
             this.xmlContext = CONTEXT_NOCONTEXT;
-        } else if (localName.equals("nombre") ||
-                localName.equals("descripcion") ||
-                localName.equals("fechaInicio") ||
-                localName.equals("fechaFin") ||
-                localName.equals("numeroHoras") ||
-                localName.equals("numeroPlazas") ||
-                localName.equals("numeroSolicitudes") ||
-                localName.equals("plazasEnListaEspera") ||
-                localName.equals("agrupacion") ||
-                localName.equals("requisitos") ||
-                localName.equals("aviso") ||
-                localName.equals("tematica") ||
-                localName.equals("nombreAgrupacion") ||
-                localName.equals("url") ||
-                localName.equals("tipo") ||
-                localName.equals("horaInicio") ||
-                localName.equals("horaFin") ||
-                localName.equals("fechaInicioMatriculacion") ||
-                localName.equals("fechaFinMatriculacion") ||
-                localName.equals("centro") ||
-                localName.equals("nivel")) {
+        } else if (
+            localName.equals("tipo") ||
+            localName.equals("horaInicio") ||
+            localName.equals("horaFin") ||
+            localName.equals("fechaInicioMatriculacion") ||
+            localName.equals("fechaFinMatriculacion") ||
+            localName.equals("centro") ||
+            localName.equals("nivel") ||
+
+            localName.equals("agrupacion") ||
+            localName.equals("nombreAgrupacion") ||
+            localName.equals("url") ||
+
+            localName.equals("nombre") ||
+            localName.equals("descripcion") ||
+            localName.equals("fechaInicio") ||
+            localName.equals("fechaFin") ||
+            localName.equals("numeroHoras") ||
+            localName.equals("numeroPlazas") ||
+            localName.equals("numeroSolicitudes") ||
+            localName.equals("plazasEnListaEspera") ||
+
+            localName.equals("requisitos") ||
+            localName.equals("aviso") ||
+            localName.equals("tematica")
+                ) {
             setAttributeValue(this.xmlContext, strBuilder.toString().replaceAll("\\n", ""), this.currDTO);
             this.xmlContext = CONTEXT_NOCONTEXT;
         } else if (localName.equals(appendableUnder)) { // End of string (in case of array addd value
