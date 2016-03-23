@@ -1,6 +1,7 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
 import es.jcyl.cee.cylford.app.cyldigital.R;
@@ -27,6 +33,11 @@ import es.jcyl.cee.cylford.app.cyldigital.model.Family;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 /*
 * La Interfaz OnItemSelectedListener me obliga a implementar métodos: onItemSelected, onNothingSelected
 * La Interfaz OnClickListener me obliga a implementar métodos: onClick, OnClickListener
@@ -34,7 +45,21 @@ import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 * */
 
 public class OnlineActivity extends AppCompatActivity
-        implements AdapterView.OnItemSelectedListener, View.OnClickListener, CyLDFormacionHandlerListener<CyLDFormacion> {
+        implements
+        AdapterView.OnItemSelectedListener,
+        View.OnClickListener,
+        CyLDFormacionHandlerListener<CyLDFormacion>,
+        OnRefreshListener<ListView> {
+
+    //Retraso para mostrar los resultados en onResults()
+    private static final int LOADING_DELAY = 3000;
+
+    BoardAdapter adapter;
+    ArrayList<CyLDFormacion> data = new ArrayList<CyLDFormacion>();
+    ArrayList<CyLDFormacion> datosFuturos = new ArrayList<CyLDFormacion>();
+    //Da formato a la fecha de las actividades mostradas en BoardAdapter.
+    SimpleDateFormat sdf = new SimpleDateFormat(
+            "'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
 
     //Combos localidad y tipo de actividad
     Spinner localidad;
@@ -56,13 +81,13 @@ public class OnlineActivity extends AppCompatActivity
     //Contiene  "fecha + nombre"  de la llamada actual al Servicio Web.
     String currentCallId = "";
 
-    //ArrayList con los datos de actividades consultados
-    ArrayList<CyLDFormacion> nuevosDatos = new ArrayList<CyLDFormacion>();
+
 
     //Fecha en long de la llamada actual al Servicio Web
     long currentCallTime = 0;
 
-    //PullToRefreshListView list;
+    //Nueva lista Pull to refresh para mostrar los resultados devueltos.
+    PullToRefreshListView list;;
 
     Button botonPrueba;
 
@@ -103,6 +128,19 @@ public class OnlineActivity extends AppCompatActivity
         //botonPrueba.setTextColor(getResources().getColor(R.color.background));
         //botonPrueba.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.board_icon_selected_selector, 0, 0);
         botonPrueba.setOnClickListener(this);
+
+        count = (TextView) this.findViewById(R.id.count);
+        count.setVisibility(View.GONE);
+
+        list = (PullToRefreshListView) findViewById(R.id.list);
+        list.setOnRefreshListener(this);
+        adapter = new BoardAdapter();
+        list.setAdapter(adapter);
+        list.setOnScrollListener(adapter);
+        list.setOnItemClickListener(adapter);
+        list.setMode(Mode.PULL_FROM_START);
+        list.setRefreshingLabel(getString(R.string.update));
+        list.setScrollingWhileRefreshingEnabled(false);
     }
 
     @Override
@@ -122,20 +160,17 @@ public class OnlineActivity extends AppCompatActivity
         }
     }
 
-    /*
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         //search-> valor del campo de texto de búsqueda
         //provinciaVal -> valor del spinner de provincias
         //tipoVal -> valor del spinner de tipo de actividad
-        requestData(true, search.getText().toString(), provinciaVal, tipoVal);
+        requestData(true, search.getText().toString(), centroVal, tipoVal);
     }
-    */
 
     //@Override
     protected void onScrollNext() {
-        requestData(false, search.getText().toString(), centroVal,
-                tipoVal);
+        requestData(false, search.getText().toString(), centroVal, tipoVal);
     }
 
 
@@ -159,7 +194,7 @@ public class OnlineActivity extends AppCompatActivity
             CyLDFormacionHandler.cancelCall(currentCallId);
         }
         //Se limpia el ArrayList de nuevos datos de Actividades
-        nuevosDatos.clear();
+        datosFuturos.clear();
         currentCallId = "education" + new Date().getTime();
         currentCallTime = new Date().getTime();
         //Si no hay valor en ninguno de los campos
@@ -170,8 +205,6 @@ public class OnlineActivity extends AppCompatActivity
         }
     }// requestData
 
-
-
     @Override
     public void onNothingSelected(AdapterView<?> adapter) {
         if (adapter == localidad) {
@@ -179,7 +212,7 @@ public class OnlineActivity extends AppCompatActivity
         } else if (adapter == tipo) {
             tipoVal = "";
         }
-        //list.setRefreshing();
+        //list.setRefreshing();//ver por que es
     }
 
     @Override
@@ -204,7 +237,6 @@ public class OnlineActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onClick(View v) {
         if (v == back) {//Si el evento es sobre el botón volver.
@@ -216,14 +248,64 @@ public class OnlineActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResults(String callId, Collection<CyLDFormacion> res, boolean expectRefreshCall){
+    public void onResults(String callId, Collection<CyLDFormacion> res, final boolean expectRefresh){
 
+        if (callId.equalsIgnoreCase(currentCallId)) {
+
+            datosFuturos.clear();
+            datosFuturos.addAll(res);
+
+            if (!expectRefresh) {
+
+                long dif = currentCallTime - new Date().getTime();
+                dif = dif + LOADING_DELAY;
+                if (dif < 0)
+                    dif = 0;
+
+                list.postDelayed(new Runnable() {
+                    public void run() {
+                        data.clear();
+                        data.addAll(datosFuturos);
+                        list.onRefreshComplete();
+                        list.setScrollingWhileRefreshingEnabled(true);
+                        adapter.unlock();
+                        adapter.notifyDataSetChanged();
+                        count.setText(String.format(getString(R.string.cuenta_actividades),
+                                data.size()));
+                        count.setVisibility(View.VISIBLE);
+                        if (data.size() == 0) {
+                            Utils.showSimpleDialog(OnlineActivity.this, null,
+                                    getString(R.string.no_results), null);
+                        }
+                    }
+                }, dif);
+
+            }
+        }// if currentCallId
     }
 
     @Override
     public void onError(String callId, Exception e, boolean expectRefresh) {
+        e.printStackTrace();
 
-    }
+        if (!expectRefresh) {
+
+            data.clear();
+            data.addAll(datosFuturos);
+
+            list.onRefreshComplete();
+            adapter.unlock();
+            adapter.notifyDataSetChanged();
+            count.setVisibility(View.VISIBLE);
+            if (data.size() == 0) {
+                count.setText(getString(R.string.server_error_short));
+                Utils.showSimpleDialog(this, null, getString(R.string.server_error), null);
+            }else{
+                count.setText(String.format(getString(R.string.cuenta_actividades),
+                        data.size()));
+            }
+        }
+    } //onError
 
     /**
      * Clase que extiende de ArrayAdapter a la cual se le pasa en el constructor
@@ -234,7 +316,6 @@ public class OnlineActivity extends AppCompatActivity
     private class FamilyAdapter extends ArrayAdapter<Family> {
 
         LayoutInflater inflater;
-
         /**
         *  Constructor con el que se crea un objeto LayoutInflater.
         */
@@ -264,4 +345,99 @@ public class OnlineActivity extends AppCompatActivity
         }
 
     }// FamilyAdapter
+
+
+    /**
+     * Extiende de AutoPagingListAdapter
+     * Implementa interfaz OnItemClickListener: implementar onItemClick()
+     * Extiende AutoPagingListAdapter: implementar getView()
+     * Rellena la lista de items
+     *
+     */
+    private class BoardAdapter extends AutoPagingListAdapter<CyLDFormacion>
+            implements AdapterView.OnItemClickListener {
+
+        public BoardAdapter() {
+            super(OnlineActivity.this, R.layout.item_actividad, data);
+        }
+
+        /**
+         *
+         * @param position
+         * @param convertView
+         * @param parent
+         * @return
+         */
+        public View getView(int position, View convertView, ViewGroup parent) {
+            int type = getItemViewType(position);
+
+            if (convertView == null) {
+                if (type == TYPE_ITEM) {
+                    convertView = getLayoutInflater().inflate(
+                            R.layout.item_actividad, null); //Pillo el Layout item_actividad
+                } else if (type == TYPE_LOADING) {
+                    convertView = getLayoutInflater().inflate(
+                            R.layout.item_menu, null);
+                }
+            }
+
+            if (type == TYPE_ITEM) {
+                CyLDFormacion it = getItem(position); //Objeto CyLDFormacion
+
+                TextView tv = (TextView) convertView.findViewById(R.id.titulo_actividad); //textView titulo_actividad de item_actividad
+                tv.setText(it.nombre); //Le paso el valor del nombre
+
+                //Centro. Solo si es presencial
+                tv = (TextView) convertView.findViewById(R.id.centro_realizacion);
+                String location = "";
+                if (it.centro == null) {
+                    location = "";
+                } else {
+                    location = it.centro;
+                }
+                /*
+                if (it.provinceId != null && it.provinceId.trim().length() > 0) {
+                    Family f = Family.getFamilyByCode(Constants.provincesID,
+                            it.provinceId);
+                    if (f != null) {
+                        location += " (" + f.getName() + ")";
+                    }
+                }*/
+                tv.setText(location);
+
+                //Fecha de Inicio
+                tv = (TextView) convertView.findViewById(R.id.fecha_realizacion);
+                if (it.fechaInicio != null) {
+                    tv.setText(it.fechaInicio);
+                } else {
+                    tv.setText("");
+                }
+                //Duración en horas
+                tv = (TextView) convertView.findViewById(R.id.total_horas);
+                tv.setText(Float.toString(it.numeroHoras));
+
+            } else if (type == TYPE_LOADING) {
+                TextView tv = (TextView) convertView.findViewById(R.id.text);
+                tv.setText("Cargando...");
+            }
+
+            return convertView;
+        }
+
+        @Override
+        protected void onScrollNext() {
+            requestData(false, search.getText().toString(), centroVal, tipoVal);
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            CyLDFormacion it = getItem(position - 1);
+            if (it != null) {
+                //Globals.selectedItem = it;
+                Intent i = new Intent(OnlineActivity.this, DetalleActividadActivity.class);
+                i.putExtra("SELECTED_ITEM", it);
+                startActivity(i);
+            }
+        }
+    }//BoardAdapter
 }

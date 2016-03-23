@@ -13,4 +13,10 @@
     <string name="title_activity_presencial">PresencialActivity</string>
     <string name="title_activity_online">OnlineActivity</string>
     <string name="search">Buscar</string>
+
+    <string name="server_error_short">Error en las comunicaciones</string>
+    <string name="server_error">Se ha producido un error en las comunicaciones. Inténtelo en unos minutos.\nSi el problema persiste, póngase en contacto con el CyLDigital:\ncorreo-e: barquejo@gmail.com</string>
+    <string name="cuenta_actividades">%d actividades</string>
+    <string name="update">Actualizando datos&#8230;</string>
+    <string name="no_results">No se han encontrado resultados</string>
 </resources>

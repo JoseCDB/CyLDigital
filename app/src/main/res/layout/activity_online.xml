@@ -65,4 +65,23 @@
         android:text="Busca"
         android:textSize="11sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:textColor="@android:color/white"
+        android:background="#0610a1"
+        android:gravity="center"
+        android:id="@+id/count"
+        android:text="21 cursos disponibles"/>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="#00000000"
+        ptr:ptrHeaderTextColor="#ff444444"
+        />
+
 </LinearLayout>

@@ -224,7 +224,7 @@ public class CyLDHandler {
 
                                 Collection<T> data = lc.retrieverBlock.localRetrieve();
 
-                                lc.listener.onResults(lc.callId, data, false);
+                                lc.listener.onResults(lc.callId, centers.data, false);
                             }
                             esperandoRefresco.get(refreshToken).clear();
                         }
