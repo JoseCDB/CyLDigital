@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/imagen"
+        android:layout_marginStart="33dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/curso" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Este es un texto de título de actividad"
+        android:layout_toRightOf="@id/imagen"
+        android:id="@+id/titulo_actividad"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Centro de realización"
+        android:layout_toRightOf="@id/imagen"
+        android:id="@+id/centro_realizacion"
+        android:layout_below="@+id/titulo_actividad"
+        android:textColor="#7278f3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha de realización"
+        android:layout_toRightOf="@id/imagen"
+        android:id="@+id/fecha_realizacion"
+        android:layout_below="@+id/centro_realizacion" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total horas"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/imagen"
+        android:id="@+id/total_horas"
+        android:layout_below="@+id/fecha_realizacion" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffadadad"
+        android:layout_below="@id/total_horas"
+        android:layout_toRightOf="@id/imagen"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
