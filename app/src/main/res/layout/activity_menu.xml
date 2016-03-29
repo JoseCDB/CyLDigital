@@ -49,10 +49,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Ahora tiene la oportunidad de formarse en las nuevas tecnologías de la información y la comunicación. Ponemos a su disposición toda una red de centros, variedad de horarios y un amplio catálogo de talleres y cursos. Para más información, contacte con el teléfono 012."
                 android:id="@+id/textView_presencial"
-                android:textSize="@dimen/abc_text_size_small_material"
-                android:textAlignment="center"
+                android:textSize="@dimen/notification_subtext_size"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ffadadad"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -84,8 +88,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Podrá acceder a una amplia oferta de formación en nuevas tecnologías desde nuestra plataforma de formación virtual. "
                 android:id="@+id/textView_online"
-                android:textSize="@dimen/abc_text_size_small_material"
-                android:textAlignment="center" />
+                android:textSize="@dimen/notification_subtext_size" />
             <!-- android:drawableTop="@drawable/courses_grid_icon" />-->
         </LinearLayout>
 

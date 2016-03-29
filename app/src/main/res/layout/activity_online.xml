@@ -47,7 +47,7 @@
     <EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@drawable/search_field"
         android:drawableLeft="@drawable/herramienta"
         android:gravity="center"

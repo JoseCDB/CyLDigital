@@ -7,8 +7,8 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="menu_presencial">Formación Presencial</string>
     <string name="menu_online">Formación Online</string>
-    <string name="title_presenciales">Formación Presencial Espacios CyLDigital</string>
-    <string name="title_onlines">Formación Online Espacios CyLDigital</string>
+    <string name="title_presenciales">Formación Presencial CyLDigital</string>
+    <string name="title_onlines">Formación Online CyLDigital</string>
     <string name="build">Build %d</string>
     <string name="title_activity_presencial">PresencialActivity</string>
     <string name="title_activity_online">OnlineActivity</string>
