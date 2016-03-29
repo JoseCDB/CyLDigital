@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_dropdown2_normal">
+            android:background="@drawable/btn_dropdown">
         </Spinner>
 
         <!--Línea entre los 2 combos-->
@@ -40,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_dropdown2_normal">
+            android:background="@drawable/btn_dropdown">
         </Spinner>
     </LinearLayout>
 
