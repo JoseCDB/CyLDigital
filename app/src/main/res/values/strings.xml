@@ -19,4 +19,8 @@
     <string name="cuenta_actividades">%d actividades</string>
     <string name="update">Actualizando datos&#8230;</string>
     <string name="no_results">No se han encontrado resultados</string>
+    <string name="title_activity_web_content">WebContentActivity</string>
+    <string name="loading">cargando</string>
+    <string name="title_activity_detalle_actividad">DetalleActividad</string>
+
 </resources>

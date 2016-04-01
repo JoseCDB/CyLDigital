@@ -10,7 +10,8 @@ import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.R;
 
 //Tenemos que implementar OnClick de OnClickListener
-public class MenuActivity extends MainActivity implements OnClickListener {
+public class MenuActivity extends MainActivity
+        implements OnClickListener {
 
     //Nuevas
     View presencial;

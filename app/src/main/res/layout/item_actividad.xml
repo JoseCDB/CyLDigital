@@ -43,7 +43,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Total horas"
+        android:text="50 horas"
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/imagen"
         android:id="@+id/total_horas"

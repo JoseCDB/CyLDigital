@@ -2,7 +2,6 @@ package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +16,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +45,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 * La Interfaz CyLDFormacionHandlerListener me obliga a implementar los métodos: onResults
 * */
 
-public class OnlineActivity extends AppCompatActivity
+public class OnlineActivity extends MainActivity
         implements
         AdapterView.OnItemSelectedListener,
         View.OnClickListener,
@@ -59,7 +60,7 @@ public class OnlineActivity extends AppCompatActivity
     ArrayList<CyLDFormacion> datosFuturos = new ArrayList<CyLDFormacion>();
     //Da formato a la fecha de las actividades mostradas en BoardAdapter.
     SimpleDateFormat sdf = new SimpleDateFormat(
-            "'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
+            "'Comienza el' d 'de' MMMM 'de' yyyy", Locale.getDefault());
 
     //Combos localidad y tipo de actividad
     Spinner localidad;
@@ -80,8 +81,6 @@ public class OnlineActivity extends AppCompatActivity
 
     //Contiene  "fecha + nombre"  de la llamada actual al Servicio Web.
     String currentCallId = "";
-
-
 
     //Fecha en long de la llamada actual al Servicio Web
     long currentCallTime = 0;
@@ -408,7 +407,12 @@ public class OnlineActivity extends AppCompatActivity
                 //Fecha de Inicio
                 tv = (TextView) convertView.findViewById(R.id.fecha_realizacion);
                 if (it.fechaInicio != null) {
-                    tv.setText(it.fechaInicio);
+                    try {
+                        Date date = new SimpleDateFormat("yyyy-mm-dd").parse(it.fechaInicio);
+                        tv.setText(sdf.format(date));
+                    }catch (ParseException pe) {
+                        System.err.println("Problemas parseando fecha de inicio actividad formativa");
+                    }
                 } else {
                     tv.setText("");
                 }
@@ -429,6 +433,14 @@ public class OnlineActivity extends AppCompatActivity
             requestData(false, search.getText().toString(), centroVal, tipoVal);
         }
 
+        /**
+         * Evento que se ejecuta cuando se selecciona una de las actividades de la lista.
+         *
+         * @param arg0
+         * @param arg1
+         * @param position
+         * @param arg3
+         */
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
             CyLDFormacion it = getItem(position - 1);
