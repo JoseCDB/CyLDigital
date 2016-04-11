@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.DetalleActividadActivity">
+
+    <include layout="@layout/menu_top" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffadadad" />
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/imagen"
+            android:layout_marginStart="33dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/curso" />
+
+        <TextView
+            android:id="@+id/centro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/imagen"
+            android:fontFamily="sans-serif-light"
+            android:text="Online"
+            android:textColor="#ffa10620"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/centro"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/imagen"
+            android:fontFamily="sans-serif-light"
+            android:text="Comienza el 4 de Marzo del 2014"
+            android:textColor="#ff999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fecha"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/imagen"
+            android:fontFamily="sans-serif-light"
+            android:text="300 horas"
+            android:textColor="#ff333333"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/textView"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/icon"
+                android:fontFamily="sans-serif-light"
+                android:text="Descripción de la actividad"
+                android:textColor="#ff333333"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/link"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#ffffffff"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/content_link"
+        android:textSize="14sp" />
+
+</LinearLayout>

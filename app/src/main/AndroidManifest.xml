@@ -40,6 +40,7 @@ android:targetSdkVersion — Specifies the API Level on which the application is
         <!-- Quito la etiqueta del título android:label="@string/title_activity_splash" a la pantalla -->
         <activity
             android:name=".ui.SplashActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,12 +64,10 @@ android:targetSdkVersion — Specifies the API Level on which the application is
             android:label="@string/title_activity_online" />
         <activity
             android:name=".ui.WebContentActivity"
-            android:label="@string/title_activity_web_content"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_web_content" />
         <activity
             android:name=".ui.DetalleActividadActivity"
-            android:label="@string/title_activity_detalle_actividad"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_detalle_actividad" />
 
     </application>
 

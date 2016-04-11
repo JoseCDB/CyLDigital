@@ -7,6 +7,7 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="menu_presencial">Formación Presencial</string>
     <string name="menu_online">Formación Online</string>
+    <string name="title_menu_formacion">Formación CyLDigital</string>
     <string name="title_presenciales">Formación Presencial CyLDigital</string>
     <string name="title_onlines">Formación Online CyLDigital</string>
     <string name="build">Build %d</string>
@@ -22,5 +23,8 @@
     <string name="title_activity_web_content">WebContentActivity</string>
     <string name="loading">cargando</string>
     <string name="title_activity_detalle_actividad">DetalleActividad</string>
+    <string name="content_link">Ver actividad</string>
+    <string name="menu_formacion_presencial">Ahora tiene la oportunidad de formarse en las nuevas tecnologías de la información y la comunicación. Ponemos a su disposición toda una red de centros, variedad de horarios y un amplio catálogo de talleres y cursos. Para más información, contacte con el teléfono 012.</string>
+    <string name="menu_formacion_online">Podrá acceder a una amplia oferta de formación en nuevas tecnologías desde nuestra plataforma de formación virtual.</string>
 
 </resources>

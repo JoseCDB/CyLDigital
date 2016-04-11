@@ -1,6 +1,7 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,8 @@ public class MenuActivity extends MainActivity
     //Nuevas
     View presencial;
     View online;
+    View iconoPresencial;
+    View iconoOnline;
 
     TextView build;
 
@@ -30,6 +33,13 @@ public class MenuActivity extends MainActivity
         online = this.findViewById(R.id.online);
         online.setOnClickListener(this);
 
+        iconoPresencial = this.findViewById(R.id.icono_presenciales);
+        iconoPresencial.setOnClickListener(this);
+
+        iconoOnline = this.findViewById(R.id.icono_online);
+        iconoOnline.setOnClickListener(this);
+
+
         //Para ver en pantalla el build (versión) de la app
         build = (TextView) this.findViewById(R.id.build);
         try {
@@ -40,14 +50,15 @@ public class MenuActivity extends MainActivity
         }
         build.setVisibility(View.GONE);//No lo muestro.
         //
-
     }
     @Override
     public void onClick(View v) {
-        if (v == presencial) {
+        if (v == presencial ||
+                v == iconoPresencial) {
             //Si el evento onclick es en la formación presencial
             startActivity(new Intent(this, PresencialActivity.class));
-        } else if (v == online) {
+        } else if (v == online ||
+                v == iconoOnline) {
             //Si el onclick es en la formación online
             startActivity(new Intent(this, OnlineActivity.class));
         }

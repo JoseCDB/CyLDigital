@@ -6,6 +6,11 @@ import android.view.Window;
 
 // For a minimum API level of 15, you'd want to use AppCompatActivity(ActionBarActivity is deprecated).
 // So for example, your MainActivity would look like this:
+
+/*
+* Hasta la versión 21 de la librería appcompat-v7 (ver build.gradle) la clase base de la que debían heredar nuestras actividades era ActionBarActivity,
+* pero esto cambió con la versión 22, donde la nueva clase a utilizar como base será AppCompatActivity.
+*/
 public class MainActivity extends AppCompatActivity {
 
     @Override

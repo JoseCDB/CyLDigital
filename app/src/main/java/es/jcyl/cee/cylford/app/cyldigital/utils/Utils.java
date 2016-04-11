@@ -21,4 +21,10 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static String processHtml(String html) {
+        String formattedHtml = "<html><head><style type=\"text/css\">a:link {color:#A10621;}a:visited {color:#A10621;}body {font-family: Helvetica, Arial; width:device-width; font-size:13px; margin:0px; color:#666666;}p {color:#666666;margin-bottom:20px;} ul{color:#666666} li {color:#666666;}</style></head><body>"
+                + html + "</body></html>";
+        return formattedHtml;
+    }
 }

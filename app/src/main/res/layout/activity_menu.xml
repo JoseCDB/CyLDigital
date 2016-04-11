@@ -6,122 +6,110 @@
     android:orientation="vertical"
     tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.MenuActivity">
 
+    <!--MENU TOP-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@color/menu" >
-        <!--
-        <ImageView
+        <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/logo_ecyl_center" />
-        -->
-        <!--
-        <ImageView
-            android:id="@+id/help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/help_icon_selector" />
-            -->
-
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/title_menu_formacion"
+            android:textColor="@color/textw" />
     </RelativeLayout>
 
 
-    <!--
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    -->
-    <!--  grid -->
+    <!--MENU PRESENCIALES-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
+        <ImageView
+            android:id="@+id/icono_presenciales"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:src="@drawable/presenciales"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/presencial"
+            android:layout_toRightOf="@id/icono_presenciales"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1">
-            <!--Cuando tenga imagenes, cambiar el layout_width a 0dp-->
-            <TextView
-                android:id="@+id/presencial"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textColor="@color/text"
-                android:textSize="20sp"
-                android:text="@string/menu_presencial"
-                android:textAlignment="center"
-                android:layout_weight="2"
-                android:drawableTop="@drawable/presenciales"/>
-            <!--android:drawableTop="@drawable/jobs_grid_icon" />-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Ahora tiene la oportunidad de formarse en las nuevas tecnologías de la información y la comunicación. Ponemos a su disposición toda una red de centros, variedad de horarios y un amplio catálogo de talleres y cursos. Para más información, contacte con el teléfono 012."
-                android:id="@+id/textView_presencial"
-                android:textSize="10sp"
-                android:layout_weight="2" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:padding="5dp"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:text="@string/menu_presencial" />
 
-        <View
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#ffadadad"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:layout_below="@+id/presencial"
+            android:text="@string/menu_formacion_presencial"
+            android:id="@+id/textView_presencial"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>/>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffadadad"/>
+
+    <!--MENU ONLINES-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <ImageView
+            android:id="@+id/icono_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/online"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/online"
+            android:layout_toRightOf="@id/icono_online"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:padding="5dp"
+            android:textColor="@color/text"
+            android:textSize="20sp"
+            android:text="@string/menu_online" />
 
-            <TextView
-                android:id="@+id/online"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textColor="@color/text"
-                android:textSize="20sp"
-                android:text="@string/menu_online"
-                android:drawableTop="@drawable/online"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:layout_below="@+id/online"
+            android:text="@string/menu_formacion_online"
+            android:id="@+id/textView_online"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"/>/>
+    </RelativeLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Podrá acceder a una amplia oferta de formación en nuevas tecnologías desde nuestra plataforma de formación virtual. "
-                android:id="@+id/textView_online"
-                android:textSize="10sp"
-                android:layout_weight="2"/>
-        </LinearLayout>
+</LinearLayout>
 
-
-
-    </LinearLayout>
     <TextView
         android:id="@+id/build"
         android:layout_width="match_parent"

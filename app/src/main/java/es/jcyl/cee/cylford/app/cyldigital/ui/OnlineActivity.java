@@ -418,7 +418,7 @@ public class OnlineActivity extends MainActivity
                 }
                 //Duración en horas
                 tv = (TextView) convertView.findViewById(R.id.total_horas);
-                tv.setText(Float.toString(it.numeroHoras));
+                tv.setText(Float.toString(it.numeroHoras) + " horas");
 
             } else if (type == TYPE_LOADING) {
                 TextView tv = (TextView) convertView.findViewById(R.id.text);
