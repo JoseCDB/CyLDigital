@@ -6,4 +6,5 @@
     <color name="textw">#FFFFFF</color>
     <color name="menu">#006df8</color>
     <color name="subtitle">#ff666666</color>
+    <color name="background_splash">#304aee</color>
 </resources>
