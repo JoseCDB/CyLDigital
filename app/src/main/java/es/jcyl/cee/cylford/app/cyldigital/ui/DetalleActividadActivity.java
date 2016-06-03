@@ -43,7 +43,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_actividad);
-
+        getSupportActionBar().hide();
 
         Intent intent = getIntent();
         it = (CyLDFormacion) intent.getSerializableExtra("SELECTED_ITEM");
@@ -61,9 +61,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         //Descripción de la actividad
         tv = (TextView) findViewById(R.id.description);
         String descActi = "";
-        if ( it.descripcion == null) {
-            descActi = "";
-        } else {
+        if(it.descripcion != null && !it.descripcion.equals("")){
             descActi = it.descripcion;
             descActi = descActi.substring(9, descActi.length()-3); //Se eliminan las etiquetas CDATA
         }
@@ -85,7 +83,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         tv = (TextView) findViewById(R.id.fecha);
         if( it.fechaInicio != null){
             try {
-                Date date = new SimpleDateFormat("yyyy-mm-dd").parse(it.fechaInicio);
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(it.fechaInicio);
                 tv.setText(sdf.format(date));
             }catch (ParseException pe) {
                 System.err.println("Problemas parseando fecha de inicio actividad formativa");

@@ -6,7 +6,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.Normalizer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
@@ -48,7 +51,8 @@ public class DBDataSource {
      * @param provincia     Localidad donde se realiza (Presencial)
      * @return Collection<CyLDFormacion> con los datos de actividades Online o Presenciales recuperadas.
      */
-    public Collection<CyLDFormacion> listActivities(String tipoFormacion, String text, String tipoActividad, String provincia) throws SQLException {
+    public Collection<CyLDFormacion> listActivities(String tipoFormacion, String text, String tipoActividad,
+                                                    String provincia, String fechaInicio, String fechaFin) throws SQLException {
         // Filtros para la query
         StringBuffer osConditions = new StringBuffer();
 
@@ -63,16 +67,16 @@ public class DBDataSource {
                     .append(" OR ").append(DBTableActivities.COL_NOMBRE).append(" LIKE '%").append(normalized).append("%'")
                     .append(")");
         }
-        /* ------------ PARÁMETROS DE BÚSQUEDA ------------ */
-
-        if (!tipoFormacion.equals(Constants.TIPO_ONLINE)) {
+        /* ------------ PARÁMETROS DE BÚSQUEDA POR TIPO DE FORMACIÓN ------------ */
+        //Consulta PRESENCIAL
+        if (tipoFormacion.equals(Constants.TIPO_PRESENCIAL)) {
             // Filtro CENTRO
             if (provincia != null && provincia.length() > 0) {
                 if (osConditions.length() > 0) {
                     osConditions.append(" AND ");
                 }
                 //osConditions.append("( ");
-                osConditions.append(DBTableActivities.COL_CENTRO).append(" = '").append(provincia).append("' ");
+                osConditions.append(DBTableActivities.COL_CENTRO).append(" LIKE '%").append(provincia).append("%' ");
                 //osConditions.append(" )");
             }
 
@@ -83,14 +87,44 @@ public class DBDataSource {
                 }
                 osConditions.append(DBTableActivities.COL_TIPO).append(" = '").append(tipoActividad).append("' ");
             }
-
-            // Filtro TIPO FORMACIÓN
-            if (tipoFormacion != null && tipoFormacion.length() > 0) {
+        //Consulta ONLINE
+        } else if (tipoFormacion.equals(Constants.TIPO_ONLINE)) {
+            Date date;
+            SimpleDateFormat dmyFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy-MM-dd");
+            //Filtro FECHA DE INICIO
+            if (fechaInicio != null && fechaInicio.length() > 0) {
                 if (osConditions.length() > 0) {
                     osConditions.append(" AND ");
                 }
-                osConditions.append(DBTableActivities.COL_TIPO_FORMACION).append(" = '").append(tipoFormacion).append("' ");
+                String fechaIniAMD = "";
+                try{
+                    date = dmyFormat.parse(fechaInicio);
+                    fechaIniAMD = ymdFormat.format(date);
+                }catch (ParseException pe) { pe.printStackTrace();}
+                osConditions.append(DBTableActivities.COL_FECHA_INICIO).append(" >= '").append(fechaIniAMD).append("' ");
             }
+            //Filtro FECHA DE FIN
+            if (fechaFin != null && fechaFin.length() > 0) {
+                if (osConditions.length() > 0) {
+                    osConditions.append(" AND ");
+                }
+                String fechaFinAMD = "";
+                try{
+                    date = dmyFormat.parse(fechaFin);
+                    fechaFinAMD = ymdFormat.format(date);
+                }catch (ParseException pe) { pe.printStackTrace();}
+                osConditions.append(DBTableActivities.COL_FECHA_FIN).append(" <= '").append(fechaFinAMD).append("' ");
+            }
+        }
+        /* ------------ FIN PARÁMETROS DE BÚSQUEDA POR TIPO DE FORMACIÓN------------ */
+
+        // Filtro TIPO FORMACIÓN
+        if (tipoFormacion != null && tipoFormacion.length() > 0) {
+            if (osConditions.length() > 0) {
+                osConditions.append(" AND ");
+            }
+            osConditions.append(DBTableActivities.COL_TIPO_FORMACION).append(" = '").append(tipoFormacion).append("' ");
         }
 
         Cursor c = db.query(DBTableActivities.NAME, DBTableActivities.COLUMNS, osConditions.toString(),
@@ -129,13 +163,14 @@ public class DBDataSource {
                     break;
                 }
             }
+
             //En la original existe una tabla (ECYL_REFRESHINFO) con nombre de resto de tablas y fecha de actualización.
             if (success) {
                 success = insertOrUpdateRefreshDate(DBTableActivities.NAME, System.currentTimeMillis());
             }
-            //si success = true
+
             if (success) {
-                db.setTransactionSuccessful(); // 3º Se marca la transacción como exitosa.
+                db.setTransactionSuccessful();// 3º Se marca la transacción como exitosa.
             }
             return success;
         } catch (SQLException e) {

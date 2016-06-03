@@ -24,11 +24,13 @@ public class SplashActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         // Set portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setContentView(R.layout.activity_splash);
+        //Se oculta el actionBar
+        //getActionBar().hide();
+        getSupportActionBar().hide();
 
         TimerTask task = new TimerTask() {
             @Override

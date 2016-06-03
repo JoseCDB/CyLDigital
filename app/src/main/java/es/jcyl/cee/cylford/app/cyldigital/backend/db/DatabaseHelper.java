@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
 
-    private static final int DB_VERSION = 6; // Se tuvo que subir el nº de version para que me volviese a crear la bbdd.
+    private static final int DB_VERSION = 8; // Se tuvo que subir el nº de version para que me volviese a crear la bbdd.
     private static final String DB_NAME = "CyLD";
 
     private static DBTable[] tables = {

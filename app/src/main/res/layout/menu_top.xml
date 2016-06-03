@@ -19,12 +19,13 @@
         android:layout_centerInParent="true"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="@string/title_presenciales"
+        android:text="@string/title_menu_formacion"
         android:textColor="@color/textw"
         android:maxLines="1"
         android:singleLine="true"
         android:width="320dp"
         android:maxWidth="320dp"
-        android:maxLength="40" />
+        android:maxLength="40"
+        android:textStyle="bold" />
 
 </RelativeLayout>

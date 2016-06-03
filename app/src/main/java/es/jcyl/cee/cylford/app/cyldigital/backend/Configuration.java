@@ -24,6 +24,9 @@ public class Configuration {
 
     public static final String KEY_FORM_READTIMEOUT = "60";
 
+    //24 hours
+    public static final String KEY_ACTIVITIES_DATAEXPIRATIONTIME = "86400";
+
 
     /**
      * Constructor usado para obtener las propiedades de

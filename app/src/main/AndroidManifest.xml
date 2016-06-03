@@ -57,9 +57,6 @@ android:targetSdkVersion — Specifies the API Level on which the application is
             android:label="@string/title_activity_menu"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.PresencialActivity"
-            android:label="@string/title_activity_presencial" />
-        <activity
             android:name=".ui.OnlineActivity"
             android:label="@string/title_activity_online" />
         <activity
@@ -68,7 +65,10 @@ android:targetSdkVersion — Specifies the API Level on which the application is
         <activity
             android:name=".ui.DetalleActividadActivity"
             android:label="@string/title_activity_detalle_actividad" />
-
+        <activity
+            android:name=".ui.PresentacionActivity"
+            android:label="@string/title_activity_presentacion"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

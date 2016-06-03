@@ -117,11 +117,12 @@ public class CyLDHandler {
 
         if (dtos == null || dtos.size() == 0) {
             //Si no se pueden obtener modelos dtos,... buscar en la tabla general de refrescos.
-            oldestRefresh = App.getDataSource().getLastRefreshFor(nombreTablaPrincipal); //TODO: Refrescos
+            //Busca en el registro de la tabla CYLD_ACTIVITIES cual fue su última actualización
+            oldestRefresh = App.getDataSource().getLastRefreshFor(nombreTablaPrincipal);
         } else {
             // Locate  the oldest center in the collection
             for (CyLDDTO dto: dtos) {
-                if (dto.refreshedOn < oldestRefresh) {
+                if (dto.refreshedOn < oldestRefresh) {//TODO: Refrescos revisar
                     oldestRefresh = dto.refreshedOn;
                 }
             }

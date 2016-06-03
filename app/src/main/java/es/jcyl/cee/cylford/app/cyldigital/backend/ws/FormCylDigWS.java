@@ -85,8 +85,14 @@ public abstract class FormCylDigWS {
             HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
             url = new URL(sUrl);
+
+            //Proyy en Alten. Pruebas con emuladores.
+            /*
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("192.168.10.53", 8080));
             cnt = (HttpsURLConnection) url.openConnection(proxy);
+            */
+            //Sin el proxy. Pruebas en dispositivo.
+            cnt = (HttpsURLConnection) url.openConnection();
             cnt.setRequestMethod("GET");
             //cnt.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:26.0) Gecko/20100101 Firefox/26.0");
             cnt.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");

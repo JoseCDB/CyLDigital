@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public class DBTableRefreshInfo extends DBTable {
     public static final String NAME = "CYLD_REFRESHINFO";
+    //Nombre de la tabla+centro+tipo sobre la que se va a
     public static final String COL_NAME = "NAME";
     public static final String COL_REFRESHDATE = "REFRESHDATE";
 

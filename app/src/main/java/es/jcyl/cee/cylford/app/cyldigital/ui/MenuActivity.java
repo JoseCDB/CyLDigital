@@ -1,14 +1,13 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-
-import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.R;
+import es.jcyl.cee.cylford.app.cyldigital.Constants;
+import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 
 //Tenemos que implementar OnClick de OnClickListener
 public class MenuActivity extends MainActivity
@@ -19,6 +18,8 @@ public class MenuActivity extends MainActivity
     View online;
     View iconoPresencial;
     View iconoOnline;
+    View textPresencial;
+    View textOnline;
 
     TextView build;
 
@@ -26,6 +27,7 @@ public class MenuActivity extends MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        getSupportActionBar().hide();
 
         presencial = this.findViewById(R.id.presencial);
         presencial.setOnClickListener(this);
@@ -39,6 +41,11 @@ public class MenuActivity extends MainActivity
         iconoOnline = this.findViewById(R.id.icono_online);
         iconoOnline.setOnClickListener(this);
 
+        textPresencial = this.findViewById(R.id.textView_presencial);
+        textPresencial.setOnClickListener(this);
+
+        textOnline = this.findViewById(R.id.textView_online);
+        textOnline.setOnClickListener(this);
 
         //Para ver en pantalla el build (versión) de la app
         build = (TextView) this.findViewById(R.id.build);
@@ -53,15 +60,20 @@ public class MenuActivity extends MainActivity
     }
     @Override
     public void onClick(View v) {
+        Intent i = new Intent (this, OnlineActivity.class);
+
         if (v == presencial ||
-                v == iconoPresencial) {
+                v == iconoPresencial ||
+                v == textPresencial) {
+            i.putExtra("origen", Constants.TIPO_PRESENCIAL);
             //Si el evento onclick es en la formación presencial
-            startActivity(new Intent(this, PresencialActivity.class));
+            //startActivity(new Intent(this, PresencialActivity.class));
         } else if (v == online ||
-                v == iconoOnline) {
-            //Si el onclick es en la formación online
-            startActivity(new Intent(this, OnlineActivity.class));
+                v == iconoOnline ||
+                v == textOnline) {
+            i.putExtra("origen", Constants.TIPO_ONLINE);
         }
+        startActivity(i);
     }
 
 }

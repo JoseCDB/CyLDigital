@@ -17,6 +17,8 @@
 
     <string name="server_error_short">Error en las comunicaciones</string>
     <string name="server_error">Se ha producido un error en las comunicaciones. Inténtelo en unos minutos.\nSi el problema persiste, póngase en contacto con el CyLDigital:\ncorreo-e: barquejo@gmail.com</string>
+    <string name="presenciales_error">Seleccione Provincia y Tipo de actividad para la consulta de Formación Presencial</string>
+
     <string name="cuenta_actividades">%d actividades</string>
     <string name="update">Actualizando datos&#8230;</string>
     <string name="no_results">No se han encontrado resultados</string>
@@ -26,5 +28,10 @@
     <string name="content_link">Ver actividad</string>
     <string name="menu_formacion_presencial">Ahora tiene la oportunidad de formarse en las nuevas tecnologías de la información y la comunicación. Ponemos a su disposición toda una red de centros, variedad de horarios y un amplio catálogo de talleres y cursos. Para más información, contacte con el teléfono 012.</string>
     <string name="menu_formacion_online">Podrá acceder a una amplia oferta de formación en nuevas tecnologías desde nuestra plataforma de formación virtual.</string>
+    <string name="selectstartdate">fecha de inicio</string>
+    <string name="selectenddate">fecha de fin</string>
+    <string name="startdatetext">Fecha de inicio</string>
+    <string name="enddatetext">Fecha de fin</string>
+    <string name="title_activity_presentacion">PresentacionActivity</string>
 
 </resources>

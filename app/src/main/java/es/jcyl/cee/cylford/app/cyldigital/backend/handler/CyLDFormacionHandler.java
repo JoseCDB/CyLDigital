@@ -5,6 +5,7 @@ import android.database.SQLException;
 import java.util.Collection;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
+import es.jcyl.cee.cylford.app.cyldigital.backend.Configuration;
 import es.jcyl.cee.cylford.app.cyldigital.backend.db.DBTableActivities;
 import es.jcyl.cee.cylford.app.cyldigital.backend.ws.CyLDWServiceException;
 import es.jcyl.cee.cylford.app.cyldigital.backend.ws.FormCylDigOnlineWS;
@@ -25,6 +26,11 @@ public class CyLDFormacionHandler extends CyLDHandler {
     private static final String REMOTERETRIEVE_TOKEN = "wholeActivities";// Token used to identify refresh operations..if another
                                                                          // refresh is required from another method and this token is on
                                                                          // the pending listeners it means it is already being refreshed
+
+    static {
+        String sValue = Configuration.KEY_ACTIVITIES_DATAEXPIRATIONTIME;//86400 segundos tiene un día
+        dataExpirationTime = Long.parseLong(sValue) * 1000; //lo que tardan en expirar las actividades consultadas es
+    }
 
     //Objeto de clase saverBlock (de clase anónima que implementa la Interfaz CollectionDataSaverBlock) para hacer el guardado en BD de la Colección pasada
     private static CollectionDataSaverBlock<CyLDFormacion> saverBlock = new CollectionDataSaverBlock<CyLDFormacion>() {
@@ -61,7 +67,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             public Collection<CyLDFormacion> localRetrieve() throws SQLException {
                 try {
                     // Desde la base de datos se obtienen datos de actividades.
-                    Collection<CyLDFormacion> data = App.getDataSource().listActivities(Constants.TIPO_PRESENCIAL, text, tipoActividad, centro);
+                    Collection<CyLDFormacion> data = App.getDataSource().listActivities(Constants.TIPO_PRESENCIAL, text, tipoActividad, centro, null, null);
                     return data;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -72,7 +78,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             @Override
             public Collection<CyLDFormacion> remoteRetrieve() throws CyLDWServiceException {
                 // Desde el Web Service se obtienen datos de actividades presenciales.
-                return getActividadesDesdeWebservice(Constants.TIPO_PRESENCIAL, numeroAct, fechaInicio, fechaFin, text, tipoActividad, centro, listener);
+                return getActividadesDesdeWebservice(Constants.TIPO_PRESENCIAL, numeroAct, null, null, text, tipoActividad, centro, listener);
             }
 
             @Override
@@ -81,7 +87,8 @@ public class CyLDFormacionHandler extends CyLDHandler {
             }
         };//**Fin Objeto "retrieverBlock"
         //Se le pasa el objeto retrieverBlock que hará la llamada a la consulta local, si hace falta se llama al WS y el saverBlock guarda las nuevas.
-        executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME, retrieverBlock, saverBlock, listener);
+        //executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME, retrieverBlock, saverBlock, listener);//JC11052016
+        executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME + "_" + Constants.TIPO_PRESENCIAL + "_" + centro + "_" + tipoActividad, retrieverBlock, saverBlock, listener);
     }
 
     /**
@@ -91,7 +98,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
      * @param callId
      * @param listener
      */
-    public static void listActivitiesOnline(final String callId, final OnlineActivity listener) {
+    public static void listActivitiesOnline(final String callId, final OnlineActivity listener, final String fechaInicio, final String fechaFin) {
         startCallId(callId);
 
         //**Añado un objeto "retrieverBlock" de una clase anónima interna que implementa la interfaz "CollectionDataRetrieverBlock" declarada en CyLDHandler
@@ -102,7 +109,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             public Collection<CyLDFormacion> localRetrieve() throws SQLException {
                 try {
                     // Desde la base de datos se obtienen datos de actividades.
-                    Collection<CyLDFormacion> data = App.getDataSource().listActivities(Constants.TIPO_ONLINE, null, null, null);
+                    Collection<CyLDFormacion> data = App.getDataSource().listActivities(Constants.TIPO_ONLINE, null, null, null, fechaInicio, fechaFin);
                     return data;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,7 +120,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
             @Override
             public Collection<CyLDFormacion> remoteRetrieve() throws CyLDWServiceException {
                 // Desde el Web Service se obtienen datos de actividades.
-                return getActividadesDesdeWebservice(Constants.TIPO_ONLINE, 0, null, null, null, null, null, listener);
+                return getActividadesDesdeWebservice(Constants.TIPO_ONLINE, 0, null, fechaInicio, fechaFin, null, null, listener);
             }
 
             @Override
@@ -122,7 +129,8 @@ public class CyLDFormacionHandler extends CyLDHandler {
             }
         };//**Fin Objeto "retrieverBlock"
         //Se le pasa el objeto retrieverBlock que hará la llamada a la consulta local, si hace falta se llama al WS y el saverBlock guarda las nuevas.
-        executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME, retrieverBlock, saverBlock, listener);
+        //executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME, retrieverBlock, saverBlock, listener); //JC11052016
+        executeCollectionRetrieval(callId, dataExpirationTime, DBTableActivities.NAME + "_" + Constants.TIPO_ONLINE, retrieverBlock, saverBlock, listener);
     }
 
     /**

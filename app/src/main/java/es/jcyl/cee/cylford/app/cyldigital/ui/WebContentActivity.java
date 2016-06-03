@@ -40,6 +40,7 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_content);
+        getSupportActionBar().hide();
 
         url = this.getIntent().getStringExtra("url");
 

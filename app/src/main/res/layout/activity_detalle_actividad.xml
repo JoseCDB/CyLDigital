@@ -76,7 +76,8 @@
         android:text="Descripción"
         android:layout_marginLeft="5dp"
         android:id="@+id/textView"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="14sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,28 +90,27 @@
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/icon"
                 android:fontFamily="sans-serif-light"
                 android:text="Descripción de la actividad"
                 android:textColor="#ff333333"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
+            <Button
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:textColor="#ffffffff"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/content_link"
+                android:textSize="14sp" />
         </LinearLayout>
     </ScrollView>
 
-
-    <Button
-        android:id="@+id/link"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#ffffffff"
-        android:fontFamily="sans-serif-light"
-        android:text="@string/content_link"
-        android:textSize="14sp" />
 
 </LinearLayout>

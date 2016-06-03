@@ -1,17 +1,27 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,6 +32,7 @@ import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
@@ -44,7 +55,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 * La Interfaz OnClickListener me obliga a implementar métodos: onClick, OnClickListener
 * La Interfaz CyLDFormacionHandlerListener me obliga a implementar los métodos: onResults
 * */
-
 public class OnlineActivity extends MainActivity
         implements
         AdapterView.OnItemSelectedListener,
@@ -59,64 +69,85 @@ public class OnlineActivity extends MainActivity
     ArrayList<CyLDFormacion> data = new ArrayList<CyLDFormacion>();
     ArrayList<CyLDFormacion> datosFuturos = new ArrayList<CyLDFormacion>();
     //Da formato a la fecha de las actividades mostradas en BoardAdapter.
-    SimpleDateFormat sdf = new SimpleDateFormat(
-            "'Comienza el' d 'de' MMMM 'de' yyyy", Locale.getDefault());
-
+    SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'de' yyyy", Locale.getDefault());
+    //Si el origen es una consulta tipo Online o Presencial
+    String origen;
     //Combos localidad y tipo de actividad
-    Spinner localidad;
-    Spinner tipo;
-
-    //Valores seleccionados en los combos
-    String centroVal = "";
-    String tipoVal = "";
-
+    Spinner localidad, tipo;
+    //Texto de valores seleccionados en los combos
+    String centroVal, tipoVal, fechaInicioAct, fechaFinAct = "";
     //Campo buscar
     EditText search;
-
     //Botón volver
     View back;
-
     //Campo que muestra el número de resutlados de la búsqueda.
     TextView count;
-
     //Contiene  "fecha + nombre"  de la llamada actual al Servicio Web.
     String currentCallId = "";
-
     //Fecha en long de la llamada actual al Servicio Web
     long currentCallTime = 0;
-
     //Nueva lista Pull to refresh para mostrar los resultados devueltos.
     PullToRefreshListView list;;
 
     Button botonPrueba;
 
+    //Layouts para los spinners de selección de centro y tipo de actividad
+    //Layout para los botones de fecha de inicio y fecha de fin
+    View layoutSpinners, layoutCalendars;
+
+    //Fechas
+    private Calendar cal;
+    private int day, month, year;
+    //F. Inicio
+    private ImageButton imageButtonFechaInicio;
+    private TextView editTextFechaInicio;
+    //F. Fin
+    private ImageButton imageButtonFechaFin;
+    private TextView editTextFechaFin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online);
+        getSupportActionBar().hide();
+
+        origen = getIntent().getStringExtra("origen");
 
         //1 SPINNER LOCALIDAD
         localidad = (Spinner) this.findViewById(R.id.localidad);
         //Para que cuando se selecciona un valor en el Spinner, el contexto recoja el escuchador
         localidad.setOnItemSelectedListener(this);//Para esto tengo que implementar interfaz OnItemSelectedListener
-        //Creamos el adaptador
+        //Se crea el adaptador
         FamilyAdapter adapterL = new FamilyAdapter(this, android.R.layout.simple_spinner_item, Constants.provincias);
-        //Añadimos el layout para el menú
+        //Se añade el layout para el menú
         adapterL.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Le indicamos al spinner el adaptador a usar
+        //Se indica al spinner el adaptador a usar
         localidad.setAdapter(adapterL);
-
 
         //2 SPINNER TIPO ACTIVIDAD
         tipo = (Spinner) this.findViewById(R.id.tipo);
         tipo.setOnItemSelectedListener(this);
-        //Creamos el adaptador
         FamilyAdapter adapterT = new FamilyAdapter(this, android.R.layout.simple_spinner_item, Constants.tiposActividad);
         adapterT.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipo.setAdapter(adapterT);
 
         //3 CAMPO DE TEXTO BUSCAR
         search = (EditText) this.findViewById(R.id.search);
+        //La acción de cuando se pulsa la lupa del teclado
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // String s = search.getText().toString();
+                    // requestData(false, s, provinceVal, familyVal);
+                    list.setRefreshing();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         //4 BOTÓN VOLVER
         back = this.findViewById(R.id.back);
@@ -128,9 +159,11 @@ public class OnlineActivity extends MainActivity
         //botonPrueba.setCompoundDrawablesWithIntrinsicBounds(0,R.drawable.board_icon_selected_selector, 0, 0);
         botonPrueba.setOnClickListener(this);
 
+        //6 CONTADOR Nº ACTIVIDADES
         count = (TextView) this.findViewById(R.id.count);
         count.setVisibility(View.GONE);
 
+        //7 LISTA ITEMS ACTIVIDADES
         list = (PullToRefreshListView) findViewById(R.id.list);
         list.setOnRefreshListener(this);
         adapter = new BoardAdapter();
@@ -138,10 +171,87 @@ public class OnlineActivity extends MainActivity
         list.setOnScrollListener(adapter);
         list.setOnItemClickListener(adapter);
         list.setMode(Mode.PULL_FROM_START);
-        list.setRefreshingLabel(getString(R.string.update));
         list.setScrollingWhileRefreshingEnabled(false);
+        list.setRefreshingLabel(getString(R.string.update));
+
+        //8 LAYOUTS
+        layoutSpinners = this.findViewById(R.id.layoutSpinners);
+        layoutCalendars = this.findViewById(R.id.layoutFechas);
+
+        //9 BOTONES CALENDARIOS
+        cal = Calendar.getInstance();
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+
+        //BOTÓN FECHA INICIO
+        imageButtonFechaInicio = (ImageButton) findViewById(R.id.imagenCalendarFI);
+        editTextFechaInicio = (TextView) findViewById(R.id.fechaInicio);
+        imageButtonFechaInicio.setOnClickListener(this);
+        //Escuchador para realizar la búsqueda trás la actualización de la fecha.
+        editTextFechaInicio.addTextChangedListener((new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                fechaInicioAct = editTextFechaInicio.getText().toString().replaceAll("\\s","");
+                fechaFinAct = editTextFechaFin.getText().toString().replaceAll("\\s","");
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        list.setRefreshing();
+                    }
+                }, 250);
+            }
+        }));
+        //BOTÓN FECHA FIN
+        imageButtonFechaFin = (ImageButton) findViewById(R.id.imagenCalendarFF);
+        editTextFechaFin = (TextView) findViewById(R.id.fechaFin);
+        imageButtonFechaFin.setOnClickListener(this);
+
+        //A mostrar/ocultar en dependencia del tipo de formación
+        if (origen.equals(Constants.TIPO_ONLINE)) {
+            layoutSpinners.setVisibility(View.GONE);
+            //Se cambia el título
+            TextView tv = (TextView) this.findViewById(R.id.title);
+            tv.setText("");
+            tv = (TextView) findViewById(R.id.title);
+            tv.setText(R.string.title_onlines);
+            //Búsqueda automática
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    list.setRefreshing();
+                }
+            }, 250);
+
+        } else if(origen.equals(Constants.TIPO_PRESENCIAL)) {
+            layoutCalendars.setVisibility(View.GONE);
+            //Se cambia el título
+            TextView tv = (TextView) this.findViewById(R.id.title);
+            tv.setText("");
+            tv = (TextView) findViewById(R.id.title);
+            tv.setText(R.string.title_presenciales);
+            Utils.showSimpleDialog(OnlineActivity.this, null,
+                    getString(R.string.presenciales_error), null);
+        }
     }
 
+    /**
+     * Método que se lanza al seleccionar un valor en un spinner.
+     *
+     * @param adapter
+     * @param arg1
+     * @param index
+     * @param arg3
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapter, View arg1, int index, long arg3) {
         if (adapter == localidad) {
@@ -149,40 +259,55 @@ public class OnlineActivity extends MainActivity
                 centroVal = "";
             } else {
                 centroVal = ((Family) localidad.getSelectedItem()).getCode();
+                if(!tipoVal.isEmpty() && !tipoVal.equals("")){
+                    list.setRefreshing();
+                }
             }
         } else if (adapter == tipo) {
             if (index == 0) {
                 tipoVal = "";
             } else {
                 tipoVal = ((Family) tipo.getSelectedItem()).getCode();
+                if(!centroVal.isEmpty() && !centroVal.equals("")){
+                    list.setRefreshing();
+                }
             }
+        }
+        //Se lanza de forma automática mostrando en la lista
+        //la consulta de actividades online
+        if (origen.equals(Constants.TIPO_ONLINE)) {
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    list.setRefreshing();
+                }
+            }, 250);
         }
     }
 
+    /**
+     * Se lanza cuando se arrastra en la lista.
+     * @param refreshView
+     */
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         //search-> valor del campo de texto de búsqueda
         //provinciaVal -> valor del spinner de provincias
         //tipoVal -> valor del spinner de tipo de actividad
-        requestData(true, search.getText().toString(), centroVal, tipoVal);
+        requestData(true, search.getText().toString());
     }
 
     //@Override
     protected void onScrollNext() {
-        requestData(false, search.getText().toString(), centroVal, tipoVal);
+        requestData(false, search.getText().toString());
     }
 
-
     /**
-     *
      * @param clear
      * @param search
-     * @param prov
-     * @param tipo
      */
-    private void requestData(boolean clear, String search, String prov, String tipo) {
-
-        //adapter.lock(); Objeto de tipo BoardAdapter
+    private void requestData(boolean clear, String search) {
+        // To prevent another scrolling event
+        adapter.lock(); //Objeto de tipo BoardAdapter
 
         // if (!clear && data != null
         // && (data.size() == 0 || data.get(data.size() - 1) != null)) {
@@ -197,9 +322,9 @@ public class OnlineActivity extends MainActivity
         currentCallId = "education" + new Date().getTime();
         currentCallTime = new Date().getTime();
         //Si no hay valor en ninguno de los campos
-        if (search.length() == 0 && prov.length() == 0 && tipo.length() == 0) {
-            CyLDFormacionHandler.listActivitiesOnline(currentCallId, OnlineActivity.this);// Parámetro this válido porque se implementa CyLDFormacionHandlerListener
-        } else {
+        if (origen.equals(Constants.TIPO_ONLINE)) {
+            CyLDFormacionHandler.listActivitiesOnline(currentCallId, OnlineActivity.this, fechaInicioAct, fechaFinAct); // Parámetro this válido porque se implementa CyLDFormacionHandlerListener
+        } else if (origen.equals(Constants.TIPO_PRESENCIAL)) {
             CyLDFormacionHandler.listActivitiesPresencial(0, null, null, search, tipoVal, centroVal, currentCallId, OnlineActivity.this);
         }
     }// requestData
@@ -211,7 +336,7 @@ public class OnlineActivity extends MainActivity
         } else if (adapter == tipo) {
             tipoVal = "";
         }
-        //list.setRefreshing();//ver por que es
+        list.setRefreshing();//Se vió la razón de esto.TODO
     }
 
     @Override
@@ -232,19 +357,50 @@ public class OnlineActivity extends MainActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == back) {//Si el evento es sobre el botón volver.
+        if (v == back) { //Si el evento es sobre el botón volver.
             this.onBackPressed();
-        }else if (v == botonPrueba) {
-            requestData(false, search.getText().toString(), centroVal,
-                    tipoVal);
+        } else if (v == botonPrueba) { //Si el evento es sobre el botón prueba.
+            requestData(false, search.getText().toString());
+        } else if (v == imageButtonFechaInicio) {
+            showDialog(0);
+        } else if (v == imageButtonFechaFin) {
+            showDialog(1);
         }
     }
+
+    @Override
+    @Deprecated
+    protected Dialog onCreateDialog(int id) {
+        if (id == 0){
+            return new DatePickerDialog(this, datePickerListenerI, year, month, day);
+        } else if (id == 1) {
+            return new DatePickerDialog(this, datePickerListenerF, year, month, day);
+        }
+
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListenerI = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            editTextFechaInicio.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
+                    + selectedYear);
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener datePickerListenerF = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            editTextFechaFin.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
+                    + selectedYear);
+        }
+    };
+
 
     @Override
     public void onResults(String callId, Collection<CyLDFormacion> res, final boolean expectRefresh){
@@ -315,6 +471,7 @@ public class OnlineActivity extends MainActivity
     private class FamilyAdapter extends ArrayAdapter<Family> {
 
         LayoutInflater inflater;
+
         /**
         *  Constructor con el que se crea un objeto LayoutInflater.
         */
@@ -342,9 +499,7 @@ public class OnlineActivity extends MainActivity
             });
             return item;
         }
-
     }// FamilyAdapter
-
 
     /**
      * Extiende de AutoPagingListAdapter
@@ -389,26 +544,16 @@ public class OnlineActivity extends MainActivity
                 //Centro. Solo si es presencial
                 tv = (TextView) convertView.findViewById(R.id.centro_realizacion);
                 String location = "";
-                if (it.centro == null) {
-                    location = "";
-                } else {
+                if (it.centro != null && !it.centro.equals("")) {
                     location = it.centro;
+                    tv.setText(location);
                 }
-                /*
-                if (it.provinceId != null && it.provinceId.trim().length() > 0) {
-                    Family f = Family.getFamilyByCode(Constants.provincesID,
-                            it.provinceId);
-                    if (f != null) {
-                        location += " (" + f.getName() + ")";
-                    }
-                }*/
-                tv.setText(location);
 
                 //Fecha de Inicio
                 tv = (TextView) convertView.findViewById(R.id.fecha_realizacion);
                 if (it.fechaInicio != null) {
                     try {
-                        Date date = new SimpleDateFormat("yyyy-mm-dd").parse(it.fechaInicio);
+                        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(it.fechaInicio);//M may. para obtener el mes correcto
                         tv.setText(sdf.format(date));
                     }catch (ParseException pe) {
                         System.err.println("Problemas parseando fecha de inicio actividad formativa");
@@ -430,7 +575,7 @@ public class OnlineActivity extends MainActivity
 
         @Override
         protected void onScrollNext() {
-            requestData(false, search.getText().toString(), centroVal, tipoVal);
+            requestData(false, search.getText().toString());
         }
 
         /**

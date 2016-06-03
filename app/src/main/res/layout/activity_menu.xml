@@ -6,109 +6,103 @@
     android:orientation="vertical"
     tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.MenuActivity">
 
-    <!--MENU TOP-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/menu" >
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="sans-serif-light"
-            android:gravity="center"
-            android:text="@string/title_menu_formacion"
-            android:textColor="@color/textw" />
-    </RelativeLayout>
-
+    <include layout="@layout/menu_top" />
 
     <!--MENU PRESENCIALES-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical" >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-
-        <ImageView
-            android:id="@+id/icono_presenciales"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:src="@drawable/presenciales"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
-        <TextView
-            android:id="@+id/presencial"
-            android:layout_toRightOf="@id/icono_presenciales"
+
+                <ImageView
+                    android:id="@+id/icono_presenciales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="false"
+                    android:src="@drawable/presenciales"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"/>
+
+                <TextView
+                    android:id="@+id/presencial"
+                    android:layout_toRightOf="@id/icono_presenciales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/text"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="@string/menu_presencial" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/presencial"
+                android:text="@string/menu_formacion_presencial"
+                android:id="@+id/textView_presencial"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
+        <!--
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:padding="5dp"
-            android:textColor="@color/text"
-            android:textSize="20sp"
-            android:text="@string/menu_presencial" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="20dp"
-            android:layout_below="@+id/presencial"
-            android:text="@string/menu_formacion_presencial"
-            android:id="@+id/textView_presencial"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"/>/>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ffadadad"/>
-
-    <!--MENU ONLINES-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <ImageView
-            android:id="@+id/icono_online"
+            android:layout_height="1dp"
+            android:background="#ffadadad"/>
+    -->
+        <!--MENU ONLINES-->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/online"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"/>
-
-        <TextView
-            android:id="@+id/online"
-            android:layout_toRightOf="@id/icono_online"
+            android:orientation="vertical">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:padding="5dp"
-            android:textColor="@color/text"
-            android:textSize="20sp"
-            android:text="@string/menu_online" />
+            android:padding="10dp">
+            <ImageView
+                android:id="@+id/icono_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/online"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="20dp"
-            android:layout_below="@+id/online"
-            android:text="@string/menu_formacion_online"
-            android:id="@+id/textView_online"
-            android:textSize="15sp"
-            android:layout_marginTop="10dp"/>/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/online"
+                android:layout_toRightOf="@id/icono_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:text="@string/menu_online" />
+        </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/online"
+                android:text="@string/menu_formacion_online"
+                android:id="@+id/textView_online"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
 
-</LinearLayout>
+
+            </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/build"

@@ -14,12 +14,15 @@
         android:layout_height="1dp"
         android:background="#ffadadad"/>
 
+
+
+    <!--SPINNERS TIPO PRESENCIAL-->
     <!--android:layout_height="wrap_content" para que solo ocupe tamaño combos-->
     <LinearLayout
+        android:id="@+id/layoutSpinners"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <!--android:layout_width="0dp" misma medida en ancho-->
         <Spinner
             android:id="@+id/localidad"
@@ -44,6 +47,112 @@
         </Spinner>
     </LinearLayout>
 
+    <!--FECHAS TIPO ONLINE-->
+    <!--android:layout_height="wrap_content" para que solo ocupe tamaño combos-->
+    <LinearLayout
+        android:id="@+id/layoutFechas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:background="#dedede">
+
+        <!--fecha de Inicio-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textofechaIni"
+                android:text="@string/startdatetext"
+                android:textColor="#000000"
+                android:gravity="left"
+                android:layout_gravity="top"
+                android:paddingLeft="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_weight="0.66" >
+                <TextView
+                    android:id="@+id/fechaInicio"
+                    android:layout_width="70dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|right"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageButton
+                    android:background="#dedede"
+                    android:id="@+id/imagenCalendarFI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/selectstartdate"
+                    android:cropToPadding="false"
+                    android:src="@drawable/calendar"
+                    android:layout_gravity="left" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--Línea entre los textos de fechas-->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ffadadad"/>
+
+        <!--fecha de Fin-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textofechaFin"
+                android:text="@string/enddatetext"
+                android:textColor="#000000"
+                android:gravity="left"
+                android:layout_gravity="top"
+                android:paddingLeft="5dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_weight="0.66">
+                <TextView
+                    android:id="@+id/fechaFin"
+                    android:layout_width="80dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="bottom|right"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical|center_horizontal" />
+                <ImageButton
+                    android:id="@+id/imagenCalendarFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/selectenddate"
+                    android:src="@drawable/calendar"
+                    android:background="#dedede"
+                    android:layout_gravity="left" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
     <EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -58,12 +167,14 @@
         android:inputType="text"
         android:textColor="@color/subtitle"/>
 
+    <!--botón de pruebas oculto "gone"-->
     <Button
         android:id="@+id/btnPrueba"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="Busca"
-        android:textSize="11sp" />
+        android:textSize="11sp"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -83,5 +194,12 @@
         android:divider="#00000000"
         ptr:ptrHeaderTextColor="#ff444444"
         />
+    <LinearLayout
 
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px" >
+        <requestFocus />
+    </LinearLayout>
 </LinearLayout>

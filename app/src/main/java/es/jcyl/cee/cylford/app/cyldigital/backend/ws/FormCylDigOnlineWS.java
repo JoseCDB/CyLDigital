@@ -8,11 +8,13 @@ import java.util.Collection;
 import javax.net.ssl.HttpsURLConnection;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
+import es.jcyl.cee.cylford.app.cyldigital.R;
 import es.jcyl.cee.cylford.app.cyldigital.backend.Configuration;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDActivityParser;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDParserException;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
+import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
 
 /**
  * Created by josecarlos.delbarrio on 13/10/2015.
@@ -89,14 +91,12 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
         //Y si es búsqueda de actividades de tipo Presencial.
         //La no inclusión de uno de estos 2 parámetros en la consulta de actividades presenciales, devuelve mensaje de error.
         if (tipoFormacion.equals(Constants.TIPO_PRESENCIAL)) {
-            if (tipoActividad != null) {
+            if ((tipoActividad != null) && (provincia != null)) {
                 if(cont > 0) {
                     sUrl.append("&");
                 }
                 sUrl.append("tipoActividad=").append(tipoActividad);
                 cont++;
-            }
-            if (provincia != null) {
                 if(cont > 0) {
                     sUrl.append("&");
                 }

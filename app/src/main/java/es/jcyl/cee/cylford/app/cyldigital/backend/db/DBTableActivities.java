@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.Normalizer;
 import java.util.List;
 
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
@@ -224,7 +225,13 @@ public class DBTableActivities extends DBTable {
         values.put(COL_HORA_FIN, act.horaFin);
         values.put(COL_FECHA_INICIO_MATRIC, act.fechaInicioMatriculacion);
         values.put(COL_FECHA_FIN_MATRIC, act.fechaFinMatriculacion);
-        values.put(COL_CENTRO, act.centro);
+        //Se quitan acentos de la provincia al hacer el guardado de la actividad.
+        String centro = "";
+        if(act.centro != null && !act.centro.equals("")) {
+            centro = Normalizer.normalize(act.centro, Normalizer.Form.NFD)
+                    .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        }
+        values.put(COL_CENTRO, centro.toLowerCase());
         values.put(COL_NIVEL, act.nivel);
         values.put(COL_AGRUPACION, act.agrupacion);// Online
         values.put(COL_NOM_AGRUPACION, act.nombreAgrupacion);
