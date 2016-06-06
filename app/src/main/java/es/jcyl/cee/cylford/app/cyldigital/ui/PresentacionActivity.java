@@ -20,7 +20,7 @@ public class PresentacionActivity extends MainActivity {
         setContentView(R.layout.activity_presentacion);
         slide_me = new SimpleSideDrawer(this);
         slide_me.setLeftBehindContentView(R.layout.left_menu);
-        slide_me.setRightBehindContentView(R.layout.right_menu);
+        //slide_me.setRightBehindContentView(R.layout.right_menu);
 
         left_button = (Button) findViewById(R.id.left_buton);
         right_button = (Button) findViewById(R.id.right_buton);

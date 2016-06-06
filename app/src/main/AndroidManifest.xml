@@ -53,11 +53,11 @@ android:targetSdkVersion — Specifies the API Level on which the application is
             android:name=".MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name=".ui.MenuActivity"
+            android:name=".ui.MenuFormacionActivity"
             android:label="@string/title_activity_menu"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.OnlineActivity"
+            android:name=".ui.ActividadesFormativasActivity"
             android:label="@string/title_activity_online" />
         <activity
             android:name=".ui.WebContentActivity"

@@ -8,13 +8,11 @@ import java.util.Collection;
 import javax.net.ssl.HttpsURLConnection;
 
 import es.jcyl.cee.cylford.app.cyldigital.Constants;
-import es.jcyl.cee.cylford.app.cyldigital.R;
 import es.jcyl.cee.cylford.app.cyldigital.backend.Configuration;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDActivityParser;
 import es.jcyl.cee.cylford.app.cyldigital.parser.CyLDParserException;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
-import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
-import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
+import es.jcyl.cee.cylford.app.cyldigital.ui.ActividadesFormativasActivity;
 
 /**
  * Created by josecarlos.delbarrio on 13/10/2015.
@@ -50,7 +48,7 @@ public class FormCylDigOnlineWS extends FormCylDigWS {
      * @throws CyLDWServiceException
      */
     public static Collection<CyLDFormacion> getActividades(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
-                                            String text, String tipoActividad, String provincia, OnlineActivity listener) throws CyLDWServiceException {
+                                            String text, String tipoActividad, String provincia, ActividadesFormativasActivity listener) throws CyLDWServiceException {
         InputStream is = null;
         HttpsURLConnection cnt = null;
         StringBuffer sUrl = new StringBuffer();

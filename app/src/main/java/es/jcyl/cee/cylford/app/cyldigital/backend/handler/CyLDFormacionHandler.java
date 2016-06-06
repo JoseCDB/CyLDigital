@@ -11,7 +11,7 @@ import es.jcyl.cee.cylford.app.cyldigital.backend.ws.CyLDWServiceException;
 import es.jcyl.cee.cylford.app.cyldigital.backend.ws.FormCylDigOnlineWS;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
 import es.jcyl.cee.cylford.app.cyldigital.backend.App;
-import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
+import es.jcyl.cee.cylford.app.cyldigital.ui.ActividadesFormativasActivity;
 
 /**
  * Created by josecarlos.delbarrio on 20/10/2015.
@@ -56,7 +56,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
      */
     public static void listActivitiesPresencial(final int numeroAct, final String fechaInicio, final String fechaFin,
                                       final String text, final String tipoActividad, final String centro,
-                                      final String callId, final OnlineActivity listener) {
+                                      final String callId, final ActividadesFormativasActivity listener) {
         startCallId(callId);
 
         //**Se crea un objeto "retrieverBlock" de una clase anónima interna que implementa la interfaz "CollectionDataRetrieverBlock" declarada en CyLDHandler.
@@ -98,7 +98,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
      * @param callId
      * @param listener
      */
-    public static void listActivitiesOnline(final String callId, final OnlineActivity listener, final String fechaInicio, final String fechaFin) {
+    public static void listActivitiesOnline(final String callId, final ActividadesFormativasActivity listener, final String fechaInicio, final String fechaFin) {
         startCallId(callId);
 
         //**Añado un objeto "retrieverBlock" de una clase anónima interna que implementa la interfaz "CollectionDataRetrieverBlock" declarada en CyLDHandler
@@ -141,7 +141,7 @@ public class CyLDFormacionHandler extends CyLDHandler {
      * @throws CyLDWServiceException
      */
     private static Collection<CyLDFormacion> getActividadesDesdeWebservice(String tipoFormacion, int numeroAct, String fechaInicio, String fechaFin,
-                                                                           String text, String tipoActividad, String provincia, OnlineActivity listener){
+                                                                           String text, String tipoActividad, String provincia, ActividadesFormativasActivity listener){
         try {
             return FormCylDigOnlineWS.getActividades(tipoFormacion, numeroAct, fechaInicio, fechaFin, text, tipoActividad, provincia, listener);
         } catch (CyLDWServiceException e) {

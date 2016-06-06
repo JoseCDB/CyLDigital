@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity">
+    tools:context=".ui.ActividadesFormativasActivity">
 
     <include layout="@layout/menu_top" />
     <!--Línea entre el título y el layout de los combos -->

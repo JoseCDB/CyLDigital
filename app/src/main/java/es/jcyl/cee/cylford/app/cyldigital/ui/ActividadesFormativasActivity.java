@@ -49,13 +49,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.navdrawer.SimpleSideDrawer;
 
 /*
 * La Interfaz OnItemSelectedListener me obliga a implementar métodos: onItemSelected, onNothingSelected
 * La Interfaz OnClickListener me obliga a implementar métodos: onClick, OnClickListener
 * La Interfaz CyLDFormacionHandlerListener me obliga a implementar los métodos: onResults
 * */
-public class OnlineActivity extends MainActivity
+public class ActividadesFormativasActivity extends MainActivity
         implements
         AdapterView.OnItemSelectedListener,
         View.OnClickListener,
@@ -78,8 +79,6 @@ public class OnlineActivity extends MainActivity
     String centroVal, tipoVal, fechaInicioAct, fechaFinAct = "";
     //Campo buscar
     EditText search;
-    //Botón volver
-    View back;
     //Campo que muestra el número de resutlados de la búsqueda.
     TextView count;
     //Contiene  "fecha + nombre"  de la llamada actual al Servicio Web.
@@ -90,6 +89,11 @@ public class OnlineActivity extends MainActivity
     PullToRefreshListView list;;
 
     Button botonPrueba;
+
+    //Botón volver
+    View back;
+
+    SimpleSideDrawer slide_me;
 
     //Layouts para los spinners de selección de centro y tipo de actividad
     //Layout para los botones de fecha de inicio y fecha de fin
@@ -108,7 +112,7 @@ public class OnlineActivity extends MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_online);
+        setContentView(R.layout.activity_actformativas);
         getSupportActionBar().hide();
 
         origen = getIntent().getStringExtra("origen");
@@ -216,6 +220,9 @@ public class OnlineActivity extends MainActivity
         imageButtonFechaFin = (ImageButton) findViewById(R.id.imagenCalendarFF);
         editTextFechaFin = (TextView) findViewById(R.id.fechaFin);
         imageButtonFechaFin.setOnClickListener(this);
+        //
+        slide_me = new SimpleSideDrawer(this);
+        slide_me.setLeftBehindContentView(R.layout.left_menu);
 
         //A mostrar/ocultar en dependencia del tipo de formación
         if (origen.equals(Constants.TIPO_ONLINE)) {
@@ -239,7 +246,7 @@ public class OnlineActivity extends MainActivity
             tv.setText("");
             tv = (TextView) findViewById(R.id.title);
             tv.setText(R.string.title_presenciales);
-            Utils.showSimpleDialog(OnlineActivity.this, null,
+            Utils.showSimpleDialog(ActividadesFormativasActivity.this, null,
                     getString(R.string.presenciales_error), null);
         }
     }
@@ -323,9 +330,9 @@ public class OnlineActivity extends MainActivity
         currentCallTime = new Date().getTime();
         //Si no hay valor en ninguno de los campos
         if (origen.equals(Constants.TIPO_ONLINE)) {
-            CyLDFormacionHandler.listActivitiesOnline(currentCallId, OnlineActivity.this, fechaInicioAct, fechaFinAct); // Parámetro this válido porque se implementa CyLDFormacionHandlerListener
+            CyLDFormacionHandler.listActivitiesOnline(currentCallId, ActividadesFormativasActivity.this, fechaInicioAct, fechaFinAct); // Parámetro this válido porque se implementa CyLDFormacionHandlerListener
         } else if (origen.equals(Constants.TIPO_PRESENCIAL)) {
-            CyLDFormacionHandler.listActivitiesPresencial(0, null, null, search, tipoVal, centroVal, currentCallId, OnlineActivity.this);
+            CyLDFormacionHandler.listActivitiesPresencial(0, null, null, search, tipoVal, centroVal, currentCallId, ActividadesFormativasActivity.this);
         }
     }// requestData
 
@@ -363,7 +370,8 @@ public class OnlineActivity extends MainActivity
     @Override
     public void onClick(View v) {
         if (v == back) { //Si el evento es sobre el botón volver.
-            this.onBackPressed();
+            //this.onBackPressed(); //retorna a la actividad anterior
+            slide_me.toggleLeftDrawer();
         } else if (v == botonPrueba) { //Si el evento es sobre el botón prueba.
             requestData(false, search.getText().toString());
         } else if (v == imageButtonFechaInicio) {
@@ -429,7 +437,7 @@ public class OnlineActivity extends MainActivity
                                 data.size()));
                         count.setVisibility(View.VISIBLE);
                         if (data.size() == 0) {
-                            Utils.showSimpleDialog(OnlineActivity.this, null,
+                            Utils.showSimpleDialog(ActividadesFormativasActivity.this, null,
                                     getString(R.string.no_results), null);
                         }
                     }
@@ -512,7 +520,7 @@ public class OnlineActivity extends MainActivity
             implements AdapterView.OnItemClickListener {
 
         public BoardAdapter() {
-            super(OnlineActivity.this, R.layout.item_actividad, data);
+            super(ActividadesFormativasActivity.this, R.layout.item_actividad, data);
         }
 
         /**
@@ -591,7 +599,7 @@ public class OnlineActivity extends MainActivity
             CyLDFormacion it = getItem(position - 1);
             if (it != null) {
                 //Globals.selectedItem = it;
-                Intent i = new Intent(OnlineActivity.this, DetalleActividadActivity.class);
+                Intent i = new Intent(ActividadesFormativasActivity.this, DetalleActividadActivity.class);
                 i.putExtra("SELECTED_ITEM", it);
                 startActivity(i);
             }

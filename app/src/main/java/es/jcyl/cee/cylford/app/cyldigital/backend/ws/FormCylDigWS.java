@@ -5,8 +5,6 @@ import android.net.NetworkInfo;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.security.KeyManagementException;
@@ -22,7 +20,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import es.jcyl.cee.cylford.app.cyldigital.R;
 import es.jcyl.cee.cylford.app.cyldigital.backend.App;
-import es.jcyl.cee.cylford.app.cyldigital.ui.OnlineActivity;
+import es.jcyl.cee.cylford.app.cyldigital.ui.ActividadesFormativasActivity;
 
 /**
  * Created by josecarlos.delbarrio on 13/10/2015.
@@ -42,7 +40,7 @@ public abstract class FormCylDigWS {
      * Genera el objeto HttpURLConnection que se utilizará
      * en el InputStream que recupera las actividades.
      * */
-    protected static HttpsURLConnection enviarRequestA(String sUrl, int connectTimeOut, int readTimeOut, OnlineActivity listener) throws IOException {
+    protected static HttpsURLConnection enviarRequestA(String sUrl, int connectTimeOut, int readTimeOut, ActividadesFormativasActivity listener) throws IOException {
         HttpsURLConnection cnt = null;
         URL url = null;
         try {

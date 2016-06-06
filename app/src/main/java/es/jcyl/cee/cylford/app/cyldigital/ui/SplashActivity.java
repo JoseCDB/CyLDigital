@@ -2,11 +2,7 @@ package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,8 +32,8 @@ public class SplashActivity extends MainActivity {
             @Override
             public void run() {
 
-                // Start the next activity. En nuestro caso arrancamos desde aquí la MenuActivity
-                Intent mainIntent = new Intent().setClass(SplashActivity.this, MenuActivity.class);
+                // Start the next activity. En nuestro caso arrancamos desde aquí la MenuFormacionActivity
+                Intent mainIntent = new Intent().setClass(SplashActivity.this, MenuFormacionActivity.class);
                 startActivity(mainIntent);
 
                 // Close the activity so the user won't able to go back this
