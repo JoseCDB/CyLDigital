@@ -10,6 +10,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.navdrawer.SimpleSideDrawer;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,15 +29,12 @@ import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
 public class DetalleActividadActivity extends MainActivity implements OnClickListener {
 
     SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
-    //botón actividad atrás
     View back;
+    View btnMenuLeft;
     CyLDFormacion it;
-
-    WebView web;
     Button info;
-
     TextView centFor;
-
+    SimpleSideDrawer slide_me;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -58,6 +57,14 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         back = this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
+        //Botón de menú lateral
+        btnMenuLeft = this.findViewById(R.id.btnleftmenu);
+        btnMenuLeft.setOnClickListener(this);
+
+        //Objeto que realiza la acción de mostrar el menú lateral
+        slide_me = new SimpleSideDrawer(this);
+        slide_me.setLeftBehindContentView(R.layout.left_menu);
+
         //Descripción de la actividad
         tv = (TextView) findViewById(R.id.description);
         String descActi = "";
@@ -68,7 +75,6 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
 
         tv.setText(Html.fromHtml(descActi));
 
-
         //Centro donde se imparte
         centFor = (TextView) findViewById(R.id.centro);
         String centroFormativo = "";
@@ -77,7 +83,6 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         } else {
             centroFormativo = it.centro;
         }
-
 
         //Texto Fecha de Inicio actividad
         tv = (TextView) findViewById(R.id.fecha);
@@ -111,9 +116,11 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
 
     @Override
     public void onClick(View v) {
-        if( v == back){
+        if(v == back) {
             this.onBackPressed();
-        } else if( v == info){
+        }else if (v == btnMenuLeft) {
+            slide_me.toggleLeftDrawer();
+        } else if(v == info){
             Intent i = new Intent(this, WebContentActivity.class);
             i.putExtra("url", it.url);
             startActivity(i);

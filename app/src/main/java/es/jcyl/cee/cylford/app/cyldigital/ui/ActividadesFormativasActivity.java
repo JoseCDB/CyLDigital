@@ -87,15 +87,14 @@ public class ActividadesFormativasActivity extends MainActivity
     long currentCallTime = 0;
     //Nueva lista Pull to refresh para mostrar los resultados devueltos.
     PullToRefreshListView list;;
-
+    //Botón de prueba que no se muestra en la versión final.
     Button botonPrueba;
-
     //Botón volver
     View back;
-
+    //Botón menú lateral
+    View btnMenuLeft;
     SimpleSideDrawer slide_me;
-
-    //Layouts para los spinners de selección de centro y tipo de actividad
+    //Layout para los spinners de selección de centro y tipo de actividad
     //Layout para los botones de fecha de inicio y fecha de fin
     View layoutSpinners, layoutCalendars;
 
@@ -188,7 +187,7 @@ public class ActividadesFormativasActivity extends MainActivity
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
 
-        //BOTÓN FECHA INICIO
+        //10 BOTÓN FECHA INICIO
         imageButtonFechaInicio = (ImageButton) findViewById(R.id.imagenCalendarFI);
         editTextFechaInicio = (TextView) findViewById(R.id.fechaInicio);
         imageButtonFechaInicio.setOnClickListener(this);
@@ -207,8 +206,8 @@ public class ActividadesFormativasActivity extends MainActivity
 
             @Override
             public void afterTextChanged(Editable s) {
-                fechaInicioAct = editTextFechaInicio.getText().toString().replaceAll("\\s","");
-                fechaFinAct = editTextFechaFin.getText().toString().replaceAll("\\s","");
+                fechaInicioAct = editTextFechaInicio.getText().toString().replaceAll("\\s", "");
+                fechaFinAct = editTextFechaFin.getText().toString().replaceAll("\\s", "");
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         list.setRefreshing();
@@ -216,13 +215,19 @@ public class ActividadesFormativasActivity extends MainActivity
                 }, 250);
             }
         }));
-        //BOTÓN FECHA FIN
+
+        //11 BOTÓN FECHA FIN
         imageButtonFechaFin = (ImageButton) findViewById(R.id.imagenCalendarFF);
         editTextFechaFin = (TextView) findViewById(R.id.fechaFin);
         imageButtonFechaFin.setOnClickListener(this);
-        //
+
+        //12
         slide_me = new SimpleSideDrawer(this);
         slide_me.setLeftBehindContentView(R.layout.left_menu);
+
+        //13 BOTÓN MENÚ LATERAL
+        btnMenuLeft = this.findViewById(R.id.btnleftmenu);
+        btnMenuLeft.setOnClickListener(this);
 
         //A mostrar/ocultar en dependencia del tipo de formación
         if (origen.equals(Constants.TIPO_ONLINE)) {
@@ -369,10 +374,11 @@ public class ActividadesFormativasActivity extends MainActivity
 
     @Override
     public void onClick(View v) {
-        if (v == back) { //Si el evento es sobre el botón volver.
-            //this.onBackPressed(); //retorna a la actividad anterior
+        if (v == back) {
+            this.onBackPressed(); //retorna a la actividad anterior
+        }else if (v == btnMenuLeft) {
             slide_me.toggleLeftDrawer();
-        } else if (v == botonPrueba) { //Si el evento es sobre el botón prueba.
+        } else if (v == botonPrueba) {
             requestData(false, search.getText().toString());
         } else if (v == imageButtonFechaInicio) {
             showDialog(0);
@@ -384,7 +390,7 @@ public class ActividadesFormativasActivity extends MainActivity
     @Override
     @Deprecated
     protected Dialog onCreateDialog(int id) {
-        if (id == 0){
+        if (id == 0) {
             return new DatePickerDialog(this, datePickerListenerI, year, month, day);
         } else if (id == 1) {
             return new DatePickerDialog(this, datePickerListenerF, year, month, day);
