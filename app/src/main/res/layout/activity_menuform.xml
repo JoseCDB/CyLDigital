@@ -50,7 +50,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:layout_below="@+id/presencial"
                 android:text="@string/menu_formacion_presencial"
                 android:id="@+id/textView_presencial"
                 android:textSize="15sp"

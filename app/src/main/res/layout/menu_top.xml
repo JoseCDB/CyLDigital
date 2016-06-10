@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
     android:layout_height="45dp"
-    android:background="@color/menu"
-    android:transitionGroup="false">
-
-    <ImageView
-        android:id="@+id/btnleftmenu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/bck_arrow" />
+    android:background="@color/menu">
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
         android:paddingLeft="15dp"
         android:src="@drawable/bck_arrow" />
 
@@ -23,6 +16,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignLeft="@+id/back"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
         android:text="@string/title_menu_formacion"
@@ -32,4 +26,11 @@
         android:maxLength="40"
         android:textStyle="bold" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/btnrightmenu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/list" />
+
+</RelativeLayout>

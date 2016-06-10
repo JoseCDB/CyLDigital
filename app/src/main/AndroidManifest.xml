@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.jcyl.cee.cylford.app.cyldigital">
-
+    <!--AndroidManifest.xml define el contenido y el comportamiento de la aplicación -->
     <!-- Permisos INTERNET, ACCESS_NETWORK_STATE, WRITE_EXTERNAL_STORAGE para evitar errores de Conectividad -->
     <!-- java.lang.SecurityException: ConnectivityService: Neither user 10056 nor current process has android.permission.ACCESS_NETWORK_STATE. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -44,7 +44,6 @@ android:targetSdkVersion — Specifies the API Level on which the application is
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
                 <!-- Solo una puede ser LAUNCHER. La principal. -->
             </intent-filter>

@@ -4,15 +4,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash">CyLDigital</string>
-    <string name="title_activity_menu">MenuActivity</string>
+
     <string name="menu_presencial">Formación Presencial</string>
     <string name="menu_online">Formación Online</string>
     <string name="title_menu_formacion">Formación CyLDigital</string>
     <string name="title_presenciales">Formación Presencial CyLDigital</string>
     <string name="title_onlines">Formación Online CyLDigital</string>
     <string name="build">Build %d</string>
-    <string name="title_activity_presencial">PresencialActivity</string>
-    <string name="title_activity_online">OnlineActivity</string>
+
     <string name="search">Buscar</string>
 
     <string name="server_error_short">Error en las comunicaciones</string>
@@ -22,9 +21,15 @@
     <string name="cuenta_actividades">%d actividades</string>
     <string name="update">Actualizando datos&#8230;</string>
     <string name="no_results">No se han encontrado resultados</string>
+
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_presencial">PresencialActivity</string>
+    <string name="title_activity_online">OnlineActivity</string>
     <string name="title_activity_web_content">WebContentActivity</string>
-    <string name="loading">cargando</string>
+    <string name="title_activity_presentacion">PresentacionActivity</string>
     <string name="title_activity_detalle_actividad">DetalleActividad</string>
+
+    <string name="loading">cargando</string>
     <string name="content_link">Ver actividad</string>
     <string name="menu_formacion_presencial">Ahora tiene la oportunidad de formarse en las nuevas tecnologías de la información y la comunicación. Ponemos a su disposición toda una red de centros, variedad de horarios y un amplio catálogo de talleres y cursos. Para más información, contacte con el teléfono 012.</string>
     <string name="menu_formacion_online">Podrá acceder a una amplia oferta de formación en nuevas tecnologías desde nuestra plataforma de formación virtual.</string>
@@ -32,6 +37,12 @@
     <string name="selectenddate">fecha de fin</string>
     <string name="startdatetext">Fecha de inicio</string>
     <string name="enddatetext">Fecha de fin</string>
-    <string name="title_activity_presentacion">PresentacionActivity</string>
 
+
+    <string name="quienes_somos">El Programa CyL Digital, "Castilla y León Comunidad Digital", es una iniciatiativa de la D.G de Telecomunicaciones de la Consejería de Fomento y Medio Ambiente de la Junta de Castilla y León, incluida en el marco de la Agenda Digital para Castilla y León, cuyo objetivo es informar y sensibilizar a la sociedad sobre las ventajas que ofrecen las nuevas tecnologías y la Sociedad de la Información.</string>
+    <string name="que_es">CyLDigital es un programa abierto a todos (ciudadanos, autónomos y pequeñas empresas) en el que se desarrollan iniciativas para sensibilizar y formar a las personas en la aplicación de las nuevas Tecnologías de la Información y la Comunicación (TIC) a su vida cotidiana, a su trabajo o a sus negocios. En CYL Digital podrá encontrar su sitio para aprender, informarse, consultar, compartir, aportar y colaborar en el intercambio de experiencias, todo ello relacionado con las TIC y la multitud de posibilidades que ofrecen.
+        Un territorio ilimitado de conocimientos que, por medio de las tecnologías multimedia y la formación, tanto presencial como online, le abrirán caminos en su aprendizaje con una oferta formativa diseñada para dar respuesta a sus necesidades. Un lugar en el que podrá relacionarte con personas de cualquier edad, donde podrá participar en comunidad, donde siempre es tiempo para aprender y compartir ideas.
+        Todo ello, con el soporte de una red de Espacios CYL Digital, en las capitales de Castilla y León, y de la Red Regional de Cibercentros, repartidos por toda la Comunidad, que impulsan el acercamiento de las TIC a la sociedad castellana y leonesa y desarrollan actividades formativas para fomentar su utilización y evitar la exclusión digital.
+        Además, CYL Digital busca promover sinergias con entidades, tanto públicas como privadas, que desarrollen iniciativas y programas TIC, para conseguir un mayor impacto y resultados y facilitar la consecución de objetivos comunes, optimizando los recursos y alineando acciones que benefician al mismo público objetivo.
+        En definitiva, se abren ante usted infinidad de posibilidades en el mundo virtual.</string>
 </resources>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -21,7 +20,6 @@ import es.jcyl.cee.cylford.app.cyldigital.Constants;
 import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.R;
 import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
-import es.jcyl.cee.cylford.app.cyldigital.utils.Utils;
 
 /**
  * Created by josecarlos.delbarrio on 15/03/2016.
@@ -30,7 +28,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
 
     SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
     View back;
-    View btnMenuLeft;
+    View btnMenuRight;
     CyLDFormacion it;
     Button info;
     TextView centFor;
@@ -58,12 +56,12 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         back.setOnClickListener(this);
 
         //Botón de menú lateral
-        btnMenuLeft = this.findViewById(R.id.btnleftmenu);
-        btnMenuLeft.setOnClickListener(this);
+        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight.setOnClickListener(this);
 
         //Objeto que realiza la acción de mostrar el menú lateral
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.left_menu);
+        slide_me.setLeftBehindContentView(R.layout.right_menu);
 
         //Descripción de la actividad
         tv = (TextView) findViewById(R.id.description);
@@ -118,8 +116,8 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
     public void onClick(View v) {
         if(v == back) {
             this.onBackPressed();
-        }else if (v == btnMenuLeft) {
-            slide_me.toggleLeftDrawer();
+        }else if (v == btnMenuRight) {
+            slide_me.toggleRightDrawer();
         } else if(v == info){
             Intent i = new Intent(this, WebContentActivity.class);
             i.putExtra("url", it.url);

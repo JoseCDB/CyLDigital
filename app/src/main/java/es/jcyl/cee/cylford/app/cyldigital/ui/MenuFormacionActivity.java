@@ -24,7 +24,7 @@ public class MenuFormacionActivity extends MainActivity
     View textOnline;
     TextView build;
     View back;
-    View btnMenuLeft;
+    View btnMenuRight;
     SimpleSideDrawer slide_me;
 
     @Override
@@ -54,11 +54,11 @@ public class MenuFormacionActivity extends MainActivity
         back = this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        btnMenuLeft = this.findViewById(R.id.btnleftmenu);
-        btnMenuLeft.setOnClickListener(this);
+        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight.setOnClickListener(this);
 
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.left_menu);
+        slide_me.setLeftBehindContentView(R.layout.right_menu);
 
         //Para ver en pantalla el build (versión) de la app
         build = (TextView) this.findViewById(R.id.build);
@@ -86,8 +86,8 @@ public class MenuFormacionActivity extends MainActivity
                 v == textOnline) {
             i.putExtra("origen", Constants.TIPO_ONLINE);
             startActivity(i);
-        } else if (v == btnMenuLeft) {
-            slide_me.toggleLeftDrawer();
+        } else if (v == btnMenuRight) {
+            slide_me.toggleRightDrawer();
         }
     }
 }

@@ -1,23 +1,184 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--  contenedor -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.PresentacionActivity">
-    <Button
-        android:id="@+id/left_buton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Left Menu" />
+    android:orientation="vertical"
+    tools:context=".ui.PresentacionActivity">
 
-    <Button
-        android:id="@+id/right_buton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Right Menu" />
+    <include layout="@layout/menu_top" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/presencial"
+        android:layout_toRightOf="@id/icono_presenciales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/text"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/menu_presencial"
+        android:visibility="gone" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/logo_cylDigital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:src="@drawable/cyildigital"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/logo_jcyl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:src="@drawable/jcyl"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/presencial"
+                android:text="@string/quienes_somos"
+                android:id="@+id/textView_presencial"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/online"
+                android:layout_toRightOf="@id/icono_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="¿Que es CyL Digital?" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/online"
+                android:text="@string/que_es"
+                android:id="@+id/textView_online"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+    <!--MENU PRESENCIALES
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <ImageView
+                    android:id="@+id/icono_presenciales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="false"
+                    android:src="@drawable/presenciales"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp" />
+                <TextView
+                    android:id="@+id/presencial"
+                    android:layout_toRightOf="@id/icono_presenciales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textColor="@color/text"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:text="@string/menu_presencial" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/presencial"
+                android:text="@string/quienes_somos"
+                android:id="@+id/textView_presencial"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+                <ImageView
+                    android:id="@+id/icono_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/online"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/online"
+                    android:layout_toRightOf="@id/icono_online"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:textColor="@color/text"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="¿Que es CyL Digital?" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:layout_below="@+id/online"
+                android:text="@string/que_es"
+                android:id="@+id/textView_online"
+                android:textSize="15sp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+-->
+    <TextView
+        android:id="@+id/build"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="3dp"
+        android:textColor="#ff666666"
+        android:text="Build 34"/>
+</LinearLayout>

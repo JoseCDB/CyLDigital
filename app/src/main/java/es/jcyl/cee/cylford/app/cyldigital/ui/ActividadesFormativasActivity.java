@@ -92,7 +92,7 @@ public class ActividadesFormativasActivity extends MainActivity
     //Botón volver
     View back;
     //Botón menú lateral
-    View btnMenuLeft;
+    View btnMenuRight;
     SimpleSideDrawer slide_me;
     //Layout para los spinners de selección de centro y tipo de actividad
     //Layout para los botones de fecha de inicio y fecha de fin
@@ -223,11 +223,11 @@ public class ActividadesFormativasActivity extends MainActivity
 
         //12
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.left_menu);
+        slide_me.setLeftBehindContentView(R.layout.right_menu);
 
         //13 BOTÓN MENÚ LATERAL
-        btnMenuLeft = this.findViewById(R.id.btnleftmenu);
-        btnMenuLeft.setOnClickListener(this);
+        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight.setOnClickListener(this);
 
         //A mostrar/ocultar en dependencia del tipo de formación
         if (origen.equals(Constants.TIPO_ONLINE)) {
@@ -376,8 +376,8 @@ public class ActividadesFormativasActivity extends MainActivity
     public void onClick(View v) {
         if (v == back) {
             this.onBackPressed(); //retorna a la actividad anterior
-        }else if (v == btnMenuLeft) {
-            slide_me.toggleLeftDrawer();
+        }else if (v == btnMenuRight) {
+            slide_me.toggleRightDrawer();
         } else if (v == botonPrueba) {
             requestData(false, search.getText().toString());
         } else if (v == imageButtonFechaInicio) {

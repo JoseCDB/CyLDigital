@@ -14,6 +14,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.navdrawer.SimpleSideDrawer;
+
 import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.R;
 
@@ -30,10 +32,10 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
     Button wfoward;
     //objeto WebView
     WebView web;
-
     View loading;
-
     String url = null;
+    SimpleSideDrawer slide_me;
+    View btnMenuRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,27 +71,37 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
         web.getSettings().setLoadWithOverviewMode(true);
         web.setWebViewClient(new MyWebViewClient());
         web.loadUrl(url);
+
+        //Botón de menú lateral
+        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight.setOnClickListener(this);
+
+        //Objeto que realiza la acción de mostrar el menú lateral
+        slide_me = new SimpleSideDrawer(this);
+        slide_me.setLeftBehindContentView(R.layout.right_menu);
     }
 
 
     @Override
     public void onClick(View v) {
-        if( v == back){
+        if( v == back) {
             this.onBackPressed();
-        }else if( v == wback){
-            if( web.canGoBack()){
+        } else if( v == wback){
+            if( web.canGoBack()) {
                 web.goBack();
                 wback.setEnabled(web.canGoBack());
             }else{
                 wback.setEnabled(false);
             }
-        }else if( v == wfoward){
+        } else if( v == wfoward) {
             if( web.canGoForward()){
                 web.goForward();
                 wfoward.setEnabled(web.canGoForward());
-            }else{
+            } else {
                 wfoward.setEnabled(false);
             }
+        } else if (v == btnMenuRight) {
+            slide_me.toggleRightDrawer();
         }
     }
 
