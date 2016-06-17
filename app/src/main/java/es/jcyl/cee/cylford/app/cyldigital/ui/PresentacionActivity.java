@@ -1,46 +1,59 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.navdrawer.SimpleSideDrawer;
 
 import es.jcyl.cee.cylford.app.cyldigital.MainActivity;
 import es.jcyl.cee.cylford.app.cyldigital.R;
 
-public class PresentacionActivity extends MainActivity {
+public class PresentacionActivity extends MainActivity implements View.OnClickListener {
 
-    SimpleSideDrawer slide_me;
-    Button left_button, right_button;
+    private SimpleSideDrawer slide_me;
+    private View btnMenuRight;
+    private View back;
+    private View itemPresentacion;
+    private View itemFormativas;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentacion);
+        //getSupportActionBar().hide();
+
+        back = this.findViewById(R.id.back);
+        back.setOnClickListener(this);
+
+        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight.setOnClickListener(this);
+
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.right_menu);
-        //slide_me.setRightBehindContentView(R.layout.right_menu);
+        slide_me.setRightBehindContentView(R.layout.menu_right);
 
-       // left_button = (Button) findViewById(R.id.left_buton);
-        //right_button = (Button) findViewById(R.id.right_buton);
-        left_button.setOnClickListener(new View.OnClickListener() {
+        itemPresentacion = this.findViewById(R.id.presentacion);
+        itemPresentacion.setOnClickListener(this);
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                slide_me.toggleLeftDrawer();
-            }
-        });
-        right_button.setOnClickListener(new View.OnClickListener() {
+        itemFormativas = this.findViewById(R.id.formativas);
+        itemFormativas.setOnClickListener(this);
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                slide_me.toggleRightDrawer();
-            }
-        });
     }
 
+    public void onClick(View v) {
+        if (v == back) {
+            this.onBackPressed();
+        }else if (v == btnMenuRight) {
+            slide_me.toggleRightDrawer();
+        } else if (v == itemPresentacion) {
+            Intent i = new Intent(this, PresentacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
+        } else if (v == itemFormativas) {
+            Intent i = new Intent(this, MenuFormacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
+        }
+    }
 
 }

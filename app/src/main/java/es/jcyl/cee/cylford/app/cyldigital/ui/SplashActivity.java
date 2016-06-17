@@ -33,7 +33,7 @@ public class SplashActivity extends MainActivity {
             public void run() {
 
                 // Start the next activity. En nuestro caso arrancamos desde aquí la MenuFormacionActivity
-                Intent mainIntent = new Intent().setClass(SplashActivity.this, MenuFormacionActivity.class);
+                Intent mainIntent = new Intent().setClass(SplashActivity.this, PresentacionActivity.class);
                 startActivity(mainIntent);
 
                 // Close the activity so the user won't able to go back this

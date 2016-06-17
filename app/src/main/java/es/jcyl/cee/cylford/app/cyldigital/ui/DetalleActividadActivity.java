@@ -61,7 +61,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
 
         //Objeto que realiza la acción de mostrar el menú lateral
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.right_menu);
+        slide_me.setRightBehindContentView(R.layout.menu_right);
 
         //Descripción de la actividad
         tv = (TextView) findViewById(R.id.description);

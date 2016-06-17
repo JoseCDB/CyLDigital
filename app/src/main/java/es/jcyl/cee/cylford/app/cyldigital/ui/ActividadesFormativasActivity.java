@@ -108,6 +108,9 @@ public class ActividadesFormativasActivity extends MainActivity
     private ImageButton imageButtonFechaFin;
     private TextView editTextFechaFin;
 
+    private View itemPresentacion;
+    private View itemFormativas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,11 +226,18 @@ public class ActividadesFormativasActivity extends MainActivity
 
         //12
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.right_menu);
+        slide_me.setRightBehindContentView(R.layout.menu_right);
 
         //13 BOTÓN MENÚ LATERAL
         btnMenuRight = this.findViewById(R.id.btnrightmenu);
         btnMenuRight.setOnClickListener(this);
+
+        //14 MENÚ
+        itemPresentacion = this.findViewById(R.id.presentacion);
+        itemPresentacion.setOnClickListener(this);
+
+        itemFormativas = this.findViewById(R.id.formativas);
+        itemFormativas.setOnClickListener(this);
 
         //A mostrar/ocultar en dependencia del tipo de formación
         if (origen.equals(Constants.TIPO_ONLINE)) {
@@ -384,6 +394,14 @@ public class ActividadesFormativasActivity extends MainActivity
             showDialog(0);
         } else if (v == imageButtonFechaFin) {
             showDialog(1);
+        } else if (v == itemPresentacion) {
+            Intent i = new Intent(this, PresentacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
+        } else if (v == itemFormativas) {
+            Intent i = new Intent(this, MenuFormacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
         }
     }
 

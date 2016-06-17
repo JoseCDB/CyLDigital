@@ -26,6 +26,8 @@ public class MenuFormacionActivity extends MainActivity
     View back;
     View btnMenuRight;
     SimpleSideDrawer slide_me;
+    private View itemPresentacion;
+    private View itemFormativas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,13 @@ public class MenuFormacionActivity extends MainActivity
         btnMenuRight.setOnClickListener(this);
 
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.right_menu);
+        slide_me.setRightBehindContentView(R.layout.menu_right);
+
+        itemPresentacion = this.findViewById(R.id.presentacion);
+        itemPresentacion.setOnClickListener(this);
+
+        itemFormativas = this.findViewById(R.id.formativas);
+        itemFormativas.setOnClickListener(this);
 
         //Para ver en pantalla el build (versión) de la app
         build = (TextView) this.findViewById(R.id.build);
@@ -88,6 +96,14 @@ public class MenuFormacionActivity extends MainActivity
             startActivity(i);
         } else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
+        }else if (v == itemPresentacion) {
+            i = new Intent(this, PresentacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
+        } else if (v == itemFormativas) {
+            i = new Intent(this, MenuFormacionActivity.class);
+            slide_me.closeRightSide();
+            startActivity(i);
         }
     }
 }

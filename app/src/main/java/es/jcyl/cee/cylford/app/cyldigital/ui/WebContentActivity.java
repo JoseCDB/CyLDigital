@@ -2,9 +2,6 @@ package es.jcyl.cee.cylford.app.cyldigital.ui;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,17 +22,17 @@ import es.jcyl.cee.cylford.app.cyldigital.R;
  */
 public class WebContentActivity extends MainActivity implements OnClickListener {
     //anterior vista
-    View back;
+    private View back;
     //botón volver ventana
-    Button wback;
+    private Button wback;
     //botón adelante ventana
-    Button wfoward;
+    private Button wfoward;
     //objeto WebView
-    WebView web;
-    View loading;
-    String url = null;
-    SimpleSideDrawer slide_me;
-    View btnMenuRight;
+    private WebView web;
+    private View loading;
+    private String url = null;
+    private SimpleSideDrawer slide_me;
+    private View btnMenuRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +75,7 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
 
         //Objeto que realiza la acción de mostrar el menú lateral
         slide_me = new SimpleSideDrawer(this);
-        slide_me.setLeftBehindContentView(R.layout.right_menu);
+        slide_me.setRightBehindContentView(R.layout.menu_right);
     }
 
 
