@@ -7,4 +7,5 @@
     <color name="menu">#006df8</color>
     <color name="subtitle">#ff666666</color>
     <color name="background_splash">#304aee</color>
+    <color name="spinners">#dedede</color>
 </resources>

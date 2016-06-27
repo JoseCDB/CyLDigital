@@ -83,7 +83,8 @@ public class MenuFormacionActivity extends MainActivity
     public void onClick(View v) {
         Intent i = new Intent(this, ActividadesFormativasActivity.class);
         if (v == back) {
-            this.onBackPressed();
+            i = new Intent(this, PresentacionActivity.class);
+            startActivity(i);
         } else if (v == presencial ||
                 v == iconoPresencial ||
                 v == textPresencial) {

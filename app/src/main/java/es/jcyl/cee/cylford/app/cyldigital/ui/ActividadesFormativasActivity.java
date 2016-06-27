@@ -385,7 +385,9 @@ public class ActividadesFormativasActivity extends MainActivity
     @Override
     public void onClick(View v) {
         if (v == back) {
-            this.onBackPressed(); //retorna a la actividad anterior
+            //this.onBackPressed(); //retorna a la actividad anterior
+            Intent i = new Intent(this, MenuFormacionActivity.class);
+            startActivity(i);
         }else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
         } else if (v == botonPrueba) {
