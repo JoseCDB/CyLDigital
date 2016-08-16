@@ -122,6 +122,7 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
             Intent i = new Intent(this, WebContentActivity.class);
             i.putExtra("url", it.url);
             startActivity(i);
+            finish();
         }
     }// onClick
 }

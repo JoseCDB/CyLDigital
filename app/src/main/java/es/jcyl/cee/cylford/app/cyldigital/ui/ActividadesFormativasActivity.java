@@ -387,6 +387,7 @@ public class ActividadesFormativasActivity extends MainActivity
         if (v == back) {
             //this.onBackPressed(); //retorna a la actividad anterior
             Intent i = new Intent(this, MenuFormacionActivity.class);
+            finish();
             startActivity(i);
         }else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
@@ -397,12 +398,14 @@ public class ActividadesFormativasActivity extends MainActivity
         } else if (v == imageButtonFechaFin) {
             showDialog(1);
         } else if (v == itemPresentacion) {
-            Intent i = new Intent(this, PresentacionActivity.class);
             slide_me.closeRightSide();
+            Intent i = new Intent(this, PresentacionActivity.class);
+            finish();
             startActivity(i);
         } else if (v == itemFormativas) {
-            Intent i = new Intent(this, MenuFormacionActivity.class);
             slide_me.closeRightSide();
+            Intent i = new Intent(this, MenuFormacionActivity.class);
+            finish();
             startActivity(i);
         }
     }

@@ -85,26 +85,31 @@ public class MenuFormacionActivity extends MainActivity
         if (v == back) {
             i = new Intent(this, PresentacionActivity.class);
             startActivity(i);
+            finish();
+            //this.onBackPressed();
         } else if (v == presencial ||
                 v == iconoPresencial ||
                 v == textPresencial) {
             i.putExtra("origen", Constants.TIPO_PRESENCIAL);
             startActivity(i);
+            finish();
         } else if (v == online ||
                 v == iconoOnline ||
                 v == textOnline) {
             i.putExtra("origen", Constants.TIPO_ONLINE);
             startActivity(i);
+            finish();
         } else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
         }else if (v == itemPresentacion) {
+            slide_me.closeRightSide();
             i = new Intent(this, PresentacionActivity.class);
-            slide_me.closeRightSide();
             startActivity(i);
+            finish();
         } else if (v == itemFormativas) {
-            i = new Intent(this, MenuFormacionActivity.class);
-            slide_me.closeRightSide();
-            startActivity(i);
+            //i = new Intent(this, MenuFormacionActivity.class);
+            //slide_me.closeRightSide();
+            //startActivity(i);
         }
     }
 }

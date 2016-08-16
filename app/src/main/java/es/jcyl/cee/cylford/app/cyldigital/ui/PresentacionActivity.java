@@ -42,17 +42,24 @@ public class PresentacionActivity extends MainActivity implements View.OnClickLi
 
     public void onClick(View v) {
         if (v == back) {
-            this.onBackPressed();
+           // this.onBackPressed();
+            //finish();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
         } else if (v == itemPresentacion) {
-            Intent i = new Intent(this, PresentacionActivity.class);
-            slide_me.closeRightSide();
-            startActivity(i);
+            //Intent i = new Intent(this, PresentacionActivity.class);
+            //slide_me.closeRightSide();
+            //startActivity(i);
         } else if (v == itemFormativas) {
-            Intent i = new Intent(this, MenuFormacionActivity.class);
             slide_me.closeRightSide();
+            Intent i = new Intent(this, MenuFormacionActivity.class);
             startActivity(i);
+            finish();
         }
     }
 
