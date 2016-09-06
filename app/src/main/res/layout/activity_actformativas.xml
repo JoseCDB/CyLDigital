@@ -1,7 +1,10 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
@@ -32,6 +35,7 @@
             android:id="@+id/localidad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_weight="1"
             android:background="@drawable/btn_dropdown">
         </Spinner>
@@ -46,6 +50,7 @@
             android:id="@+id/tipo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_weight="1"
             android:background="@drawable/btn_dropdown">
         </Spinner>

@@ -38,11 +38,19 @@
     <string name="startdatetext">Fecha de inicio</string>
     <string name="enddatetext">Fecha de fin</string>
 
-
+    <string name="titulo_descripción">DESCRIPCIÓN</string>
     <string name="quienes_somos">El Programa CyL Digital, "Castilla y León Comunidad Digital", es una iniciatiativa de la D.G de Telecomunicaciones de la Consejería de Fomento y Medio Ambiente de la Junta de Castilla y León, incluida en el marco de la Agenda Digital para Castilla y León, cuyo objetivo es informar y sensibilizar a la sociedad sobre las ventajas que ofrecen las nuevas tecnologías y la Sociedad de la Información.</string>
     <string name="que_es">CyLDigital es un programa abierto a todos (ciudadanos, autónomos y pequeñas empresas) en el que se desarrollan iniciativas para sensibilizar y formar a las personas en la aplicación de las nuevas Tecnologías de la Información y la Comunicación (TIC) a su vida cotidiana, a su trabajo o a sus negocios. En CYL Digital podrá encontrar su sitio para aprender, informarse, consultar, compartir, aportar y colaborar en el intercambio de experiencias, todo ello relacionado con las TIC y la multitud de posibilidades que ofrecen.
         Un territorio ilimitado de conocimientos que, por medio de las tecnologías multimedia y la formación, tanto presencial como online, le abrirán caminos en su aprendizaje con una oferta formativa diseñada para dar respuesta a sus necesidades. Un lugar en el que podrá relacionarte con personas de cualquier edad, donde podrá participar en comunidad, donde siempre es tiempo para aprender y compartir ideas.
         Todo ello, con el soporte de una red de Espacios CYL Digital, en las capitales de Castilla y León, y de la Red Regional de Cibercentros, repartidos por toda la Comunidad, que impulsan el acercamiento de las TIC a la sociedad castellana y leonesa y desarrollan actividades formativas para fomentar su utilización y evitar la exclusión digital.
         Además, CYL Digital busca promover sinergias con entidades, tanto públicas como privadas, que desarrollen iniciativas y programas TIC, para conseguir un mayor impacto y resultados y facilitar la consecución de objetivos comunes, optimizando los recursos y alineando acciones que benefician al mismo público objetivo.
         En definitiva, se abren ante usted infinidad de posibilidades en el mundo virtual.</string>
+    <string name="title_activity_acerca">AcercaActivity</string>
+
+    <string name="menu_0">Menú</string>
+    <string name="menu_1">Presentación y Servicios</string>
+    <string name="menu_2">Actividades Formativas</string>
+    <string name="menu_3">Acerca de</string>
+
+    <string name="acerca_texto">Aplicación para la consulta de actividades formativas impartidas por la iniciativa CyL Digital de la D.G de Telecomunicaciones de la Consejería de Fomento y Medio Ambiente de la Junta de Castilla y León.\n\nEsta aplicación utiliza los datos publicados por la web de datos abiertos de la JCYL.\n\nDesarrollada por barquejo@gmail.com</string>
 </resources>

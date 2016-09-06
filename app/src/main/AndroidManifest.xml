@@ -42,7 +42,8 @@ android:targetSdkVersion — Specifies the API Level on which the application is
         <activity
             android:name=".ui.SplashActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,20 +57,28 @@ android:targetSdkVersion — Specifies the API Level on which the application is
         <activity
             android:name=".ui.MenuFormacionActivity"
             android:label="@string/title_activity_menu"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ActividadesFormativasActivity"
-            android:label="@string/title_activity_online" />
+            android:label="@string/title_activity_online"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.WebContentActivity"
-            android:label="@string/title_activity_web_content" />
+            android:label="@string/title_activity_web_content"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.DetalleActividadActivity"
-            android:label="@string/title_activity_detalle_actividad" />
+            android:label="@string/title_activity_detalle_actividad"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.PresentacionActivity"
             android:label="@string/title_activity_presentacion"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.AcercaActivity"
+            android:label="@string/title_activity_acerca"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="35dp"
@@ -17,27 +18,28 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/titulo_actividad"
         android:text="Este es un texto de título de actividad"
         android:layout_toRightOf="@id/imagen"
-        android:id="@+id/titulo_actividad"
-        android:textColor="#000000"
+        android:textColor="@color/texto_titulo_act_item"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Online"
-        android:layout_toRightOf="@id/imagen"
         android:id="@+id/centro_realizacion"
+        android:text="Centro de realización"
+        android:layout_toRightOf="@id/imagen"
         android:layout_below="@+id/titulo_actividad"
         android:textColor="#7278f3" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/fecha_realizacion"
         android:text="Fecha de realización"
         android:layout_toRightOf="@id/imagen"
-        android:id="@+id/fecha_realizacion"
+        android:textColor="@color/texto_fecha_curso"
         android:layout_below="@+id/centro_realizacion" />
 
     <TextView
@@ -47,6 +49,7 @@
         android:layout_marginRight="10dp"
         android:layout_toRightOf="@id/imagen"
         android:id="@+id/total_horas"
+        android:textColor="@color/texto_duracion_curso"
         android:layout_below="@+id/fecha_realizacion" />
 
     <View

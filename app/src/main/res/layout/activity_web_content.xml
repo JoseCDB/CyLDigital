@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
-    tools:context="es.jcyl.cee.cylford.app.cyldigital.ui.WebContentActivity">
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".ui.WebContentActivity">
 
     <!--Layout para el menú top -->
     <RelativeLayout
@@ -62,6 +62,15 @@
             android:text="@string/title_presenciales"
             android:textColor="@color/textw"
             android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/btnrightmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/menu_btn_selector"
+            />
     </RelativeLayout>
     <!-- Layout para el menú top: fin-->
 

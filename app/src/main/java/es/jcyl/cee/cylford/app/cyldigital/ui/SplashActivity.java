@@ -15,18 +15,15 @@ public class SplashActivity extends MainActivity {
     // Set the duration of the splash screen
     private static final long SPLASH_SCREEN_DELAY = 3000;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        // Set portrait orientation
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// Set portrait orientation
         setContentView(R.layout.activity_splash);
+
         //Se oculta el actionBar
         //getActionBar().hide();
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide(); //working with appcompat-v7 action bar you need to obtain it by calling "getSupportActionBar"
 
         TimerTask task = new TimerTask() {
             @Override

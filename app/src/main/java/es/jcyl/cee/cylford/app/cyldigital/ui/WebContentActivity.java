@@ -1,5 +1,6 @@
 package es.jcyl.cee.cylford.app.cyldigital.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -9,6 +10,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.navdrawer.SimpleSideDrawer;
@@ -21,9 +23,8 @@ import es.jcyl.cee.cylford.app.cyldigital.R;
  * Actividad para el "navegador web"
  */
 public class WebContentActivity extends MainActivity implements OnClickListener {
-    //anterior vista
-    private View back;
-    //botón volver ventana
+
+    //botón atrás ventana
     private Button wback;
     //botón adelante ventana
     private Button wfoward;
@@ -32,18 +33,21 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
     private View loading;
     private String url = null;
     private SimpleSideDrawer slide_me;
-    private View btnMenuRight;
+
+    //anterior vista
+    private ImageView back, btnMenuRight;
+
+    private View itemPresentacion, itemFormativas, itemAcerca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_content);
-        getSupportActionBar().hide();
 
         url = this.getIntent().getStringExtra("url");
 
-        back = this.findViewById(R.id.back);
+        back = (ImageView) this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
         wback = (Button) this.findViewById(R.id.web_back);
@@ -63,19 +67,28 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        web.getSettings().setUserAgentString(web.getSettings().getUserAgentString()+ " " + "cylford");
+        web.getSettings().setUserAgentString(web.getSettings().getUserAgentString() + " " + "cylford");
         web.getSettings().setUseWideViewPort(true);
         web.getSettings().setLoadWithOverviewMode(true);
         web.setWebViewClient(new MyWebViewClient());
         web.loadUrl(url);
 
         //Botón de menú lateral
-        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight = (ImageView) this.findViewById(R.id.btnrightmenu);
         btnMenuRight.setOnClickListener(this);
 
         //Objeto que realiza la acción de mostrar el menú lateral
         slide_me = new SimpleSideDrawer(this);
         slide_me.setRightBehindContentView(R.layout.menu_right);
+
+        itemPresentacion = this.findViewById(R.id.presentacion);
+        itemPresentacion.setOnClickListener(this);
+
+        itemAcerca = this.findViewById(R.id.acerca);
+        itemAcerca.setOnClickListener(this);
+
+        itemFormativas = this.findViewById(R.id.formativas);
+        itemFormativas.setOnClickListener(this);
     }
 
 
@@ -99,6 +112,21 @@ public class WebContentActivity extends MainActivity implements OnClickListener 
             }
         } else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
+        } else if (v == itemAcerca) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, AcercaActivity.class);
+            startActivity(i);
+            //finish();
+        } else if (v == itemPresentacion) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, PresentacionActivity.class);
+            startActivity(i);
+            //finish();
+        } else if (v == itemFormativas) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, MenuFormacionActivity.class);
+            startActivity(i);
+            //finish();
         }
     }
 

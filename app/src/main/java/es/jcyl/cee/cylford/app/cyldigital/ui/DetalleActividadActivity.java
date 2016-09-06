@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.navdrawer.SimpleSideDrawer;
@@ -26,21 +27,19 @@ import es.jcyl.cee.cylford.app.cyldigital.parser.dto.CyLDFormacion;
  */
 public class DetalleActividadActivity extends MainActivity implements OnClickListener {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
-    View back;
-    View btnMenuRight;
-    CyLDFormacion it;
-    Button info;
-    TextView centFor;
-    SimpleSideDrawer slide_me;
+    private SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'del' yyyy", Locale.getDefault());
+    private ImageView back, btnMenuRight;
+    private CyLDFormacion it;
+    private Button info;
+    private TextView centFor;
+    private SimpleSideDrawer slide_me;
+    private View itemPresentacion, itemAcerca;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_actividad);
-        getSupportActionBar().hide();
 
         Intent intent = getIntent();
         it = (CyLDFormacion) intent.getSerializableExtra("SELECTED_ITEM");
@@ -52,16 +51,22 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         tv.setText(it.nombre);
 
         //Botón actividad atrás
-        back = this.findViewById(R.id.back);
+        back = (ImageView) this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
         //Botón de menú lateral
-        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight = (ImageView) this.findViewById(R.id.btnrightmenu);
         btnMenuRight.setOnClickListener(this);
 
         //Objeto que realiza la acción de mostrar el menú lateral
         slide_me = new SimpleSideDrawer(this);
         slide_me.setRightBehindContentView(R.layout.menu_right);
+
+        itemPresentacion = this.findViewById(R.id.presentacion);
+        itemPresentacion.setOnClickListener(this);
+
+        itemAcerca = this.findViewById(R.id.acerca);
+        itemAcerca.setOnClickListener(this);
 
         //Descripción de la actividad
         tv = (TextView) findViewById(R.id.description);
@@ -111,7 +116,6 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
         }
     }
 
-
     @Override
     public void onClick(View v) {
         if(v == back) {
@@ -122,7 +126,17 @@ public class DetalleActividadActivity extends MainActivity implements OnClickLis
             Intent i = new Intent(this, WebContentActivity.class);
             i.putExtra("url", it.url);
             startActivity(i);
-            finish();
+            //finish();
+        } else if (v == itemAcerca) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, AcercaActivity.class);
+            startActivity(i);
+            //finish();
+        } else if (v == itemPresentacion) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, PresentacionActivity.class);
+            startActivity(i);
+            //finish();
         }
     }// onClick
 }

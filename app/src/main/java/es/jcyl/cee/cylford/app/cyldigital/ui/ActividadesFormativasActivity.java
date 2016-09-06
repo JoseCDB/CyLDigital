@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,37 +68,36 @@ public class ActividadesFormativasActivity extends MainActivity
     //Retraso para mostrar los resultados en onResults()
     private static final int LOADING_DELAY = 3000;
 
-    BoardAdapter adapter;
-    ArrayList<CyLDFormacion> data = new ArrayList<CyLDFormacion>();
-    ArrayList<CyLDFormacion> datosFuturos = new ArrayList<CyLDFormacion>();
+    private BoardAdapter adapter;
+    private ArrayList<CyLDFormacion> data = new ArrayList<CyLDFormacion>();
+    private ArrayList<CyLDFormacion> datosFuturos = new ArrayList<CyLDFormacion>();
     //Da formato a la fecha de las actividades mostradas en BoardAdapter.
-    SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'de' yyyy", Locale.getDefault());
+    private SimpleDateFormat sdf = new SimpleDateFormat("'Comienza el' d 'de' MMMM 'de' yyyy", Locale.getDefault());
     //Si el origen es una consulta tipo Online o Presencial
-    String origen;
+    private String origen;
     //Combos localidad y tipo de actividad
-    Spinner localidad, tipo;
+    private Spinner localidad, tipo;
     //Texto de valores seleccionados en los combos
-    String centroVal, tipoVal, fechaInicioAct, fechaFinAct = "";
+    private String centroVal, tipoVal, fechaInicioAct, fechaFinAct = "";
     //Campo buscar
-    EditText search;
+    private EditText search;
     //Campo que muestra el número de resutlados de la búsqueda.
-    TextView count;
+    private TextView count;
     //Contiene  "fecha + nombre"  de la llamada actual al Servicio Web.
-    String currentCallId = "";
+    private String currentCallId = "";
     //Fecha en long de la llamada actual al Servicio Web
     long currentCallTime = 0;
     //Nueva lista Pull to refresh para mostrar los resultados devueltos.
-    PullToRefreshListView list;;
+    private PullToRefreshListView list;;
     //Botón de prueba que no se muestra en la versión final.
-    Button botonPrueba;
-    //Botón volver
-    View back;
-    //Botón menú lateral
-    View btnMenuRight;
-    SimpleSideDrawer slide_me;
+    private Button botonPrueba;
+
+    private ImageView back, btnMenuRight; //Botones volver y menú lateral
+
+    private SimpleSideDrawer slide_me;
     //Layout para los spinners de selección de centro y tipo de actividad
     //Layout para los botones de fecha de inicio y fecha de fin
-    View layoutSpinners, layoutCalendars;
+    private LinearLayout layoutSpinners, layoutCalendars;
 
     //Fechas
     private Calendar cal;
@@ -108,14 +109,13 @@ public class ActividadesFormativasActivity extends MainActivity
     private ImageButton imageButtonFechaFin;
     private TextView editTextFechaFin;
 
-    private View itemPresentacion;
-    private View itemFormativas;
+    private View itemPresentacion, itemFormativas, itemAcerca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actformativas);
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide(); // Ya no estoy quitando en el Manifest con el style AppTheme
 
         origen = getIntent().getStringExtra("origen");
 
@@ -156,7 +156,7 @@ public class ActividadesFormativasActivity extends MainActivity
         });
 
         //4 BOTÓN VOLVER
-        back = this.findViewById(R.id.back);
+        back = (ImageView) this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
         //5 BOTÓN PRUEBA
@@ -181,8 +181,8 @@ public class ActividadesFormativasActivity extends MainActivity
         list.setRefreshingLabel(getString(R.string.update));
 
         //8 LAYOUTS
-        layoutSpinners = this.findViewById(R.id.layoutSpinners);
-        layoutCalendars = this.findViewById(R.id.layoutFechas);
+        layoutSpinners = (LinearLayout) this.findViewById(R.id.layoutSpinners);
+        layoutCalendars = (LinearLayout) this.findViewById(R.id.layoutFechas);
 
         //9 BOTONES CALENDARIOS
         cal = Calendar.getInstance();
@@ -229,7 +229,7 @@ public class ActividadesFormativasActivity extends MainActivity
         slide_me.setRightBehindContentView(R.layout.menu_right);
 
         //13 BOTÓN MENÚ LATERAL
-        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight = (ImageView) this.findViewById(R.id.btnrightmenu);
         btnMenuRight.setOnClickListener(this);
 
         //14 MENÚ
@@ -238,6 +238,9 @@ public class ActividadesFormativasActivity extends MainActivity
 
         itemFormativas = this.findViewById(R.id.formativas);
         itemFormativas.setOnClickListener(this);
+
+        itemAcerca = this.findViewById(R.id.acerca);
+        itemAcerca.setOnClickListener(this);
 
         //A mostrar/ocultar en dependencia del tipo de formación
         if (origen.equals(Constants.TIPO_ONLINE)) {
@@ -385,10 +388,9 @@ public class ActividadesFormativasActivity extends MainActivity
     @Override
     public void onClick(View v) {
         if (v == back) {
-            //this.onBackPressed(); //retorna a la actividad anterior
             Intent i = new Intent(this, MenuFormacionActivity.class);
-            finish();
             startActivity(i);
+            finish();
         }else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
         } else if (v == botonPrueba) {
@@ -400,13 +402,18 @@ public class ActividadesFormativasActivity extends MainActivity
         } else if (v == itemPresentacion) {
             slide_me.closeRightSide();
             Intent i = new Intent(this, PresentacionActivity.class);
-            finish();
             startActivity(i);
+            finish();
         } else if (v == itemFormativas) {
             slide_me.closeRightSide();
             Intent i = new Intent(this, MenuFormacionActivity.class);
-            finish();
             startActivity(i);
+            finish();
+        } else if (v == itemAcerca) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, AcercaActivity.class);
+            startActivity(i);
+            //finish();
         }
     }
 

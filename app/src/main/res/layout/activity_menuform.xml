@@ -1,30 +1,34 @@
-<!--  contenedor -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.MenuFormacionActivity">
 
     <include layout="@layout/menu_top" />
 
-    <!--MENU PRESENCIALES-->
+    <!--PRINCIPAL-->
     <LinearLayout
+        android:id="@+id/layoutPrincipal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="10dp">
+        <!--MENU PRESENCIALES-->
         <LinearLayout
+            android:id="@+id/layoutPresenciales"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
-
-
                 <ImageView
                     android:id="@+id/icono_presenciales"
                     android:layout_width="wrap_content"
@@ -32,29 +36,22 @@
                     android:layout_centerInParent="false"
                     android:src="@drawable/presenciales"
                     android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"/>
-
+                    android:layout_marginTop="0dp" />
                 <TextView
                     android:id="@+id/presencial"
                     android:layout_toRightOf="@id/icono_presenciales"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="@color/text"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:text="@string/menu_presencial" />
+                    android:text="@string/menu_presencial"
+                    style="@style/texto_gran"/>
             </RelativeLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
                 android:text="@string/menu_formacion_presencial"
                 android:id="@+id/textView_presencial"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"/>
-        </LinearLayout>
+                style="@style/texto_peq"/>
+        </LinearLayout><!-- Linear presenciales-->
 
         <!--
         <View
@@ -64,44 +61,37 @@
     -->
         <!--MENU ONLINES-->
         <LinearLayout
+            android:id="@+id/layoutOnlines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp">
-            <ImageView
-                android:id="@+id/icono_online"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/online"/>
-
-            <TextView
-                android:id="@+id/online"
-                android:layout_toRightOf="@id/icono_online"
+            android:orientation="vertical"
+            android:clickable="true">
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:textColor="@color/text"
-                android:textSize="20sp"
-                android:text="@string/menu_online" />
-        </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
-                android:layout_below="@+id/online"
-                android:text="@string/menu_formacion_online"
-                android:id="@+id/textView_online"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"/>
-
-
-            </LinearLayout>
-    </LinearLayout>
+                android:padding="10dp">
+                <ImageView
+                    android:id="@+id/icono_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/online"/>
+                <TextView
+                    android:id="@+id/online"
+                    android:layout_toRightOf="@id/icono_online"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/menu_online"
+                    style="@style/texto_gran"/>
+            </RelativeLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/online"
+                    android:text="@string/menu_formacion_online"
+                    android:id="@+id/textView_online"
+                    style="@style/texto_peq"/>
+            </LinearLayout> <!-- Linear onlines-->
+    </LinearLayout> <!-- Linear principal-->
 
     <TextView
         android:id="@+id/build"

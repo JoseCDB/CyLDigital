@@ -18,7 +18,7 @@ public abstract class AutoPagingListAdapter<T> extends ArrayAdapter<T> implement
     public static final int TYPE_ITEM = 0;
     public static final int TYPE_LOADING = 1;
 
-    public AutoPagingListAdapter(Context context, int textViewResourceId,
+    public AutoPagingListAdapter (Context context, int textViewResourceId,
                                  List<T> objects) {
         super(context, textViewResourceId, objects);
     }
@@ -38,8 +38,7 @@ public abstract class AutoPagingListAdapter<T> extends ArrayAdapter<T> implement
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
         if (firstVisibleItem + visibleItemCount - 1 == getCount() && canScroll) {
             onScrollNext();
@@ -47,12 +46,10 @@ public abstract class AutoPagingListAdapter<T> extends ArrayAdapter<T> implement
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-    }
+    public void onScrollStateChanged(AbsListView view, int scrollState) {}
 
     @Override
-    public abstract View getView(int position, View convertView,
-                                 ViewGroup parent);
+    public abstract View getView(int position, View convertView, ViewGroup parent);
 
     @Override
     public int getViewTypeCount(){
@@ -67,6 +64,5 @@ public abstract class AutoPagingListAdapter<T> extends ArrayAdapter<T> implement
             return TYPE_ITEM;
         }
     }
-
 
 }

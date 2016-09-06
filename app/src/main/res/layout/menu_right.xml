@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:padding="10dp"
-        android:text="Menú"
+        android:text="@string/menu_0"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Presentación y Servicios"
+            android:text="@string/menu_1"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -33,9 +33,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Actividades Formativas"
+            android:text="@string/menu_2"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/acerca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/menu_3"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 </LinearLayout>

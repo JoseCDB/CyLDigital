@@ -1,8 +1,10 @@
-<!--  contenedor -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.PresentacionActivity">
 
@@ -53,34 +55,24 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
                 android:layout_below="@+id/presencial"
                 android:text="@string/quienes_somos"
                 android:id="@+id/textView_presencial"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"/>
+                style="@style/texto_peq"/>
             <TextView
                 android:id="@+id/online"
                 android:layout_toRightOf="@id/icono_online"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:textColor="@color/text"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="¿Que es CyL Digital?" />
+                android:text="¿Que es CyL Digital?"
+                style="@style/texto_gran"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="10dp"
                 android:layout_below="@+id/online"
                 android:text="@string/que_es"
                 android:id="@+id/textView_online"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"/>
+                style="@style/texto_peq"/>
         </LinearLayout>
     </ScrollView>
 

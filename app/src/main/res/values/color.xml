@@ -8,4 +8,10 @@
     <color name="subtitle">#ff666666</color>
     <color name="background_splash">#304aee</color>
     <color name="spinners">#dedede</color>
+
+    <color name="texto_titulo_act_item">#000000</color>
+    <color name="texto_fecha_curso">#4f0071</color>
+    <color name="texto_centro_item">#7278f3</color>
+    <color name="texto_centro_detalle">#ffa10620</color>
+    <color name="texto_duracion_curso">#ff333333</color>
 </resources>

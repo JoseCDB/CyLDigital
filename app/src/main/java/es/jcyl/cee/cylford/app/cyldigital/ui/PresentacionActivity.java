@@ -3,6 +3,7 @@ package es.jcyl.cee.cylford.app.cyldigital.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.navdrawer.SimpleSideDrawer;
 
@@ -12,21 +13,20 @@ import es.jcyl.cee.cylford.app.cyldigital.R;
 public class PresentacionActivity extends MainActivity implements View.OnClickListener {
 
     private SimpleSideDrawer slide_me;
-    private View btnMenuRight;
-    private View back;
-    private View itemPresentacion;
-    private View itemFormativas;
+
+    private ImageView back, btnMenuRight;
+
+    private View itemPresentacion, itemFormativas, itemAcerca;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presentacion);
-        //getSupportActionBar().hide();
 
-        back = this.findViewById(R.id.back);
+        back = (ImageView) this.findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        btnMenuRight = this.findViewById(R.id.btnrightmenu);
+        btnMenuRight = (ImageView) this.findViewById(R.id.btnrightmenu);
         btnMenuRight.setOnClickListener(this);
 
         slide_me = new SimpleSideDrawer(this);
@@ -38,6 +38,8 @@ public class PresentacionActivity extends MainActivity implements View.OnClickLi
         itemFormativas = this.findViewById(R.id.formativas);
         itemFormativas.setOnClickListener(this);
 
+        itemAcerca = this.findViewById(R.id.acerca);
+        itemAcerca.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -49,17 +51,18 @@ public class PresentacionActivity extends MainActivity implements View.OnClickLi
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-        }else if (v == btnMenuRight) {
+        } else if (v == btnMenuRight) {
             slide_me.toggleRightDrawer();
-        } else if (v == itemPresentacion) {
-            //Intent i = new Intent(this, PresentacionActivity.class);
-            //slide_me.closeRightSide();
-            //startActivity(i);
         } else if (v == itemFormativas) {
             slide_me.closeRightSide();
             Intent i = new Intent(this, MenuFormacionActivity.class);
             startActivity(i);
             finish();
+        } else if (v == itemAcerca) {
+            slide_me.closeRightSide();
+            Intent i = new Intent(this, AcercaActivity.class);
+            startActivity(i);
+            //finish();
         }
     }
 
