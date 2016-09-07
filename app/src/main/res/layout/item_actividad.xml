@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/centro_realizacion"
-        android:text="Centro de realización"
+        android:text="@string/menu_online"
         android:layout_toRightOf="@id/imagen"
         android:layout_below="@+id/titulo_actividad"
         android:textColor="#7278f3" />

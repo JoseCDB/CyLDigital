@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".ui.AcercaActivity">
+
+    <include layout="@layout/menu_top" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Información de esta aplicación móvil."
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        style="@style/texto_peq"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/acerca_texto"
+        android:id="@+id/textView1"
+        style="@style/texto_peq"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/build"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="3dp"
+        android:textColor="#ff666666"
+        android:text="Build 34"/>
+</LinearLayout>

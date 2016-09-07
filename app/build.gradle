@@ -4,14 +4,14 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23 // versión con la que se compila
     buildToolsVersion "23.0.0"
-
+    //Project structure\Modules\app\Flavours
     defaultConfig {
         applicationId "es.jcyl.cee.cylford.app.cyldigital"
         minSdkVersion 15 //minimo sdk con el que aseguramos que va a funcionar
-        targetSdkVersion 23
-        versionCode 1 //para nosotros
+        targetSdkVersion 23 //la versión objetivo o máxima
+        versionCode 1 //para nosotros al subir al play store. sino no nos deja
         versionName "1.0"
-        //para la tienda de desarrollo. Control de versiones de software. Lo va a pedir la tienda al subirlo
+        //Nombre descriptivo. para la tienda de desarrollo. Control de versiones de software. Lo va a pedir la tienda al subirlo
     }
     buildTypes {
         release {
@@ -28,7 +28,7 @@ dependencies {
     //compile files('libs/android-support-v4.jar')
     //soporte para versiones anteriores. Retrocompatibilidad.
     compile project(':Android-PullToRefresh-master')
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'//librería de soporte marcada en el SDK "Android Support Library (23)"
     compile 'com.android.support:design:23.0.1'
     compile files('libs/slider.jar')
 }

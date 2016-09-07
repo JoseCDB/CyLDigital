@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/imagen"
-            android:text="Online"
+            android:text="@string/menu_online"
             android:textColor="@color/texto_centro_detalle"
             android:fontFamily="sans-serif-light"
             style="@style/texto_actividad_detalle"/>

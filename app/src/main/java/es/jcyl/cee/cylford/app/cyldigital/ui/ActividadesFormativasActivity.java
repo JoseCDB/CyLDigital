@@ -250,6 +250,7 @@ public class ActividadesFormativasActivity extends MainActivity
             tv.setText("");
             tv = (TextView) findViewById(R.id.title);
             tv.setText(R.string.title_onlines);
+
             //Búsqueda automática
             new Handler().postDelayed(new Runnable() {
                 public void run() {
@@ -264,6 +265,8 @@ public class ActividadesFormativasActivity extends MainActivity
             tv.setText("");
             tv = (TextView) findViewById(R.id.title);
             tv.setText(R.string.title_presenciales);
+
+            //Mensaje de aviso preencial
             Utils.showSimpleDialog(ActividadesFormativasActivity.this, null,
                     getString(R.string.presenciales_error), null);
         }
@@ -587,10 +590,8 @@ public class ActividadesFormativasActivity extends MainActivity
 
                 //Centro. Solo si es presencial
                 tv = (TextView) convertView.findViewById(R.id.centro_realizacion);
-                String location = "";
                 if (it.centro != null && !it.centro.equals("")) {
-                    location = it.centro;
-                    tv.setText(location);
+                    tv.setText(it.centro);
                 }
 
                 //Fecha de Inicio

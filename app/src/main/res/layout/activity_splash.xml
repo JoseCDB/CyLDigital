@@ -34,9 +34,6 @@
             android:src="@drawable/cyl_digital_splash_txt" />
     </LinearLayout>
 
-
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
