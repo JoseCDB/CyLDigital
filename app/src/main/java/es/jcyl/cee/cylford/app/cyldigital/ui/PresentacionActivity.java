@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.navdrawer.SimpleSideDrawer;
 
@@ -15,6 +16,8 @@ public class PresentacionActivity extends MainActivity implements View.OnClickLi
     private SimpleSideDrawer slide_me;
 
     private ImageView back, btnMenuRight;
+
+    TextView build;
 
     private View itemPresentacion, itemFormativas, itemAcerca;
 
@@ -40,6 +43,15 @@ public class PresentacionActivity extends MainActivity implements View.OnClickLi
 
         itemAcerca = this.findViewById(R.id.acerca);
         itemAcerca.setOnClickListener(this);
+
+        build = (TextView) this.findViewById(R.id.build);
+        try {
+            int vcode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            build.setText(String.format(getString(R.string.build), vcode));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //build.setVisibility(View.GONE);
     }
 
     public void onClick(View v) {

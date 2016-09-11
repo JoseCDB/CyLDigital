@@ -100,5 +100,6 @@
         android:gravity="right"
         android:padding="3dp"
         android:textColor="#ff666666"
-        android:text="Build 34"/>
+        android:text="Build 34"
+        android:visibility="gone"/>
 </LinearLayout>
