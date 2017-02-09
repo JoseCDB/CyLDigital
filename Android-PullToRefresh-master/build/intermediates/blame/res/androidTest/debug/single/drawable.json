@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\progress_indeterminate_horizontal_holo.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\drawable\\progress_indeterminate_horizontal_holo.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\progress_horizontal_holo_light.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\drawable\\progress_horizontal_holo_light.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\progress_horizontal_holo_light_right.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\drawable\\progress_horizontal_holo_light_right.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
+    }
+]

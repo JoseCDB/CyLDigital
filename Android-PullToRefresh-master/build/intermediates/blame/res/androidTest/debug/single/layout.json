@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pulling_progress_layout.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\layout\\pulling_progress_layout.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_progress_google_style.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_progress_google_style.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    },
+    {
+        "merged": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_google_style.xml",
+        "source": "D:\\Desarrollo\\CyLDigital\\cyldigital\\Android-PullToRefresh-master\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_google_style.xml"
+    }
+]
